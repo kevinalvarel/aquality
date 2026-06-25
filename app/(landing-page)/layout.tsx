@@ -1,15 +1,10 @@
-// For adding custom fonts with other frameworks, see:
-// https://tailwindcss.com/docs/font-family
-import type { Metadata } from "next";
-import {
-  Plus_Jakarta_Sans,
-  Noto_Serif_Georgian,
-  IBM_Plex_Mono,
-} from "next/font/google";
-import "./globals.css";
 import { PageBackground } from "@/components/landing-page/background";
-import { Providers } from "@/components/providers/providers";
 import { FloatingNavbar } from "@/components/landing-page/ui/navbar";
+import {
+  IBM_Plex_Mono,
+  Noto_Serif_Georgian,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -27,12 +22,7 @@ const fontMono = IBM_Plex_Mono({
   weight: "400",
 });
 
-export const metadata: Metadata = {
-  title: "Aquality",
-  description: "AI-powered app to track water quality",
-};
-
-export default function RootLayout({
+export default function LandingPageLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -42,7 +32,9 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <FloatingNavbar />
+        <PageBackground />
+        {children}
       </body>
     </html>
   );
