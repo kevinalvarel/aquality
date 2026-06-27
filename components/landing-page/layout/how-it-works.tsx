@@ -1,59 +1,59 @@
 "use client";
 
 import { useState } from "react";
-import { Map, BarChart3, TreePalm, Waves } from "lucide-react";
+import { Map, Droplets, BarChart3, Bell } from "lucide-react";
 
 const steps = [
   {
-    id: "map",
+    id: "select",
     icon: Map,
     number: "01",
-    title: "Pilih Wilayah",
+    title: "Pilih Pantai di Banten",
     subtitle: "Peta Interaktif",
     description:
-      "Gunakan peta interaktif untuk memilih area pesisir yang ingin dianalisis. Navigasi dengan mudah menggunakan kontrol peta dan layer yang dapat disesuaikan.",
+      "Gunakan peta interaktif untuk memilih pantai di wilayah Banten yang ingin Anda pantau. Tersedia 18+ lokasi pantai dari Anyer, Carita, Sawarna, hingga Tanjung Lesung.",
     visual: {
       gradient: "from-primary/10 to-sky-500/5",
       accent: "bg-primary",
     },
   },
   {
-    id: "analysis",
-    icon: Waves,
+    id: "index",
+    icon: Droplets,
     number: "02",
-    title: "Analisis Data",
-    subtitle: "Pemrosesan Otomatis",
+    title: "Baca Indeks Kualitas",
+    subtitle: "Index Polusi & Air",
     description:
-      "Platform secara otomatis memproses data citra satelit dan menghasilkan analisis abrasi, perubahan garis pantai, serta indeks vegetasi mangrove.",
+      "Lihat indeks pencemaran air (pH, salinitas, E. coli), indeks polusi udara (AQI, PM2.5), serta skor keramaian pengunjung dalam satu tampilan yang jelas.",
     visual: {
-      gradient: "from-sky-500/10 to-emerald-500/5",
-      accent: "bg-sky-500",
+      gradient: "from-cyan-500/10 to-primary/5",
+      accent: "bg-cyan-500",
     },
   },
   {
-    id: "monitor",
-    icon: TreePalm,
+    id: "analyze",
+    icon: BarChart3,
     number: "03",
-    title: "Pantau Perubahan",
-    subtitle: "Monitoring Berkelanjutan",
+    title: "Analisis Tren & Riwayat",
+    subtitle: "Dashboard Analitik",
     description:
-      "Pantau perubahan kondisi pesisir dari waktu ke waktu melalui perbandingan data temporal. Deteksi tren abrasi dan degradasi ekosistem secara dini.",
+      "Pantau tren perubahan kualitas pantai dari waktu ke waktu. Bandingkan kondisi antar pantai dan identifikasi pola musiman pencemaran.",
     visual: {
-      gradient: "from-emerald-500/10 to-chart-2/5",
+      gradient: "from-emerald-500/10 to-cyan-500/5",
       accent: "bg-emerald-500",
     },
   },
   {
-    id: "report",
-    icon: BarChart3,
+    id: "alert",
+    icon: Bell,
     number: "04",
-    title: "Buat Laporan",
-    subtitle: "Visualisasi & Export",
+    title: "Aktifkan Notifikasi",
+    subtitle: "Peringatan Dini",
     description:
-      "Hasilkan laporan komprehensif dengan grafik, peta, dan statistik yang siap digunakan untuk pengambilan keputusan dan publikasi ilmiah.",
+      "Berlangganan notifikasi untuk pantai favorit Anda. Dapatkan peringatan segera ketika kualitas air atau polusi melewati ambang batas yang aman.",
     visual: {
-      gradient: "from-chart-2/10 to-primary/5",
-      accent: "bg-chart-2",
+      gradient: "from-amber-500/10 to-primary/5",
+      accent: "bg-amber-500",
     },
   },
 ];
@@ -63,7 +63,7 @@ export function HowItWorks() {
 
   return (
     <section id="how-it-works" className="relative w-full py-24 sm:py-32">
-      {/* Background */}
+      {/* Background lines */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
@@ -77,11 +77,11 @@ export function HowItWorks() {
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
             Empat Langkah{" "}
-            <span className="text-primary">Menuju Pemantauan</span>
+            <span className="text-primary">Menuju Pantai Terbaik</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Proses sederhana dan intuitif untuk memulai pemantauan pesisir
-            dengan Coast Vision.
+            Proses sederhana untuk mengetahui kualitas, polusi, dan keramaian
+            pantai di wilayah Banten sebelum berkunjung.
           </p>
         </div>
 
@@ -182,7 +182,7 @@ export function HowItWorks() {
                   </p>
                 </div>
 
-                {/* Step indicator */}
+                {/* Step indicator dots */}
                 <div className="flex gap-2 mt-8">
                   {steps.map((_, i) => (
                     <button
@@ -200,7 +200,7 @@ export function HowItWorks() {
                 </div>
               </div>
 
-              {/* Decorative blurred shapes */}
+              {/* Decorative blurred shape */}
               <div
                 className={`absolute -bottom-20 -right-20 w-60 h-60 rounded-full ${steps[activeStep].visual.accent} opacity-[0.03] blur-3xl`}
               />

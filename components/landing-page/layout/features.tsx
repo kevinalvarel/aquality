@@ -1,36 +1,45 @@
 import {
   Map,
   BarChart3,
-  TreePalm,
-  Waves,
-  Satellite,
-  Database,
+  Droplets,
+  Wind,
+  Users,
+  Bell,
 } from "lucide-react";
 
 const features = [
   {
     icon: Map,
-    title: "Peta Interaktif",
+    title: "Peta Interaktif Banten",
     description:
-      "Visualisasi geospasial dengan layer peta yang dapat dikustomisasi untuk analisis wilayah pesisir secara mendetail.",
+      "Visualisasi geospasial semua pantai di Banten dengan layer indeks kualitas, polusi, dan keramaian yang dapat dikustomisasi.",
     color: "text-primary",
     bgColor: "bg-primary/8",
     borderColor: "group-hover:border-primary/20",
   },
   {
-    icon: Waves,
-    title: "Analisis Abrasi",
+    icon: Droplets,
+    title: "Index Pencemaran Air",
     description:
-      "Deteksi dan monitoring perubahan garis pantai menggunakan data temporal dari citra satelit.",
+      "Pantau kadar pH, salinitas, logam berat, dan indikator biologis pencemaran air laut secara berkala.",
+    color: "text-cyan-500",
+    bgColor: "bg-cyan-500/8",
+    borderColor: "group-hover:border-cyan-500/20",
+  },
+  {
+    icon: Wind,
+    title: "Index Polusi Udara",
+    description:
+      "Monitoring AQI (Air Quality Index) dan konsentrasi partikel PM2.5 di kawasan pantai Banten.",
     color: "text-sky-500",
     bgColor: "bg-sky-500/8",
     borderColor: "group-hover:border-sky-500/20",
   },
   {
-    icon: TreePalm,
-    title: "Kesehatan Mangrove",
+    icon: Users,
+    title: "Tingkat Keramaian",
     description:
-      "Evaluasi kondisi ekosistem mangrove dengan indeks vegetasi dan analisis spektral.",
+      "Estimasi real-time kepadatan pengunjung di setiap pantai berdasarkan data pergerakan dan input komunitas.",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/8",
     borderColor: "group-hover:border-emerald-500/20",
@@ -39,28 +48,19 @@ const features = [
     icon: BarChart3,
     title: "Dashboard Analitik",
     description:
-      "Visualisasi data pesisir yang komprehensif dengan grafik, statistik, dan laporan terpadu.",
+      "Visualisasi tren kualitas pantai mingguan, bulanan, dan tahunan dalam grafik interaktif yang mudah dibaca.",
     color: "text-chart-2",
     bgColor: "bg-chart-2/8",
     borderColor: "group-hover:border-chart-2/20",
   },
   {
-    icon: Satellite,
-    title: "Citra Satelit",
+    icon: Bell,
+    title: "Notifikasi Peringatan",
     description:
-      "Akses data citra satelit beresolusi tinggi untuk analisis perubahan wilayah pesisir dari waktu ke waktu.",
+      "Dapatkan notifikasi otomatis ketika kondisi pantai melampaui batas aman untuk kunjungan wisatawan.",
     color: "text-amber-500",
     bgColor: "bg-amber-500/8",
     borderColor: "group-hover:border-amber-500/20",
-  },
-  {
-    icon: Database,
-    title: "Basis Data Terpadu",
-    description:
-      "Penyimpanan dan pengelolaan data pesisir yang terstruktur untuk mendukung riset berkelanjutan.",
-    color: "text-violet-500",
-    bgColor: "bg-violet-500/8",
-    borderColor: "group-hover:border-violet-500/20",
   },
 ];
 
@@ -74,12 +74,13 @@ export function Features() {
             Fitur Utama
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-            Semua yang Anda Butuhkan untuk{" "}
-            <span className="text-primary">Pemantauan Pesisir</span>
+            Semua Informasi yang Anda Butuhkan untuk{" "}
+            <span className="text-primary">Pilih Pantai Terbaik</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Platform lengkap dengan fitur-fitur canggih untuk menganalisis,
-            memantau, dan melaporkan kondisi wilayah pesisir.
+            Aquality menyediakan data lengkap kondisi lingkungan pantai di
+            wilayah Banten — dari polusi udara, pencemaran air, hingga
+            keramaian pengunjung.
           </p>
         </div>
 

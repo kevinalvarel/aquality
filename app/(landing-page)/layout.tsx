@@ -1,10 +1,13 @@
 import { PageBackground } from "@/components/landing-page/background";
+import { Footer } from "@/components/landing-page/layout/footer";
 import { FloatingNavbar } from "@/components/landing-page/ui/navbar";
 import {
   IBM_Plex_Mono,
   Noto_Serif_Georgian,
   Plus_Jakarta_Sans,
 } from "next/font/google";
+
+import "@/app/globals.css";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -35,6 +38,7 @@ export default function LandingPageLayout({
         <FloatingNavbar />
         <PageBackground />
         {children}
+        <Footer />
       </body>
     </html>
   );
