@@ -248,9 +248,7 @@ export const NavbarLogo = () => {
         height={30}
         priority
       />
-      <span className="font-medium text-black dark:text-white">
-        CoastVision
-      </span>
+      <span className="font-bold text-black dark:text-white">Aquality</span>
     </Link>
   );
 };
