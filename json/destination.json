@@ -1,0 +1,103 @@
+{
+  "destinations": [
+    {
+      "id": 1,
+      "name": "Pantai Anyer",
+      "rating": 4.5,
+      "reviewCount": 18340,
+      "distance": "130 km dari Jakarta",
+      "description": "Pantai paling populer di Banten dengan pasir putih, ombak tenang, dan deretan resort berbintang. Cocok untuk keluarga.",
+      "longitude": 105.888,
+      "latitude": -6.06,
+      "tags": ["Resort", "Keluarga", "Populer"],
+      "visitDuration": "Seharian",
+      "trending": true
+    },
+    {
+      "id": 2,
+      "name": "Pantai Carita",
+      "rating": 4.4,
+      "reviewCount": 12500,
+      "distance": "140 km dari Jakarta",
+      "description": "Pantai berair jernih dengan pemandangan Gunung Krakatau di kejauhan. Surga snorkeling dan watersport.",
+      "longitude": 105.822,
+      "latitude": -6.275,
+      "tags": ["Snorkeling", "Krakatau", "Watersport"],
+      "visitDuration": "Seharian",
+      "trending": true
+    },
+    {
+      "id": 3,
+      "name": "Pantai Sawarna",
+      "rating": 4.8,
+      "reviewCount": 7900,
+      "distance": "220 km dari Jakarta",
+      "description": "Permata tersembunyi di selatan Banten dengan tebing karang dramatis, ombak besar untuk surfing, dan laguna biru.",
+      "longitude": 106.417,
+      "latitude": -7.0,
+      "tags": ["Surfing", "Hidden Gem", "Laguna"],
+      "visitDuration": "1–2 hari",
+      "trending": true
+    },
+    {
+      "id": 4,
+      "name": "Pantai Tanjung Lesung",
+      "rating": 4.6,
+      "reviewCount": 6100,
+      "distance": "170 km dari Jakarta",
+      "description": "Kawasan wisata eksklusif dengan laut biru tenang, pasir putih lembut, dan fasilitas resort premium.",
+      "longitude": 105.573,
+      "latitude": -6.548,
+      "tags": ["Resort Mewah", "Tenang", "Premium"],
+      "visitDuration": "1–2 hari"
+    },
+    {
+      "id": 5,
+      "name": "Pantai Karang Bolong",
+      "rating": 4.3,
+      "reviewCount": 5430,
+      "distance": "120 km dari Jakarta",
+      "description": "Pantai unik dengan formasi batu karang berlubang alami yang menjadi ikon wisata Banten bagian utara.",
+      "longitude": 105.908,
+      "latitude": -5.978,
+      "tags": ["Karang Unik", "Fotografi", "Alam"],
+      "visitDuration": "2–3 jam"
+    },
+    {
+      "id": 6,
+      "name": "Pantai Pasauran",
+      "rating": 4.5,
+      "reviewCount": 4200,
+      "distance": "135 km dari Jakarta",
+      "description": "Spot diving terbaik di kawasan Anyer dengan terumbu karang yang masih terjaga dan visibilitas air yang jernih.",
+      "longitude": 105.876,
+      "latitude": -5.991,
+      "tags": ["Diving", "Terumbu Karang", "Jernih"],
+      "visitDuration": "Seharian"
+    },
+    {
+      "id": 7,
+      "name": "Pantai Cibeureum",
+      "rating": 4.2,
+      "reviewCount": 3100,
+      "distance": "145 km dari Jakarta",
+      "description": "Pantai tenang yang belum banyak tersentuh wisatawan dengan pemandangan sunset yang memukau dan harga terjangkau.",
+      "longitude": 105.799,
+      "latitude": -6.31,
+      "tags": ["Sunset", "Sepi", "Terjangkau"],
+      "visitDuration": "2–4 jam"
+    },
+    {
+      "id": 8,
+      "name": "Pantai Bagedur",
+      "rating": 4.4,
+      "reviewCount": 2870,
+      "distance": "200 km dari Jakarta",
+      "description": "Pantai di Lebak Selatan dengan ombak besar yang cocok untuk surfing dan pemandangan alam yang masih alami.",
+      "longitude": 106.113,
+      "latitude": -6.872,
+      "tags": ["Surfing", "Alami", "Ombak Besar"],
+      "visitDuration": "Seharian"
+    }
+  ]
+}
