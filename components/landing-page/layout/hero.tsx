@@ -30,7 +30,7 @@ const stats = [
 export function Hero() {
   return (
     <section id="hero" className="relative w-full overflow-hidden">
-      <div className="mx-auto w-full max-w-275 px-6 pt-44 pb-32 sm:px-10 sm:pt-32 sm:pb-40">
+      <div className="mx-auto w-full max-w-275 px-6 pt-52 pb-32 lg:px-10 lg:pt-48 lg:pb-40">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           {/* Main headline */}
           <h1 className=" text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.08] text-foreground">
