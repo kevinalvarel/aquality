@@ -1,11 +1,13 @@
+import { Banner } from "@/components/main/explore/banner";
 import { FilterCard } from "@/components/main/explore/filter-card";
 import { ResultCard } from "@/components/main/explore/result-card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function ExplorePage() {
   return (
     <div className="min-h-screen">
+      <Banner />
       <div className="max-w-7xl mx-auto flex flex-col gap-3 my-6">
         <h1 className="text-4xl font-bold">Selamat Datang Kevin</h1>
         <p className="text-muted-foreground">Mau liburan kemana hari ini?</p>
