@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { SummaryCards } from "@/components/main/analyze/summary-cards";
-import { BeachImagePreview } from "@/components/main/analyze/beach-image-preview";
-import { AIAnalysisResult } from "@/components/main/analyze/ai-analysis-result";
-import { EnvironmentalMetrics } from "@/components/main/analyze/environmental-metrics";
-import { AIRecommendation } from "@/components/main/analyze/ai-recommendation";
-import { AnalysisTimeline } from "@/components/main/analyze/analysis-timeline";
-import { EnvironmentalConditions } from "@/components/main/analyze/environmental-conditions";
-import { DetectedObjects } from "@/components/main/analyze/detected-objects";
-import { ConfidenceBreakdown } from "@/components/main/analyze/confidence-breakdown";
-import { AnalysisTabs } from "@/components/main/analyze/analysis-tabs";
+import { SummaryCards } from "@/components/main/analyze/slug/summary-cards";
+import { BeachImagePreview } from "@/components/main/analyze/slug/beach-image-preview";
+import { AIAnalysisResult } from "@/components/main/analyze/slug/ai-analysis-result";
+import { EnvironmentalMetrics } from "@/components/main/analyze/slug/environmental-metrics";
+import { AIRecommendation } from "@/components/main/analyze/slug/ai-recommendation";
+import { AnalysisTimeline } from "@/components/main/analyze/slug/analysis-timeline";
+import { EnvironmentalConditions } from "@/components/main/analyze/slug/environmental-conditions";
+import { DetectedObjects } from "@/components/main/analyze/slug/detected-objects";
+import { ConfidenceBreakdown } from "@/components/main/analyze/slug/confidence-breakdown";
+import { AnalysisTabs } from "@/components/main/analyze/slug/analysis-tabs";
 import { Microscope, Plus, Download } from "lucide-react";
 
 export default function SlugPage() {
