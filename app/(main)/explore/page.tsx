@@ -6,9 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function ExplorePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen my-6">
       <Banner />
-      <div className="max-w-7xl mx-auto flex flex-col gap-3 my-6">
+      <div className="max-w-7xl mx-auto flex flex-col gap-3 mt-8">
         <h1 className="text-4xl font-bold">Selamat Datang Kevin</h1>
         <p className="text-muted-foreground">Mau liburan kemana hari ini?</p>
       </div>
