@@ -11,7 +11,7 @@ export function Banner() {
           height={1080}
           className="w-full h-96 object-cover rounded-xl"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-background to-transparent " />
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent " />
       </div>
     </>
   );

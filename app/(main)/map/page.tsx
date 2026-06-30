@@ -111,11 +111,11 @@ export default function MapPage() {
           </ScrollArea>
         </aside>
 
-        {/* ── Map ── */}
         <div className="relative flex-1 overflow-hidden rounded-xl border border-border shadow-sm">
           <Map
             center={[106.0, -6.4]}
             zoom={9}
+            minZoom={8.5}
             pitch={25}
             className="h-full w-full"
           >
