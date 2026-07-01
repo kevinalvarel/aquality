@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { DashboardSummaryCards } from "@/components/main/analyze/dashboard/dashboard-summary-cards";
-import { AIInsightsCard } from "@/components/main/analyze/dashboard/ai-insights-card";
-import { AnalysisTrendChart } from "@/components/main/analyze/dashboard/analysis-trend-chart";
-import { BeachStatusDonut } from "@/components/main/analyze/dashboard/beach-status-donut";
-import { SearchAndFilters } from "@/components/main/analyze/dashboard/search-and-filters";
-import { RecentAnalysesTable } from "@/components/main/analyze/dashboard/recent-analyses-table";
 import { Microscope, ImagePlus, Download } from "lucide-react";
+import { DashboardSummaryCards } from "@/components/main/analyze/main/dashboard-summary-cards";
+import { AIInsightsCard } from "@/components/main/analyze/main/ai-insights-card";
+import { AnalysisTrendChart } from "@/components/main/analyze/main/analysis-trend-chart";
+import { BeachStatusDonut } from "@/components/main/analyze/main/beach-status-donut";
+import { SearchAndFilters } from "@/components/main/analyze/main/search-and-filters";
+import { RecentAnalysesTable } from "@/components/main/analyze/main/recent-analyses-table";
 
 export default function AnalyzePage() {
   return (
