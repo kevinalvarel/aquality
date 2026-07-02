@@ -5,7 +5,7 @@ import type {
   LeaderboardSummary,
 } from "@/types/leaderboard";
 
-import leaderboardData from "@/data/leaderboard.json";
+import leaderboardData from "@/json/leaderboard.json";
 
 // ─── Data Source ──────────────────────────────────────────────────────────
 // Currently reads from local JSON. To switch to Redis/API:
@@ -31,8 +31,10 @@ async function fetchRawData(): Promise<{
 export async function getLeaderboard(
   filters: LeaderboardFilters,
   page: number = 1,
-  pageSize: number = 5
-): Promise<LeaderboardResponse & { page: number; pageSize: number; totalPages: number }> {
+  pageSize: number = 5,
+): Promise<
+  LeaderboardResponse & { page: number; pageSize: number; totalPages: number }
+> {
   const raw = await fetchRawData();
   let filtered = [...raw.data];
 
@@ -42,7 +44,7 @@ export async function getLeaderboard(
     filtered = filtered.filter(
       (b) =>
         b.beachName.toLowerCase().includes(query) ||
-        b.location.toLowerCase().includes(query)
+        b.location.toLowerCase().includes(query),
     );
   }
 
@@ -115,7 +117,7 @@ export async function getLeaderboardSummary(): Promise<LeaderboardSummary> {
 }
 
 export async function getTopBeaches(
-  count: number = 3
+  count: number = 3,
 ): Promise<BeachLeaderboard[]> {
   const raw = await fetchRawData();
   return [...raw.data]
@@ -145,7 +147,11 @@ export async function getScoreDistribution(): Promise<
   }
 
   return [
-    { status: "Excellent", count: dist.Excellent, fill: "var(--color-success)" },
+    {
+      status: "Excellent",
+      count: dist.Excellent,
+      fill: "var(--color-success)",
+    },
     { status: "Good", count: dist.Good, fill: "var(--color-chart-2)" },
     { status: "Moderate", count: dist.Moderate, fill: "var(--color-warning)" },
     { status: "Poor", count: dist.Poor, fill: "var(--color-destructive)" },

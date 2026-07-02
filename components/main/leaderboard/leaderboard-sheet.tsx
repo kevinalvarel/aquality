@@ -15,8 +15,15 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { BeachLeaderboard } from "@/types/leaderboard";
-import { Bot, Droplets, Trash2, TreePalm, AlertTriangle, ExternalLink } from "lucide-react";
-import { getStatusColor } from "./utils";
+import {
+  Bot,
+  Droplets,
+  Trash2,
+  TreePalm,
+  AlertTriangle,
+  ExternalLink,
+} from "lucide-react";
+import { getStatusColor } from "@/lib/ui/utils";
 
 interface LeaderboardSheetProps {
   beach: BeachLeaderboard | null;

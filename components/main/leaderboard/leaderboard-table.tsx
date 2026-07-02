@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/pagination";
 import type { BeachLeaderboard } from "@/types/leaderboard";
 import { Bot, ExternalLink } from "lucide-react";
-import { getStatusColor, formatRelativeDate } from "./utils";
+import { getStatusColor, formatRelativeDate } from "@/lib/ui/utils";
 
 interface LeaderboardTableProps {
   data: BeachLeaderboard[];
@@ -132,7 +132,9 @@ export function LeaderboardTable({
                   <TableCell className="text-center hidden md:table-cell">
                     <div className="flex items-center justify-center gap-1 text-muted-foreground">
                       <Bot className="size-3" />
-                      <span className="tabular-nums">{beach.aiConfidence}%</span>
+                      <span className="tabular-nums">
+                        {beach.aiConfidence}%
+                      </span>
                     </div>
                   </TableCell>
                   <TableCell className="hidden lg:table-cell text-muted-foreground">
@@ -146,7 +148,10 @@ export function LeaderboardTable({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Link href={`/analyze/${beach.slug}`}>
-                        <ExternalLink className="size-3" data-icon="inline-start" />
+                        <ExternalLink
+                          className="size-3"
+                          data-icon="inline-start"
+                        />
                         View
                       </Link>
                     </Button>
@@ -196,7 +201,7 @@ export function LeaderboardTable({
                       {p}
                     </PaginationLink>
                   </PaginationItem>
-                )
+                ),
               )}
               <PaginationItem>
                 <PaginationNext

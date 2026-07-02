@@ -7,7 +7,7 @@ import {
   IBM_Plex_Mono,
 } from "next/font/google";
 import "./globals.css";
-import { PageBackground } from "@/components/landing-page/background";
+import { PageBackground } from "@/components/background";
 import { Providers } from "@/components/providers/providers";
 import { FloatingNavbar } from "@/components/landing-page/ui/navbar";
 

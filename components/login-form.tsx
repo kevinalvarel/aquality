@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils";
+"use client";
+import { cn } from "@/lib/ui/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -12,10 +13,33 @@ import { Input } from "@/components/ui/input";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
 
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+
+import Ferrofluid from "@/components/shaders/ferrofluid";
+import { LoginSchema } from "@/validations/auth";
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(values: LoginSchema) {
+    setIsLoading(true);
+
+    setIsLoading(false);
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -40,12 +64,12 @@ export function LoginForm({
               <Field>
                 <div className="flex items-center">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a
-                    href="#"
+                  <Link
+                    href="/reset-password"
                     className="ml-auto text-sm underline-offset-2 hover:underline"
                   >
                     Lupa Password?
-                  </a>
+                  </Link>
                 </div>
                 <Input id="password" type="password" required />
               </Field>
@@ -71,10 +95,21 @@ export function LoginForm({
             </FieldGroup>
           </form>
           <div className="relative hidden bg-muted md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            <Ferrofluid
+              colors={["#4288c9", "#4288c9", "#4288c9"]}
+              speed={0.5}
+              scale={1.6}
+              turbulence={1}
+              fluidity={0.1}
+              rimWidth={0.2}
+              sharpness={2.5}
+              shimmer={1.5}
+              glow={2}
+              flowDirection="down"
+              opacity={1}
+              mouseInteraction
+              mouseStrength={1}
+              mouseRadius={0.35}
             />
           </div>
         </CardContent>

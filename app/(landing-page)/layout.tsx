@@ -1,4 +1,4 @@
-import { PageBackground } from "@/components/landing-page/background";
+import { PageBackground } from "@/components/background";
 import { Footer } from "@/components/landing-page/layout/footer";
 import { FloatingNavbar } from "@/components/landing-page/ui/navbar";
 import {

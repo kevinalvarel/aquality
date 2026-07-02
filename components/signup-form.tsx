@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils";
+"use client";
+import { cn } from "@/lib/ui/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -11,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
+import Ferrofluid from "@/components/shaders/ferrofluid";
 
 export function SignupForm({
   className,
@@ -37,7 +39,7 @@ export function SignupForm({
                   required
                 />
                 <FieldDescription>
-                  Nama pengguna ini akan digunakan untuk login ke akun Aquality.
+                  Nama pengguna ini akan ditampilkan
                 </FieldDescription>
               </Field>
               <Field>
@@ -91,10 +93,21 @@ export function SignupForm({
             </FieldGroup>
           </form>
           <div className="relative hidden bg-muted md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            <Ferrofluid
+              colors={["#4288c9", "#4288c9", "#4288c9"]}
+              speed={0.5}
+              scale={1.6}
+              turbulence={1}
+              fluidity={0.1}
+              rimWidth={0.2}
+              sharpness={2.5}
+              shimmer={1.5}
+              glow={2}
+              flowDirection="down"
+              opacity={1}
+              mouseInteraction
+              mouseStrength={1}
+              mouseRadius={0.35}
             />
           </div>
         </CardContent>

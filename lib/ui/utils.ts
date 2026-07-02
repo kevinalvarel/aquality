@@ -1,5 +1,13 @@
 import type { BeachStatus } from "@/types/leaderboard";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
+// Shadcn
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+// Leaderboard
 export function getStatusColor(status: BeachStatus): {
   bg: string;
   text: string;
