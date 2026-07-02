@@ -25,43 +25,40 @@ export function useLeaderboardFilters() {
   const updateFilter = useCallback(
     <K extends keyof LeaderboardFilters>(
       key: K,
-      value: LeaderboardFilters[K]
+      value: LeaderboardFilters[K],
     ) => {
       startTransition(() => {
         setFilters((prev) => ({ ...prev, [key]: value }));
         setPage(1);
       });
     },
-    []
+    [],
   );
 
   const setSearch = useCallback(
     (search: string) => updateFilter("search", search),
-    [updateFilter]
+    [updateFilter],
   );
 
   const setStatus = useCallback(
     (status: BeachStatus | "all") => updateFilter("status", status),
-    [updateFilter]
+    [updateFilter],
   );
 
   const setLocation = useCallback(
     (location: string) => updateFilter("location", location),
-    [updateFilter]
+    [updateFilter],
   );
 
-  const setSort = useCallback(
-    (field: SortField, direction: SortDirection) => {
-      startTransition(() => {
-        setFilters((prev) => ({
-          ...prev,
-          sortField: field,
-          sortDirection: direction,
-        }));
-      });
-    },
-    []
-  );
+  const setSort = useCallback((field: SortField, direction: SortDirection) => {
+    startTransition(() => {
+      setFilters((prev) => ({
+        ...prev,
+        sortField: field,
+        sortDirection: direction,
+      }));
+    });
+  }, []);
 
   const resetFilters = useCallback(() => {
     startTransition(() => {
@@ -85,7 +82,7 @@ export function useLeaderboardFilters() {
 
 export function useSelectedBeach() {
   const [selectedBeach, setSelectedBeach] = useState<BeachLeaderboard | null>(
-    null
+    null,
   );
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 

@@ -10,9 +10,11 @@ export const LoginSchema = z.object({
 export const RegisterSchema = z
   .object({
     username: z.string().min(3, "Username terlalu pendek"),
-    email: z.email(),
+    email: z.email("Masukkan format email dengan benar!"),
     password: z.string().min(8, "Password harus lebih dari 8 karakter"),
-    confirmPassword: z.string(),
+    confirmPassword: z
+      .string()
+      .min(1, "Konfirmasi password tidak boleh kosong"),
   })
   .refine((data) => {
     const { password, confirmPassword } = data;

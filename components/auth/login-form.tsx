@@ -1,10 +1,11 @@
 "use client";
-import { cn } from "@/lib/ui/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
@@ -19,11 +20,15 @@ import { useState } from "react";
 
 import Ferrofluid from "@/components/shaders/ferrofluid";
 import { LoginSchema } from "@/validations/auth";
+import { signIn } from "@/servers/auth-action";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LoginSchema>({
@@ -36,7 +41,13 @@ export function LoginForm({
 
   async function onSubmit(values: LoginSchema) {
     setIsLoading(true);
-
+    const { success, message } = await signIn(values.email, values.password);
+    if (success) {
+      toast.success("Login berhasil!");
+      router.push("/explore");
+    } else {
+      toast.error(message);
+    }
     setIsLoading(false);
   }
 
@@ -44,7 +55,7 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Selamat Datang Kembali</h1>
@@ -52,30 +63,55 @@ export function LoginForm({
                   Masuk ke akun Aquality kamu untuk melanjutkan
                 </p>
               </div>
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </Field>
-              <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <Link
-                    href="/reset-password"
-                    className="ml-auto text-sm underline-offset-2 hover:underline"
-                  >
-                    Lupa Password?
-                  </Link>
-                </div>
-                <Input id="password" type="password" required />
-              </Field>
-              <Field>
-                <Button type="submit">Masuk</Button>
-              </Field>
+              <Controller
+                control={form.control}
+                name="email"
+                render={({ field, fieldState }) => (
+                  <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input
+                      {...field}
+                      id="email"
+                      type="email"
+                      placeholder="m@example.com"
+                      autoComplete="off"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                control={form.control}
+                name="password"
+                render={({ field, fieldState }) => (
+                  <Field>
+                    <div className="flex items-center">
+                      <FieldLabel htmlFor="password">Password</FieldLabel>
+                      <Link
+                        href="/reset-password"
+                        className="ml-auto text-sm underline-offset-2 hover:underline"
+                      >
+                        Lupa Password?
+                      </Link>
+                    </div>
+                    <Input
+                      {...field}
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      autoComplete="off"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Memuat..." : "Masuk"}
+              </Button>
               <FieldSeparator className="h-1 my-3 *:data-[slot=field-separator-content]:bg-card">
                 Atau lanjutkan dengan
               </FieldSeparator>

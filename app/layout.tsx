@@ -7,9 +7,10 @@ import {
   IBM_Plex_Mono,
 } from "next/font/google";
 import "./globals.css";
-import { PageBackground } from "@/components/background";
+import { PageBackground } from "@/components/layouts/background";
 import { Providers } from "@/components/providers/providers";
 import { FloatingNavbar } from "@/components/landing-page/ui/navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >
+        <Toaster />
         <Providers>{children}</Providers>
       </body>
     </html>

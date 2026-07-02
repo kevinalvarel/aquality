@@ -1,4 +1,4 @@
-import { PageBackground } from "@/components/background";
+import { PageBackground } from "@/components/layouts/background";
 import { Footer } from "@/components/landing-page/layout/footer";
 import { FloatingNavbar } from "@/components/landing-page/ui/navbar";
 import {
@@ -31,15 +31,13 @@ export default function LandingPageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
-      >
-        <FloatingNavbar />
-        <PageBackground />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <div
+      className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
+    >
+      <FloatingNavbar />
+      <PageBackground />
+      {children}
+      <Footer />
+    </div>
   );
 }

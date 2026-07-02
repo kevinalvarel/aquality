@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { MapMarker, MarkerContent, MarkerPopup } from "@/components/ui/map";
-import { cn } from "@/lib/ui/utils";
+import { cn } from "@/lib/utils";
 import { Clock, Navigation, Waves } from "lucide-react";
 import { StarRating } from "./star-rating";
 import { Destination } from "@/types/map";

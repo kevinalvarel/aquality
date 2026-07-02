@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { BeachLeaderboard } from "@/types/leaderboard";
 import { Bot, Crown } from "lucide-react";
-import { getStatusColor } from "@/lib/ui/utils";
+import { getStatusColor } from "@/lib/utils";
 
 interface LeaderboardPodiumProps {
   topBeaches: BeachLeaderboard[];

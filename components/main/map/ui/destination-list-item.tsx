@@ -2,7 +2,7 @@ import { Destination } from "@/types/map";
 import { StarRating } from "./star-rating";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/ui/utils";
+import { cn } from "@/lib/utils";
 
 export function DestinationListItem({
   destination,

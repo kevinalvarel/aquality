@@ -23,7 +23,7 @@ import {
   AlertTriangle,
   ExternalLink,
 } from "lucide-react";
-import { getStatusColor } from "@/lib/ui/utils";
+import { getStatusColor } from "@/lib/utils";
 
 interface LeaderboardSheetProps {
   beach: BeachLeaderboard | null;

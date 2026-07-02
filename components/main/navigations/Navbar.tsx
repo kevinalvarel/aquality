@@ -1,4 +1,16 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signOutAction } from "@/servers/auth-action";
+import { LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -40,10 +52,25 @@ export function NavbarApp() {
         ))}
       </div>
       <div className="hidden md:flex items-center justify-center gap-4">
-        <Avatar>
-          <AvatarImage src="/images/logo.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar className="cursor-pointer">
+              <AvatarImage src="/images/logo.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="text-destructive focus:text-destructive cursor-pointer"
+              onSelect={() => signOutAction()}
+            >
+              <LogOut className="mr-2 size-4" />
+              Keluar
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="flex md:hidden"></div>
     </div>

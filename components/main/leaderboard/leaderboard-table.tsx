@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/pagination";
 import type { BeachLeaderboard } from "@/types/leaderboard";
 import { Bot, ExternalLink } from "lucide-react";
-import { getStatusColor, formatRelativeDate } from "@/lib/ui/utils";
+import { getStatusColor, formatRelativeDate } from "@/lib/utils";
 
 interface LeaderboardTableProps {
   data: BeachLeaderboard[];
