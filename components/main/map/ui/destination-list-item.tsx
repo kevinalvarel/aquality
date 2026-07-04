@@ -1,4 +1,4 @@
-import { Destination } from "@/types/map";
+import { Destination } from "@/types/map.type";
 import { StarRating } from "./star-rating";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, ChevronRight } from "lucide-react";

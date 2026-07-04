@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { LeaderboardSummary as LeaderboardSummaryData } from "@/types/leaderboard";
+import type { LeaderboardSummary as LeaderboardSummaryData } from "@/types/leaderboard.type";
 import { BarChart3, Hash, Award, Clock } from "lucide-react";
 
 interface LeaderboardSummaryProps {

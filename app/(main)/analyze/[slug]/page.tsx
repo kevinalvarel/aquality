@@ -1,5 +1,12 @@
+import { Suspense } from "react";
+import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Microscope, Plus, Download } from "lucide-react";
+import { getAnalysisBySlug } from "@/services/analysis.service";
+// ─── Components ─────────────────────────────────────────────────────────────
+// These components currently render with hardcoded data.
+// When you're ready to wire them up, pass the analysis data as props.
 import { SummaryCards } from "@/components/main/analyze/slug/summary-cards";
 import { BeachImagePreview } from "@/components/main/analyze/slug/beach-image-preview";
 import { AIAnalysisResult } from "@/components/main/analyze/slug/ai-analysis-result";
@@ -10,9 +17,18 @@ import { EnvironmentalConditions } from "@/components/main/analyze/slug/environm
 import { DetectedObjects } from "@/components/main/analyze/slug/detected-objects";
 import { ConfidenceBreakdown } from "@/components/main/analyze/slug/confidence-breakdown";
 import { AnalysisTabs } from "@/components/main/analyze/slug/analysis-tabs";
-import { Microscope, Plus, Download } from "lucide-react";
-
-export default function SlugPage() {
+interface AnalysisDetailPageProps {
+  params: Promise<{ slug: string }>;
+}
+export default async function AnalysisDetailPage({
+  params,
+}: AnalysisDetailPageProps) {
+  const { slug } = await params;
+  const analysis = await getAnalysisBySlug(slug);
+  // If no analysis found, show 404
+  if (!analysis) {
+    notFound();
+  }
   return (
     <div className="space-y-6 px-4 py-6 md:px-6 lg:px-8">
       {/* Page Header */}
@@ -23,12 +39,12 @@ export default function SlugPage() {
               <Microscope className="size-5 text-primary" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">
-              Beach Analysis
+              {analysis.beach.name} — Analysis
             </h1>
           </div>
           <p className="max-w-xl text-sm text-muted-foreground">
-            Analyze coastal water conditions using AI-powered image
-            classification and environmental metrics.
+            AI-powered coastal water quality analysis for{" "}
+            {analysis.beach.location}.
           </p>
         </div>
         <div className="flex gap-2">
@@ -42,11 +58,8 @@ export default function SlugPage() {
           </Button>
         </div>
       </div>
-
       <Separator />
-
       <SummaryCards />
-
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left Column (larger) */}
         <div className="space-y-6 lg:col-span-2">
@@ -55,7 +68,6 @@ export default function SlugPage() {
           <EnvironmentalMetrics />
           <AIRecommendation />
         </div>
-
         {/* Right Sidebar */}
         <div className="space-y-6">
           <AnalysisTimeline />
@@ -64,7 +76,6 @@ export default function SlugPage() {
           <ConfidenceBreakdown />
         </div>
       </div>
-
       {/* Bottom Tabs Section */}
       <Separator />
       <AnalysisTabs />

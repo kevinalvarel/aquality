@@ -7,7 +7,13 @@ export async function middleware(request: NextRequest) {
     headers: await headers(),
   });
 
-  if (!session) {
+  const path = request.nextUrl.pathname;
+
+  if (session && (path === "/login" || path === "/register")) {
+    return NextResponse.redirect(new URL("/explore", request.url));
+  }
+
+  if (!session && path !== "/login" && path !== "/register") {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

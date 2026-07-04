@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import type { BeachLeaderboard, LeaderboardSummary } from "@/types/leaderboard";
+import type {
+  BeachLeaderboard,
+  LeaderboardSummary,
+} from "@/types/leaderboard.type";
 import { LeaderboardHeader } from "@/components/main/leaderboard/leaderboard-header";
 import { LeaderboardSummary as LeaderboardSummaryCards } from "@/components/main/leaderboard/leaderboard-summary";
 import { LeaderboardPodium } from "@/components/main/leaderboard/leaderboard-podium";

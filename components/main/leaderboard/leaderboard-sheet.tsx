@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { BeachLeaderboard } from "@/types/leaderboard";
+import type { BeachLeaderboard } from "@/types/leaderboard.type";
 import {
   Bot,
   Droplets,

@@ -20,7 +20,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import type { BeachLeaderboard } from "@/types/leaderboard";
+import type { BeachLeaderboard } from "@/types/leaderboard.type";
 import { Bot, ExternalLink } from "lucide-react";
 import { getStatusColor, formatRelativeDate } from "@/lib/utils";
 

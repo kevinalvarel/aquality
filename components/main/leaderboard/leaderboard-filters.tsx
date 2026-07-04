@@ -14,7 +14,7 @@ import type {
   BeachStatus,
   SortField,
   SortDirection,
-} from "@/types/leaderboard";
+} from "@/types/leaderboard.type";
 import { Search, X, CalendarRange } from "lucide-react";
 import {
   Tooltip,

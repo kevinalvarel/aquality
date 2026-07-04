@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { BeachLeaderboard } from "@/types/leaderboard";
+import type { BeachLeaderboard } from "@/types/leaderboard.type";
 import { Bot, Crown } from "lucide-react";
 import { getStatusColor } from "@/lib/utils";
 

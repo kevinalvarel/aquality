@@ -7,7 +7,7 @@ import type {
   SortField,
   SortDirection,
   BeachStatus,
-} from "@/types/leaderboard";
+} from "@/types/leaderboard.type";
 
 const DEFAULT_FILTERS: LeaderboardFilters = {
   search: "",

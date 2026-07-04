@@ -3,7 +3,7 @@ import { MapMarker, MarkerContent, MarkerPopup } from "@/components/ui/map";
 import { cn } from "@/lib/utils";
 import { Clock, Navigation, Waves } from "lucide-react";
 import { StarRating } from "./star-rating";
-import { Destination } from "@/types/map";
+import { Destination } from "@/types/map.type";
 
 export function DestinationMarker({
   destination,

@@ -1,4 +1,4 @@
-import type { BeachStatus } from "@/types/leaderboard";
+import type { BeachStatus } from "@/types/leaderboard.type";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
