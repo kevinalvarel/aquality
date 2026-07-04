@@ -1,15 +1,20 @@
+"use client";
 import { Banner } from "@/components/main/explore/banner";
 import { FilterCard } from "@/components/main/explore/filter-card";
 import { ResultCard } from "@/components/main/explore/result-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useSession } from "@/lib/auth-client";
 
 export default function ExplorePage() {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   return (
     <div className="min-h-screen my-6">
       <Banner />
       <div className="max-w-7xl mx-auto flex flex-col gap-3 mt-8">
-        <h1 className="text-4xl font-bold">Selamat Datang Kevin</h1>
+        <h1 className="text-4xl font-bold">Halo {user?.name}</h1>
         <p className="text-muted-foreground">Mau liburan kemana hari ini?</p>
       </div>
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">

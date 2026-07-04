@@ -28,7 +28,8 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "../ui/input-group";
-import { Eye, EyeClosed } from "lucide-react";
+import { Eye, EyeClosed, Loader2 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export function LoginForm({
   className,
@@ -59,6 +60,54 @@ export function LoginForm({
     }
     setIsLoading(false);
   }
+
+  const signInGithub = async () => {
+    setIsLoading(true);
+    try {
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/explore",
+      });
+      toast.success("Login berhasil!");
+      setIsLoading(false);
+    } catch (error) {
+      const e = error as Error;
+      toast.error(e.message);
+      setIsLoading(false);
+    }
+  };
+
+  const signInGoogle = async () => {
+    setIsLoading(true);
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/explore",
+      });
+      toast.success("Login berhasil!");
+      setIsLoading(false);
+    } catch (error) {
+      const e = error as Error;
+      toast.error(e.message);
+      setIsLoading(false);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    setIsLoading(true);
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/explore",
+      });
+      toast.success("Login berhasil!");
+      setIsLoading(false);
+    } catch (error) {
+      const e = error as Error;
+      toast.error(e.message);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -134,12 +183,30 @@ export function LoginForm({
                 Atau lanjutkan dengan
               </FieldSeparator>
               <Field className="grid grid-cols-2 gap-4">
-                <Button variant="outline" type="button">
-                  <FaGoogle />
+                <Button
+                  onClick={signInGoogle}
+                  variant="outline"
+                  type="button"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    <FaGoogle />
+                  )}
                   <span className="sr-only">Masuk dengan Google</span>
                 </Button>
-                <Button variant="outline" type="button">
-                  <FaGithub />
+                <Button
+                  variant="outline"
+                  type="button"
+                  disabled={isLoading}
+                  onClick={signInGithub}
+                >
+                  {isLoading ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    <FaGithub />
+                  )}
                   <span className="sr-only">Masuk dengan Github</span>
                 </Button>
               </Field>
