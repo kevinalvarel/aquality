@@ -23,6 +23,12 @@ import { LoginSchema } from "@/validations/auth";
 import { signIn } from "@/servers/auth-action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
+import { Eye, EyeClosed } from "lucide-react";
 
 export function LoginForm({
   className,
@@ -30,6 +36,9 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisible = () => setIsVisible((prev) => !prev);
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(LoginSchema),
@@ -96,13 +105,22 @@ export function LoginForm({
                         Lupa Password?
                       </Link>
                     </div>
-                    <Input
-                      {...field}
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      autoComplete="off"
-                    />
+                    <InputGroup>
+                      <InputGroupInput
+                        {...field}
+                        id="password"
+                        type={isVisible ? "text" : "password"}
+                        placeholder="••••••••"
+                        autoComplete="off"
+                      />
+                      <InputGroupAddon
+                        align="inline-end"
+                        className="cursor-pointer"
+                        onClick={toggleVisible}
+                      >
+                        {isVisible ? <Eye /> : <EyeClosed />}
+                      </InputGroupAddon>
+                    </InputGroup>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
