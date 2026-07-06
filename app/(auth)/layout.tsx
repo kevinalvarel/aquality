@@ -1,3 +1,5 @@
+import { FloatingNavbar } from "@/components/landing-page/ui/navbar";
+
 export default function AuthLayout({
   children,
 }: {
@@ -5,6 +7,7 @@ export default function AuthLayout({
 }) {
   return (
     <>
+      <FloatingNavbar />
       <div>{children}</div>
     </>
   );

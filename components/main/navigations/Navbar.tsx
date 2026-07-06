@@ -35,7 +35,7 @@ const navList = [
 
 export function NavbarApp() {
   return (
-    <div className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+    <div className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border rounded-bl-lg rounded-br-lg">
       <div className="flex items-center justify-between py-4 px-6 max-w-7xl mx-auto md:px-12">
         <div className="flex items-center gap-2">
           <Image alt="Logo" src="/images/logo.png" height={50} width={50} />
