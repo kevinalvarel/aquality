@@ -68,7 +68,7 @@ export async function getExploreBeaches(): Promise<ExploreBeachItem[]> {
             image: row.image,
             status: row.status as DbBeachStatus,
             latestScore: row.latestScore,
-            latestConfidence: row.latestConfidence,
+            latestConfidence: row.latestConfidence !== null ? Math.round(row.latestConfidence * 100) : null,
             lastAnalyzed: row.lastAnalyzed,
           });
         }
@@ -150,7 +150,7 @@ export async function getBeachesForMap(): Promise<MapBeachItem[]> {
             image: row.image,
             status: row.status as DbBeachStatus,
             latestScore: row.latestScore,
-            latestConfidence: row.latestConfidence,
+            latestConfidence: row.latestConfidence !== null ? Math.round(row.latestConfidence * 100) : null,
             lastAnalyzed: row.lastAnalyzed,
           });
         }

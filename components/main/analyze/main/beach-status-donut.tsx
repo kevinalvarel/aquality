@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -21,16 +19,44 @@ interface DonutSegment {
   tokenClass: string;
 }
 
-const segments: DonutSegment[] = [
-  { label: "Excellent", value: 38, color: "var(--primary)", tokenClass: "text-primary" },
-  { label: "Good", value: 42, color: "var(--success)", tokenClass: "text-success" },
-  { label: "Moderate", value: 14, color: "var(--warning)", tokenClass: "text-warning" },
-  { label: "Poor", value: 6, color: "var(--destructive)", tokenClass: "text-destructive" },
-];
+interface BeachStatusDonutProps {
+  data: { status: string; count: number }[];
+}
 
-const total = segments.reduce((sum, s) => sum + s.value, 0);
+export function BeachStatusDonut({ data }: BeachStatusDonutProps) {
+  const configMap: Record<string, { color: string; tokenClass: string }> = {
+    Excellent: { color: "var(--primary)", tokenClass: "text-primary" },
+    Good: { color: "var(--success)", tokenClass: "text-success" },
+    Moderate: { color: "var(--warning)", tokenClass: "text-warning" },
+    Poor: { color: "var(--destructive)", tokenClass: "text-destructive" },
+  };
 
-export function BeachStatusDonut() {
+  const segments: DonutSegment[] = [
+    { label: "Excellent", value: data.find(d => d.status === "Excellent")?.count ?? 0, ...configMap.Excellent },
+    { label: "Good", value: data.find(d => d.status === "Good")?.count ?? 0, ...configMap.Good },
+    { label: "Moderate", value: data.find(d => d.status === "Moderate")?.count ?? 0, ...configMap.Moderate },
+    { label: "Poor", value: data.find(d => d.status === "Poor")?.count ?? 0, ...configMap.Poor },
+  ];
+
+  const total = segments.reduce((sum, s) => sum + s.value, 0);
+
+  if (total === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <PieChart className="size-4 text-primary" />
+            Beach Status Distribution
+          </CardTitle>
+          <CardDescription>Classification breakdown across all analyses</CardDescription>
+        </CardHeader>
+        <CardContent className="flex h-[240px] items-center justify-center text-muted-foreground text-sm">
+          No analysis distribution data available.
+        </CardContent>
+      </Card>
+    );
+  }
+
   const size = 200;
   const strokeWidth = 28;
   const radius = (size - strokeWidth) / 2;
@@ -59,10 +85,11 @@ export function BeachStatusDonut() {
               className="rotate-[-90deg]"
             >
               {segments.map((segment) => {
+                if (segment.value === 0) return null;
                 const segmentLength =
                   (segment.value / total) * circumference;
-                const gapSize = 4;
-                const dashArray = `${segmentLength - gapSize} ${
+                const gapSize = total > segment.value ? 4 : 0;
+                const dashArray = `${Math.max(0, segmentLength - gapSize)} ${
                   circumference - segmentLength + gapSize
                 }`;
                 const offset = cumulativeOffset;
@@ -119,7 +146,7 @@ export function BeachStatusDonut() {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {segment.value} beaches classified as {segment.label}
+                    {segment.value} analyses classified as {segment.label}
                   </p>
                 </TooltipContent>
               </Tooltip>

@@ -47,7 +47,7 @@ export async function getBeachBySlug(
         id: row.id,
         slug: row.slug,
         environmentalScore: row.environmentalScore,
-        aiConfidence: row.aiConfidence,
+        aiConfidence: row.aiConfidence !== null ? Math.round(row.aiConfidence * 100) : null,
         overallStatus: row.overallStatus,
         createdAt: row.createdAt,
       }),
@@ -109,7 +109,7 @@ export async function getAllBeaches(): Promise<BeachListItem[]> {
           image: row.image,
           status: row.status,
           latestScore: row.latestScore,
-          latestConfidence: row.latestConfidence,
+          latestConfidence: row.latestConfidence !== null ? Math.round(row.latestConfidence * 100) : null,
           lastAnalyzed: row.lastAnalyzed,
         });
       }

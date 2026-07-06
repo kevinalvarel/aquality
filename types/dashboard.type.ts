@@ -11,6 +11,7 @@ export interface DashboardStats {
   averageConfidence: number;
   recentAnalyses: AnalysisListItem[];
   monthlyStats: MonthlyStatItem[];
+  statusDistribution: { status: string; count: number }[];
 }
 
 /** Monthly aggregation for trend charts */

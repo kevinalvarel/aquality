@@ -7,8 +7,12 @@ import { AnalysisTrendChart } from "@/components/main/analyze/main/analysis-tren
 import { BeachStatusDonut } from "@/components/main/analyze/main/beach-status-donut";
 import { SearchAndFilters } from "@/components/main/analyze/main/search-and-filters";
 import { RecentAnalysesTable } from "@/components/main/analyze/main/recent-analyses-table";
+import { Suspense } from "react";
+import { getDashboardStats } from "@/services/dashboard.service";
 
-export default function AnalyzePage() {
+export default async function AnalyzePage() {
+  const stats = await getDashboardStats();
+
   return (
     <div className="space-y-8 px-4 py-6 md:px-6 lg:px-8">
       {/* Page Header */}
@@ -42,23 +46,27 @@ export default function AnalyzePage() {
       <Separator />
 
       {/* Summary KPI Cards */}
-      <DashboardSummaryCards />
+      <DashboardSummaryCards stats={stats} />
 
       {/* AI Insights */}
-      <AIInsightsCard />
+      <AIInsightsCard stats={stats} />
 
       {/* Analytics Charts */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <AnalysisTrendChart />
-        <BeachStatusDonut />
+        <AnalysisTrendChart data={stats.monthlyStats} />
+        <BeachStatusDonut data={stats.statusDistribution} />
       </div>
 
       {/* Search & Filters */}
       <div className="space-y-4">
-        <SearchAndFilters />
+        <Suspense fallback={<div className="h-10 w-full animate-pulse rounded-lg bg-muted" />}>
+          <SearchAndFilters />
+        </Suspense>
 
         {/* Recent Analyses Table */}
-        <RecentAnalysesTable />
+        <Suspense fallback={<div className="h-64 w-full animate-pulse rounded-lg bg-muted" />}>
+          <RecentAnalysesTable />
+        </Suspense>
       </div>
     </div>
   );

@@ -6,15 +6,41 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Sparkles, CheckCircle2 } from "lucide-react";
+import type { DashboardStats } from "@/types/dashboard.type";
 
-const insights = [
-  "Most beaches analyzed this month are classified as Good.",
-  "Water clarity has improved compared to last week.",
-  "Three beaches require additional monitoring due to increased turbidity.",
-  "AI confidence remains consistently above 95%.",
-];
+interface AIInsightsCardProps {
+  stats: DashboardStats;
+}
 
-export function AIInsightsCard() {
+export function AIInsightsCard({ stats }: AIInsightsCardProps) {
+  // Find most common status
+  let mostCommonStatus = "Good";
+  let maxCount = -1;
+  for (const item of stats.statusDistribution) {
+    if (item.count > maxCount) {
+      maxCount = item.count;
+      mostCommonStatus = item.status;
+    }
+  }
+
+  // Count beaches requiring attention (Moderate/Poor)
+  const attentionCount = stats.statusDistribution
+    .filter((d) => d.status === "Moderate" || d.status === "Poor")
+    .reduce((sum, d) => sum + d.count, 0);
+
+  const insights = [
+    `Most beaches analyzed are currently classified as ${mostCommonStatus}.`,
+    "Water quality across monitored Banten beaches remains stable.",
+    attentionCount > 0
+      ? `${attentionCount} beach${
+          attentionCount > 1 ? "es" : ""
+        } require${
+          attentionCount === 1 ? "s" : ""
+        } closer monitoring due to lowered quality markers.`
+      : "No beaches currently require urgent environmental intervention.",
+    `AI classification confidence remains consistently high, averaging ${stats.averageConfidence}%.`,
+  ];
+
   return (
     <Card className="relative overflow-hidden border-primary/20">
       {/* Subtle gradient accent */}

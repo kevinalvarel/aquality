@@ -77,7 +77,7 @@ async function fetchLeaderboardData(): Promise<BeachLeaderboard[]> {
       image: row.image ?? "/beaches/default.jpg",
       environmentalScore: row.environmentalScore ?? 0,
       status: mapStatus(row.overallStatus),
-      aiConfidence: row.aiConfidence ?? 0,
+      aiConfidence: row.aiConfidence !== null ? Math.round(row.aiConfidence * 100) : 0,
       waterClarity: row.waterClarity ?? 0,
       pollutionLevel: row.pollutionLevel ?? 0,
       shorelineCleanliness: row.shorelineCleanliness ?? 0,

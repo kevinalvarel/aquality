@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -7,32 +5,38 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { TrendingUp } from "lucide-react";
+import type { MonthlyStatItem } from "@/types/dashboard.type";
 
-// Dummy line chart data: monthly analysis counts
-const lineData = [
-  { month: "Jan", value: 18 },
-  { month: "Feb", value: 24 },
-  { month: "Mar", value: 32 },
-  { month: "Apr", value: 28 },
-  { month: "May", value: 42 },
-  { month: "Jun", value: 52 },
-  { month: "Jul", value: 48 },
-  { month: "Aug", value: 58 },
-  { month: "Sep", value: 64 },
-  { month: "Oct", value: 72 },
-  { month: "Nov", value: 68 },
-  { month: "Dec", value: 82 },
-];
+interface AnalysisTrendChartProps {
+  data: MonthlyStatItem[];
+}
 
-const maxValue = Math.max(...lineData.map((d) => d.value));
+export function AnalysisTrendChart({ data }: AnalysisTrendChartProps) {
+  const lineData = data.map((d) => ({
+    month: d.month,
+    value: d.totalAnalyses,
+  }));
 
-export function AnalysisTrendChart() {
+  if (lineData.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base">
+            <TrendingUp className="size-4 text-primary" />
+            Analysis Trend
+          </CardTitle>
+          <CardDescription>Number of analyses over time</CardDescription>
+        </CardHeader>
+        <CardContent className="flex h-[200px] items-center justify-center text-muted-foreground text-sm">
+          No trend data available.
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const maxValue = Math.max(...lineData.map((d) => d.value), 1);
+
   // Generate SVG path for line chart
   const width = 600;
   const height = 200;
@@ -41,7 +45,7 @@ export function AnalysisTrendChart() {
   const chartHeight = height - padding.top - padding.bottom;
 
   const points = lineData.map((d, i) => ({
-    x: padding.left + (i / (lineData.length - 1)) * chartWidth,
+    x: padding.left + (lineData.length > 1 ? (i / (lineData.length - 1)) * chartWidth : chartWidth / 2),
     y: padding.top + chartHeight - (d.value / maxValue) * chartHeight,
     ...d,
   }));
@@ -54,6 +58,21 @@ export function AnalysisTrendChart() {
     padding.top + chartHeight
   } L ${points[0].x} ${padding.top + chartHeight} Z`;
 
+  // Calculate percentage change if we have at least two months
+  let percentageLabel = "Stable";
+  let isPositive = true;
+  if (lineData.length >= 2) {
+    const prev = lineData[lineData.length - 2].value;
+    const current = lineData[lineData.length - 1].value;
+    if (prev > 0) {
+      const diff = ((current - prev) / prev) * 100;
+      isPositive = diff >= 0;
+      percentageLabel = `${diff >= 0 ? "+" : ""}${Math.round(diff)}% this month`;
+    } else if (current > 0) {
+      percentageLabel = `+100% this month`;
+    }
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -65,8 +84,10 @@ export function AnalysisTrendChart() {
             </CardTitle>
             <CardDescription>Number of analyses over time</CardDescription>
           </div>
-          <span className="rounded-md bg-success/10 px-2 py-1 text-xs font-medium text-success">
-            +23% this quarter
+          <span className={`rounded-md px-2 py-1 text-xs font-medium ${
+            isPositive ? "bg-success/10 text-success" : "bg-warning/10 text-warning"
+          }`}>
+            {percentageLabel}
           </span>
         </div>
       </CardHeader>

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { BeachLeaderboard } from "@/types/leaderboard.type";
-import { Bot, Crown } from "lucide-react";
+import { Bot, Crown, Waves } from "lucide-react";
 import { getStatusColor } from "@/lib/utils";
+import Image from "next/image";
 
 interface LeaderboardPodiumProps {
   topBeaches: BeachLeaderboard[];
@@ -66,17 +67,31 @@ export function LeaderboardPodium({ topBeaches }: LeaderboardPodiumProps) {
                 {/* Rank badge */}
                 <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5">
                   <span
-                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${config.badgeClass}`}
+                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold backdrop-blur-sm ${config.badgeClass}`}
                   >
                     {config.crown && <Crown className="size-3" />}
                     {config.medal} {config.label}
                   </span>
                 </div>
 
-                {/* Image placeholder bar */}
-                <div
-                  className={`w-full bg-gradient-to-br from-primary/20 via-chart-2/15 to-primary/10 ${config.height}`}
-                />
+                {/* Image container */}
+                <div className={`relative w-full overflow-hidden ${config.height}`}>
+                  {beach.image ? (
+                    <Image
+                      src={beach.image}
+                      alt={beach.beachName}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                      priority={config.rank === 1}
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-muted">
+                      <Waves className="size-8 text-muted-foreground/40" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
 
                 <CardContent className="space-y-3 pt-3">
                   <div>

@@ -8,6 +8,21 @@ import type { AnalysisListItem } from "@/types/analysis.type";
 // ─── Dashboard Service ──────────────────────────────────────────────────────
 // Provides aggregated statistics for the dashboard view.
 // All queries use cache-first strategy with a 5-minute TTL.
+function mapStatus(status: string | null): string {
+  switch (status) {
+    case "excellent":
+      return "Excellent";
+    case "good":
+      return "Good";
+    case "moderate":
+      return "Moderate";
+    case "poor":
+      return "Poor";
+    default:
+      return "Moderate";
+  }
+}
+
 /**
  * Get all dashboard statistics in a single call.
  * Aggregates: total analyses, total beaches, average score/confidence,
@@ -22,6 +37,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       averagesResult,
       recentAnalysesResult,
       monthlyStatsResult,
+      statusDistributionResult,
     ] = await Promise.all([
       // Total completed analyses
       db
@@ -77,7 +93,17 @@ export async function getDashboardStats(): Promise<DashboardStats> {
           sql`extract(year from ${analyses.createdAt})`,
           sql`extract(month from ${analyses.createdAt})`,
         ),
+      // Status distribution across all completed analyses
+      db
+        .select({
+          status: analyses.overallStatus,
+          count: count(),
+        })
+        .from(analyses)
+        .where(eq(analyses.status, "completed"))
+        .groupBy(analyses.overallStatus),
     ]);
+
     // Map recent analyses to typed list items
     const recentAnalyses: AnalysisListItem[] = recentAnalysesResult.map(
       (row) => ({
@@ -85,7 +111,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
         slug: row.slug,
         status: row.status,
         environmentalScore: row.environmentalScore,
-        aiConfidence: row.aiConfidence,
+        aiConfidence:
+          row.aiConfidence !== null ? Math.round(row.aiConfidence * 100) : null,
         overallStatus: row.overallStatus,
         createdAt: row.createdAt,
         beachName: row.beachName,
@@ -94,23 +121,32 @@ export async function getDashboardStats(): Promise<DashboardStats> {
         location: row.location,
       }),
     );
+
     // Map monthly stats
     const monthlyStats: MonthlyStatItem[] = monthlyStatsResult.map((row) => ({
       month: row.month,
       year: row.year,
       totalAnalyses: row.totalAnalyses,
       averageScore: Math.round(Number(row.averageScore) || 0),
-      averageConfidence: Math.round(Number(row.averageConfidence) || 0),
+      averageConfidence: Math.round((Number(row.averageConfidence) || 0) * 100),
     }));
+
+    // Map status distribution
+    const statusDistribution = statusDistributionResult.map((row) => ({
+      status: mapStatus(row.status),
+      count: row.count,
+    }));
+
     return {
       totalAnalyses: totalAnalysesResult[0]?.count ?? 0,
       totalBeaches: totalBeachesResult[0]?.count ?? 0,
       averageScore: Math.round(Number(averagesResult[0]?.avgScore) || 0),
       averageConfidence: Math.round(
-        Number(averagesResult[0]?.avgConfidence) || 0,
+        (Number(averagesResult[0]?.avgConfidence) || 0) * 100,
       ),
       recentAnalyses,
       monthlyStats,
+      statusDistribution,
     };
   });
 }
