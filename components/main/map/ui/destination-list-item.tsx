@@ -2,7 +2,6 @@ import { Destination } from "@/types/map.type";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, ChevronRight, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 
 const statusConfig = {
   excellent: {
@@ -37,11 +36,11 @@ export function DestinationListItem({
     destination.latestScore !== null && destination.latestScore >= 80;
 
   return (
-    <Button
+    <button
       type="button"
       onClick={onClick}
       className={cn(
-        "w-full rounded-lg border p-3 text-left transition-all duration-150",
+        "w-full rounded-lg border p-3 text-left transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "hover:border-primary/40 hover:bg-accent/60",
         isSelected
           ? "border-primary/60 bg-primary/5 shadow-sm"
@@ -50,11 +49,11 @@ export function DestinationListItem({
     >
       <div className="flex items-start gap-3">
         <div
-          className={cn("mt-0.5 size-2.5 shrink-0 rounded-full", config.dot)}
+          className={cn("mt-1 size-2.5 shrink-0 rounded-full", config.dot)}
         />
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-1">
-            <p className="truncate text-sm font-medium">{destination.name}</p>
+            <p className="truncate text-sm font-medium text-foreground">{destination.name}</p>
             {isTrending && (
               <TrendingUp className="size-3 shrink-0 text-orange-500" />
             )}
@@ -82,11 +81,11 @@ export function DestinationListItem({
         </div>
         <ChevronRight
           className={cn(
-            "size-4 shrink-0 text-muted-foreground/50 transition-transform",
+            "size-4 shrink-0 text-muted-foreground/50 transition-transform mt-0.5",
             isSelected && "translate-x-0.5 text-primary",
           )}
         />
       </div>
-    </Button>
+    </button>
   );
 }
