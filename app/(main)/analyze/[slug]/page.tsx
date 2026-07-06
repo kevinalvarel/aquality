@@ -25,7 +25,6 @@ export default async function AnalysisDetailPage({
 }: AnalysisDetailPageProps) {
   const { slug } = await params;
   const analysis = await getAnalysisBySlug(slug);
-  // If no analysis found, show 404
   if (!analysis) {
     notFound();
   }

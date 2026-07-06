@@ -21,6 +21,12 @@ export const CACHE_KEYS = {
   analysis: (slug: string) => `analysis:${slug}`,
   analysisList: (hash: string) => `analysis:list:${hash}`,
   recentAnalyses: "analysis:recent",
+
+  // Explore
+  exploreBeaches: "explore:beaches",
+
+  // Map
+  mapBeaches: "map:beaches",
 } as const;
 
 // ─── Cache TTLs (seconds) ───────────────────────────────────────────────────
@@ -42,4 +48,10 @@ export const CACHE_TTL = {
 
   /** Analysis list (filtered/paginated) — 5 minutes */
   analysisList: 300,
+
+  /** Explore page beaches — 10 minutes */
+  explore: 600,
+
+  /** Map page beaches — 10 minutes */
+  map: 600,
 } as const;

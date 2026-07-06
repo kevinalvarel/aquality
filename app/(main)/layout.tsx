@@ -8,7 +8,7 @@ export default function MainLayout({
   return (
     <div>
       <NavbarApp />
-      <main className="max-w-6xl mx-auto">{children}</main>
+      <main className=" max-w-6xl mx-auto">{children}</main>
     </div>
   );
 }

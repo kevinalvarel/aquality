@@ -1,8 +1,26 @@
 import { Destination } from "@/types/map.type";
-import { StarRating } from "./star-rating";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, ChevronRight } from "lucide-react";
+import { MapPin, ChevronRight, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const statusConfig = {
+  excellent: {
+    label: "Sangat Baik",
+    dot: "bg-emerald-500",
+  },
+  good: {
+    label: "Baik",
+    dot: "bg-sky-500",
+  },
+  moderate: {
+    label: "Sedang",
+    dot: "bg-amber-500",
+  },
+  poor: {
+    label: "Buruk",
+    dot: "bg-red-500",
+  },
+} as const;
 
 export function DestinationListItem({
   destination,
@@ -13,6 +31,10 @@ export function DestinationListItem({
   isSelected: boolean;
   onClick: () => void;
 }) {
+  const config = statusConfig[destination.status];
+  const isTrending =
+    destination.latestScore !== null && destination.latestScore >= 80;
+
   return (
     <button
       type="button"
@@ -26,29 +48,35 @@ export function DestinationListItem({
       )}
     >
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 size-2.5 shrink-0 rounded-full bg-sky-500" />
+        <div
+          className={cn("mt-0.5 size-2.5 shrink-0 rounded-full", config.dot)}
+        />
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-1">
             <p className="truncate text-sm font-medium">{destination.name}</p>
-            {destination.trending && (
+            {isTrending && (
               <TrendingUp className="size-3 shrink-0 text-orange-500" />
             )}
           </div>
           <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
-            <StarRating rating={destination.rating} />
-            <span>·</span>
-            <span className="truncate">{destination.distance}</span>
+            <MapPin className="size-3 shrink-0" />
+            <span className="truncate">{destination.location}</span>
           </div>
           <div className="mt-1.5 flex flex-wrap gap-1">
-            {destination.tags.slice(0, 2).map((tag) => (
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4">
+              {config.label}
+            </Badge>
+            {destination.latestScore !== null && (
               <Badge
-                key={tag}
                 variant="secondary"
                 className="text-[10px] px-1.5 py-0 h-4"
               >
-                {tag}
+                Skor: {destination.latestScore}
               </Badge>
-            ))}
+            )}
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4">
+              {destination.province}
+            </Badge>
           </div>
         </div>
         <ChevronRight

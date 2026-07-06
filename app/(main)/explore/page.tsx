@@ -1,52 +1,28 @@
-"use client";
-import { Banner } from "@/components/main/explore/banner";
-import { FilterCard } from "@/components/main/explore/filter-card";
-import { ResultCard } from "@/components/main/explore/result-card";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { useSession } from "@/lib/auth-client";
+import { Suspense } from "react";
+import { getExploreBeaches } from "@/services/explore.service";
+import { ExplorePageClient } from "./explore-client";
+import { ResultCardSkeleton } from "@/components/main/explore/result-card";
 
 export default function ExplorePage() {
-  const { data: session } = useSession();
-  const user = session?.user;
+  return (
+    <Suspense fallback={<ExplorePageFallback />}>
+      <ExplorePageData />
+    </Suspense>
+  );
+}
 
+async function ExplorePageData() {
+  const beaches = await getExploreBeaches();
+  return <ExplorePageClient beaches={beaches} />;
+}
+
+function ExplorePageFallback() {
   return (
     <div className="min-h-screen my-6">
-      <Banner />
-      <div className="max-w-7xl mx-auto flex flex-col gap-3 mt-8">
-        <h1 className="text-4xl font-bold">Halo {user?.name}</h1>
-        <p className="text-muted-foreground">Mau liburan kemana hari ini?</p>
-      </div>
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-        <div className="col-span-1">
-          <FilterCard />
-        </div>
-        <div className="col-span-2 flex flex-col gap-3">
-          <Card>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-base font-medium">Temukan destinasi</h1>
-                  <p className="text-sm text-muted-foreground">
-                    Berikut adalah rekomendasi destinasi berdasarkan preferensi
-                    Anda
-                  </p>
-                </div>
-                <div>
-                  <h2 className="text-base font-bold text-primary">
-                    18 ditemukan
-                  </h2>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <div className="grid grid-cols-1 gap-3">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <ResultCard />
-            </div>
-            <Button className="w-full text-primary" variant="outline">
-              Muat lebih banyak
-            </Button>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mt-16">
+        <div className="col-span-2 col-start-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <ResultCardSkeleton />
           </div>
         </div>
       </div>

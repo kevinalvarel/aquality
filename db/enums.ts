@@ -1,5 +1,4 @@
 import { pgEnum } from "drizzle-orm/pg-core";
-// ─── Analysis Status ─────────────────────────────────────────────────────────
 // Tracks the processing pipeline of a coastal analysis
 export const analysisStatusEnum = pgEnum("analysis_status", [
   "pending",
@@ -7,7 +6,7 @@ export const analysisStatusEnum = pgEnum("analysis_status", [
   "completed",
   "failed",
 ]);
-// ─── Beach Environmental Status ──────────────────────────────────────────────
+
 // Overall quality rating derived from environmental metrics
 export const beachStatusEnum = pgEnum("beach_status", [
   "excellent",
