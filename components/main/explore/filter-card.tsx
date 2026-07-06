@@ -8,7 +8,6 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Slider } from "@/components/ui/slider";
 
 const healthFilters = [
   {
@@ -57,7 +56,7 @@ const distanceFilter = [
 export function FilterCard() {
   return (
     <>
-      <Card>
+      <Card className="sticky">
         <CardHeader>
           <CardTitle>Filter Pencarian</CardTitle>
           <CardDescription>Jelajahi destinasi cita-citamu</CardDescription>

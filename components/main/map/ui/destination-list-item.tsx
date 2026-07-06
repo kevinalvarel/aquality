@@ -2,6 +2,7 @@ import { Destination } from "@/types/map.type";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, ChevronRight, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const statusConfig = {
   excellent: {
@@ -36,7 +37,7 @@ export function DestinationListItem({
     destination.latestScore !== null && destination.latestScore >= 80;
 
   return (
-    <button
+    <Button
       type="button"
       onClick={onClick}
       className={cn(
@@ -86,6 +87,6 @@ export function DestinationListItem({
           )}
         />
       </div>
-    </button>
+    </Button>
   );
 }

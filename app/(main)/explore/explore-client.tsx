@@ -19,12 +19,12 @@ export function ExplorePageClient({ beaches }: ExplorePageClientProps) {
   return (
     <div className="min-h-screen my-6">
       <Banner />
-      <div className="max-w-7xl mx-auto flex flex-col gap-3 mt-8">
+      <div className="max-w-7xl mx-auto flex flex-col gap-3 my-8">
         <h1 className="text-4xl font-bold">Halo {user?.name}</h1>
         <p className="text-muted-foreground">Mau liburan kemana hari ini?</p>
       </div>
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-        <div className="col-span-1">
+        <div className="sticky top-25 col-span-1 h-fit">
           <FilterCard />
         </div>
         <div className="col-span-2 flex flex-col gap-3">

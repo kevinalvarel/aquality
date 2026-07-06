@@ -17,8 +17,6 @@ import { useMemo } from "react";
 import { generateBeachAnalysis } from "@/lib/beach-analysis.util";
 import type { Destination } from "@/types/map.type";
 
-// ─── Status Badge Config ────────────────────────────────────────────────────
-
 const statusConfig = {
   excellent: {
     label: "Sangat Baik",

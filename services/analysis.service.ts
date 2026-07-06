@@ -172,8 +172,7 @@ export async function getAnalysisBySlug(
     CACHE_KEYS.analysis(slug),
     CACHE_TTL.analysisDetail,
     async () => {
-      // Fetch the analysis with its beach
-      const analysisRows = await db
+      let analysisRows = await db
         .select({
           id: analyses.id,
           slug: analyses.slug,
@@ -201,6 +200,39 @@ export async function getAnalysisBySlug(
         .innerJoin(beaches, eq(analyses.beachId, beaches.id))
         .where(eq(analyses.slug, slug))
         .limit(1);
+
+      if (analysisRows.length === 0) {
+        // Fallback: search for the latest analysis of the beach with this beach slug
+        analysisRows = await db
+          .select({
+            id: analyses.id,
+            slug: analyses.slug,
+            status: analyses.status,
+            environmentalScore: analyses.environmentalScore,
+            aiConfidence: analyses.aiConfidence,
+            waterClarity: analyses.waterClarity,
+            pollutionLevel: analyses.pollutionLevel,
+            shorelineCleanliness: analyses.shorelineCleanliness,
+            wasteDetection: analyses.wasteDetection,
+            overallStatus: analyses.overallStatus,
+            summary: analyses.summary,
+            processedAt: analyses.processedAt,
+            createdAt: analyses.createdAt,
+            updatedAt: analyses.updatedAt,
+            beachId: analyses.beachId,
+            beachDbId: beaches.id,
+            beachSlug: beaches.slug,
+            beachName: beaches.name,
+            beachLocation: beaches.location,
+            beachProvince: beaches.province,
+            beachImage: beaches.image,
+          })
+          .from(analyses)
+          .innerJoin(beaches, eq(analyses.beachId, beaches.id))
+          .where(eq(beaches.slug, slug))
+          .orderBy(desc(analyses.createdAt))
+          .limit(1);
+      }
 
       const analysis = analysisRows[0];
       if (!analysis) return null;
