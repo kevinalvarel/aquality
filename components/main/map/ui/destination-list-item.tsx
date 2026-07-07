@@ -53,14 +53,14 @@ export function DestinationListItem({
         />
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-1">
-            <p className="truncate text-sm font-medium text-foreground">{destination.name}</p>
+            <p className="truncate text-sm font-medium text-foreground">{destination.pantai}</p>
             {isTrending && (
               <TrendingUp className="size-3 shrink-0 text-orange-500" />
             )}
           </div>
           <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
             <MapPin className="size-3 shrink-0" />
-            <span className="truncate">{destination.location}</span>
+            <span className="truncate">{destination.kecamatan}</span>
           </div>
           <div className="mt-1.5 flex flex-wrap gap-1">
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4">
@@ -75,7 +75,7 @@ export function DestinationListItem({
               </Badge>
             )}
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4">
-              {destination.province}
+              {destination.kabupatenKota}
             </Badge>
           </div>
         </div>

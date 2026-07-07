@@ -30,9 +30,14 @@ export interface AnalysisDetail {
 export interface AnalysisBeachInfo {
   id: string;
   slug: string;
-  name: string;
-  location: string;
-  province: string;
+  pantai: string;
+  kecamatan: string;
+  kabupatenKota: string;
+  pctSehat2026: number | null;
+  statusKualitas2026: string | null;
+  industriTerdekat: string | null;
+  jarakIndustriKm: number | null;
+  kategoriDampakIndustri: string | null;
   image: string | null;
 }
 

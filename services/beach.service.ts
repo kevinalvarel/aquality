@@ -80,9 +80,9 @@ export async function getAllBeaches(): Promise<BeachListItem[]> {
       .select({
         id: beaches.id,
         slug: beaches.slug,
-        name: beaches.name,
-        location: beaches.location,
-        province: beaches.province,
+        pantai: beaches.pantai,
+        kecamatan: beaches.kecamatan,
+        kabupatenKota: beaches.kabupatenKota,
         image: beaches.image,
         status: beaches.status,
         latestScore: latestAnalysis.environmentalScore,
@@ -103,9 +103,9 @@ export async function getAllBeaches(): Promise<BeachListItem[]> {
         beachMap.set(row.id, {
           id: row.id,
           slug: row.slug,
-          name: row.name,
-          location: row.location,
-          province: row.province,
+          pantai: row.pantai,
+          kecamatan: row.kecamatan,
+          kabupatenKota: row.kabupatenKota,
           image: row.image,
           status: row.status,
           latestScore: row.latestScore,
@@ -123,9 +123,9 @@ export async function getAllBeaches(): Promise<BeachListItem[]> {
 export async function getUniqueProvinces(): Promise<string[]> {
   return withCache("beach:provinces", CACHE_TTL.beach, async () => {
     const rows = await db
-      .selectDistinct({ province: beaches.province })
+      .selectDistinct({ province: beaches.kabupatenKota })
       .from(beaches)
-      .orderBy(beaches.province);
+      .orderBy(beaches.kabupatenKota);
     return rows.map((r) => r.province);
   });
 }
@@ -140,13 +140,18 @@ export async function createBeach(
     .insert(beaches)
     .values({
       slug: input.slug,
-      name: input.name,
-      location: input.location,
-      province: input.province,
-      description: input.description,
+      pantai: input.pantai,
+      kecamatan: input.kecamatan,
+      kabupatenKota: input.kabupatenKota,
+      pctSehat2026: input.pctSehat2026,
+      statusKualitas2026: input.statusKualitas2026,
       latitude: input.latitude,
       longitude: input.longitude,
+      industriTerdekat: input.industriTerdekat,
+      jarakIndustriKm: input.jarakIndustriKm,
+      kategoriDampakIndustri: input.kategoriDampakIndustri,
       image: input.image,
+      description: input.description,
       status: input.status ?? "moderate",
     })
     .returning();

@@ -64,10 +64,10 @@ export async function getDashboardStats(): Promise<DashboardStats> {
           aiConfidence: analyses.aiConfidence,
           overallStatus: analyses.overallStatus,
           createdAt: analyses.createdAt,
-          beachName: beaches.name,
+          beachName: beaches.pantai,
           beachSlug: beaches.slug,
           beachImage: beaches.image,
-          location: beaches.location,
+          location: beaches.kecamatan,
         })
         .from(analyses)
         .innerJoin(beaches, eq(analyses.beachId, beaches.id))

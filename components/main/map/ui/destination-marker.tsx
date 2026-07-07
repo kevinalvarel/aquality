@@ -65,8 +65,8 @@ export function DestinationMarker({
   const analysis = useMemo(
     () =>
       generateBeachAnalysis({
-        name: destination.name,
-        location: destination.location,
+        pantai: destination.pantai,
+        kecamatan: destination.kecamatan,
         status: destination.status,
         latestScore: destination.latestScore,
         latestConfidence: destination.latestConfidence,
@@ -87,7 +87,7 @@ export function DestinationMarker({
           type="button"
           onClick={onClick}
           className="group relative flex flex-col items-center"
-          aria-label={`Lihat ${destination.name}`}
+          aria-label={`Lihat ${destination.pantai}`}
         >
           <div
             className={cn(
@@ -100,7 +100,7 @@ export function DestinationMarker({
           >
             <Waves className="size-3 text-white" />
             <span className="max-w-[120px] truncate text-[11px] font-semibold text-white">
-              {destination.name}
+              {destination.pantai}
             </span>
           </div>
           {/* Tail */}
@@ -121,11 +121,11 @@ export function DestinationMarker({
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
                 <h3 className="text-sm font-semibold leading-tight">
-                  {destination.name}
+                  {destination.pantai}
                 </h3>
                 <div className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
                   <MapPin className="size-3 shrink-0" />
-                  <span className="truncate">{destination.location}</span>
+                  <span className="truncate">{destination.kecamatan}</span>
                 </div>
               </div>
               <Badge

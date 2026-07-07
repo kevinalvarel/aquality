@@ -46,8 +46,8 @@ async function fetchLeaderboardData(): Promise<BeachLeaderboard[]> {
       .select({
         beachId: beaches.id,
         beachSlug: beaches.slug,
-        beachName: beaches.name,
-        location: beaches.location,
+        beachName: beaches.pantai,
+        location: beaches.kecamatan,
         image: beaches.image,
         environmentalScore: analyses.environmentalScore,
         aiConfidence: analyses.aiConfidence,

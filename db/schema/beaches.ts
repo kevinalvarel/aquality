@@ -16,13 +16,18 @@ export const beaches = pgTable(
   {
     id: uuid("id").primaryKey().defaultRandom(),
     slug: varchar("slug", { length: 255 }).notNull().unique(),
-    name: varchar("name", { length: 255 }).notNull(),
-    location: varchar("location", { length: 255 }).notNull(),
-    province: varchar("province", { length: 100 }).notNull(),
-    description: text("description"),
+    pantai: varchar("pantai", { length: 255 }).notNull(),
+    kecamatan: varchar("kecamatan", { length: 255 }).notNull(),
+    kabupatenKota: varchar("kabupaten_kota", { length: 255 }).notNull(),
+    pctSehat2026: doublePrecision("pct_sehat_2026"),
+    statusKualitas2026: varchar("status_kualitas_2026", { length: 100 }),
     latitude: doublePrecision("latitude"),
     longitude: doublePrecision("longitude"),
+    industriTerdekat: text("industri_terdekat"),
+    jarakIndustriKm: doublePrecision("jarak_industri_km"),
+    kategoriDampakIndustri: varchar("kategori_dampak_industri", { length: 100 }),
     image: text("image"),
+    description: text("description"),
     status: beachStatusEnum("status").default("moderate").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
@@ -34,7 +39,7 @@ export const beaches = pgTable(
   },
   (table) => [
     uniqueIndex("beaches_slug_idx").on(table.slug),
-    index("beaches_province_idx").on(table.province),
+    index("beaches_kabupaten_idx").on(table.kabupatenKota),
     index("beaches_status_idx").on(table.status),
   ],
 );

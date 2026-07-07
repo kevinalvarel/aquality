@@ -61,14 +61,14 @@ export async function getAnalyses(
       if (filters.search) {
         conditions.push(
           or(
-            ilike(beaches.name, `%${filters.search}%`),
-            ilike(beaches.location, `%${filters.search}%`),
+            ilike(beaches.pantai, `%${filters.search}%`),
+            ilike(beaches.kecamatan, `%${filters.search}%`),
           ),
         );
       }
 
       if (filters.province && filters.province !== "all") {
-        conditions.push(eq(beaches.province, filters.province));
+        conditions.push(eq(beaches.kabupatenKota, filters.province));
       }
 
       if (filters.status && filters.status !== "all") {
@@ -95,7 +95,7 @@ export async function getAnalyses(
           orderByClause = sortDir(analyses.aiConfidence);
           break;
         case "beachName":
-          orderByClause = sortDir(beaches.name);
+          orderByClause = sortDir(beaches.pantai);
           break;
         case "createdAt":
         default:
@@ -120,10 +120,10 @@ export async function getAnalyses(
             aiConfidence: analyses.aiConfidence,
             overallStatus: analyses.overallStatus,
             createdAt: analyses.createdAt,
-            beachName: beaches.name,
+            beachName: beaches.pantai,
             beachSlug: beaches.slug,
             beachImage: beaches.image,
-            location: beaches.location,
+            location: beaches.kecamatan,
           })
           .from(analyses)
           .innerJoin(beaches, eq(analyses.beachId, beaches.id))
@@ -191,9 +191,14 @@ export async function getAnalysisBySlug(
           beachId: analyses.beachId,
           beachDbId: beaches.id,
           beachSlug: beaches.slug,
-          beachName: beaches.name,
-          beachLocation: beaches.location,
-          beachProvince: beaches.province,
+          beachName: beaches.pantai,
+          beachLocation: beaches.kecamatan,
+          beachProvince: beaches.kabupatenKota,
+          beachPctSehat2026: beaches.pctSehat2026,
+          beachStatusKualitas2026: beaches.statusKualitas2026,
+          beachIndustriTerdekat: beaches.industriTerdekat,
+          beachJarakIndustriKm: beaches.jarakIndustriKm,
+          beachKategoriDampakIndustri: beaches.kategoriDampakIndustri,
           beachImage: beaches.image,
         })
         .from(analyses)
@@ -222,9 +227,14 @@ export async function getAnalysisBySlug(
             beachId: analyses.beachId,
             beachDbId: beaches.id,
             beachSlug: beaches.slug,
-            beachName: beaches.name,
-            beachLocation: beaches.location,
-            beachProvince: beaches.province,
+            beachName: beaches.pantai,
+            beachLocation: beaches.kecamatan,
+            beachProvince: beaches.kabupatenKota,
+            beachPctSehat2026: beaches.pctSehat2026,
+            beachStatusKualitas2026: beaches.statusKualitas2026,
+            beachIndustriTerdekat: beaches.industriTerdekat,
+            beachJarakIndustriKm: beaches.jarakIndustriKm,
+            beachKategoriDampakIndustri: beaches.kategoriDampakIndustri,
             beachImage: beaches.image,
           })
           .from(analyses)
@@ -268,10 +278,10 @@ export async function getAnalysisBySlug(
               aiConfidence: analyses.aiConfidence,
               overallStatus: analyses.overallStatus,
               createdAt: analyses.createdAt,
-              beachName: beaches.name,
+              beachName: beaches.pantai,
               beachSlug: beaches.slug,
               beachImage: beaches.image,
-              location: beaches.location,
+              location: beaches.kecamatan,
             })
             .from(analyses)
             .innerJoin(beaches, eq(analyses.beachId, beaches.id))
@@ -305,9 +315,14 @@ export async function getAnalysisBySlug(
         beach: {
           id: analysis.beachDbId,
           slug: analysis.beachSlug,
-          name: analysis.beachName,
-          location: analysis.beachLocation,
-          province: analysis.beachProvince,
+          pantai: analysis.beachName,
+          kecamatan: analysis.beachLocation,
+          kabupatenKota: analysis.beachProvince,
+          pctSehat2026: analysis.beachPctSehat2026,
+          statusKualitas2026: analysis.beachStatusKualitas2026,
+          industriTerdekat: analysis.beachIndustriTerdekat,
+          jarakIndustriKm: analysis.beachJarakIndustriKm,
+          kategoriDampakIndustri: analysis.beachKategoriDampakIndustri,
           image: analysis.beachImage,
         },
         metrics: metrics
@@ -382,10 +397,10 @@ export async function getRecentAnalyses(
           aiConfidence: analyses.aiConfidence,
           overallStatus: analyses.overallStatus,
           createdAt: analyses.createdAt,
-          beachName: beaches.name,
+          beachName: beaches.pantai,
           beachSlug: beaches.slug,
           beachImage: beaches.image,
-          location: beaches.location,
+          location: beaches.kecamatan,
         })
         .from(analyses)
         .innerJoin(beaches, eq(analyses.beachId, beaches.id))
@@ -418,7 +433,7 @@ export async function createAnalysis(
 ): Promise<AnalysisDetail | null> {
   // Generate slug from beach name + timestamp
   const beachRows = await db
-    .select({ slug: beaches.slug, name: beaches.name })
+    .select({ slug: beaches.slug, name: beaches.pantai })
     .from(beaches)
     .where(eq(beaches.id, input.beachId))
     .limit(1);

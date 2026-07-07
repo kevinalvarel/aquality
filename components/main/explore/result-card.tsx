@@ -62,7 +62,7 @@ function ResultCardItem({ beach }: { beach: ExploreBeachItem }) {
             {beach.image ? (
               <Image
                 src={beach.image}
-                alt={beach.name}
+                alt={beach.pantai}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
@@ -92,11 +92,11 @@ function ResultCardItem({ beach }: { beach: ExploreBeachItem }) {
         </CardHeader>
         <CardContent className="space-y-1.5 p-3">
           <CardTitle className="text-sm font-semibold leading-tight line-clamp-1">
-            {beach.name}
+            {beach.pantai}
           </CardTitle>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <MapPin className="size-3 shrink-0" />
-            <span className="truncate">{beach.location}</span>
+            <span className="truncate">{beach.kecamatan}</span>
           </div>
           {beach.description && (
             <p className="text-xs leading-relaxed text-muted-foreground line-clamp-2">

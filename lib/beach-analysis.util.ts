@@ -11,8 +11,8 @@ import type {
 import type { DbBeachStatus } from "@/types/beach.type";
 
 interface BeachAnalysisInput {
-  name: string;
-  location: string;
+  pantai: string;
+  kecamatan: string;
   status: DbBeachStatus;
   latestScore: number | null;
   latestConfidence: number | null;
@@ -132,7 +132,7 @@ function deriveSummary(
       : "";
 
   return (
-    `${beach.name} berlokasi di ${beach.location}. ` +
+    `${beach.pantai} berlokasi di ${beach.kecamatan}. ` +
     `Kualitas air saat ini: ${waterQuality}. ` +
     `Status keamanan: ${safetyStatus}. ` +
     `${scoreText}${confidenceText}`

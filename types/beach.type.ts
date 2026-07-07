@@ -8,13 +8,18 @@ export type DbBeachStatus = "excellent" | "good" | "moderate" | "poor";
 export interface BeachDetail {
   id: string;
   slug: string;
-  name: string;
-  location: string;
-  province: string;
-  description: string | null;
+  pantai: string;
+  kecamatan: string;
+  kabupatenKota: string;
+  pctSehat2026: number | null;
+  statusKualitas2026: string | null;
   latitude: number | null;
   longitude: number | null;
+  industriTerdekat: string | null;
+  jarakIndustriKm: number | null;
+  kategoriDampakIndustri: string | null;
   image: string | null;
+  description: string | null;
   status: string;
   createdAt: Date;
   updatedAt: Date;
@@ -35,9 +40,9 @@ export interface BeachAnalysisSummary {
 export interface BeachListItem {
   id: string;
   slug: string;
-  name: string;
-  location: string;
-  province: string;
+  pantai: string;
+  kecamatan: string;
+  kabupatenKota: string;
   image: string | null;
   status: string;
   latestScore: number | null;
@@ -48,24 +53,34 @@ export interface BeachListItem {
 /** Input for creating a new beach */
 export interface CreateBeachInput {
   slug: string;
-  name: string;
-  location: string;
-  province: string;
-  description?: string;
+  pantai: string;
+  kecamatan: string;
+  kabupatenKota: string;
+  pctSehat2026?: number;
+  statusKualitas2026?: string;
   latitude?: number;
   longitude?: number;
+  industriTerdekat?: string;
+  jarakIndustriKm?: number;
+  kategoriDampakIndustri?: string;
   image?: string;
+  description?: string;
   status?: DbBeachStatus;
 }
 
 /** Input for updating an existing beach */
 export interface UpdateBeachInput {
-  name?: string;
-  location?: string;
-  province?: string;
-  description?: string;
+  pantai?: string;
+  kecamatan?: string;
+  kabupatenKota?: string;
+  pctSehat2026?: number;
+  statusKualitas2026?: string;
   latitude?: number;
   longitude?: number;
+  industriTerdekat?: string;
+  jarakIndustriKm?: number;
+  kategoriDampakIndustri?: string;
   image?: string;
+  description?: string;
   status?: DbBeachStatus;
 }

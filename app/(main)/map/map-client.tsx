@@ -21,9 +21,14 @@ function toDestination(beach: MapBeachItem): Destination {
   return {
     id: beach.id,
     slug: beach.slug,
-    name: beach.name,
-    location: beach.location,
-    province: beach.province,
+    pantai: beach.pantai,
+    kecamatan: beach.kecamatan,
+    kabupatenKota: beach.kabupatenKota,
+    pctSehat2026: beach.pctSehat2026,
+    statusKualitas2026: beach.statusKualitas2026,
+    industriTerdekat: beach.industriTerdekat,
+    jarakIndustriKm: beach.jarakIndustriKm,
+    kategoriDampakIndustri: beach.kategoriDampakIndustri,
     description: beach.description,
     longitude: beach.longitude,
     latitude: beach.latitude,
@@ -45,9 +50,9 @@ export function MapPageClient({ beaches }: MapPageClientProps) {
     if (searchQuery.trim() === "") return true;
     const query = searchQuery.toLowerCase();
     return (
-      d.name.toLowerCase().includes(query) ||
-      d.location.toLowerCase().includes(query) ||
-      d.province.toLowerCase().includes(query)
+      d.pantai.toLowerCase().includes(query) ||
+      d.kecamatan.toLowerCase().includes(query) ||
+      d.kabupatenKota.toLowerCase().includes(query)
     );
   });
 
