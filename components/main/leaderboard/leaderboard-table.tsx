@@ -24,6 +24,13 @@ import type { BeachLeaderboard } from "@/types/leaderboard.type";
 import { Bot, ExternalLink } from "lucide-react";
 import { getStatusColor, formatRelativeDate } from "@/lib/utils";
 
+const statusLabels: Record<string, string> = {
+  excellent: "Sangat Baik",
+  good: "Baik",
+  moderate: "Sedang",
+  poor: "Buruk",
+};
+
 interface LeaderboardTableProps {
   data: BeachLeaderboard[];
   page: number;
@@ -71,20 +78,20 @@ export function LeaderboardTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[60px]">Rank</TableHead>
-              <TableHead>Beach</TableHead>
-              <TableHead className="hidden sm:table-cell">Location</TableHead>
-              <TableHead className="text-center">Score</TableHead>
+              <TableHead className="w-[60px]">Peringkat</TableHead>
+              <TableHead>Pantai</TableHead>
+              <TableHead className="hidden sm:table-cell">Lokasi</TableHead>
+              <TableHead className="text-center">Skor</TableHead>
               <TableHead className="text-center hidden sm:table-cell">
                 Status
               </TableHead>
               <TableHead className="text-center hidden md:table-cell">
-                AI Conf.
+                Keyakinan AI
               </TableHead>
               <TableHead className="hidden lg:table-cell">
-                Last Analysis
+                Analisis Terakhir
               </TableHead>
-              <TableHead className="text-right">Action</TableHead>
+              <TableHead className="text-right">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -126,7 +133,7 @@ export function LeaderboardTable({
                       <span
                         className={`mr-1 inline-block size-1.5 rounded-full ${statusColor.dot}`}
                       />
-                      {beach.status}
+                      {statusLabels[beach.status] || beach.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-center hidden md:table-cell">
@@ -152,7 +159,7 @@ export function LeaderboardTable({
                           className="size-3"
                           data-icon="inline-start"
                         />
-                        View
+                        Lihat
                       </Link>
                     </Button>
                   </TableCell>
@@ -167,8 +174,8 @@ export function LeaderboardTable({
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            Showing {startRank + 1}–{Math.min(startRank + pageSize, total)} of{" "}
-            {total} beaches
+            Menampilkan {startRank + 1}–{Math.min(startRank + pageSize, total)}{" "}
+            dari {total} pantai
           </p>
           <Pagination className="w-auto mx-0">
             <PaginationContent>

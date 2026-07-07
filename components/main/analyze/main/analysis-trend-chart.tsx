@@ -24,12 +24,12 @@ export function AnalysisTrendChart({ data }: AnalysisTrendChartProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <TrendingUp className="size-4 text-primary" />
-            Analysis Trend
+            Tren Analisis
           </CardTitle>
-          <CardDescription>Number of analyses over time</CardDescription>
+          <CardDescription>Jumlah analisis dari waktu ke waktu</CardDescription>
         </CardHeader>
         <CardContent className="flex h-[200px] items-center justify-center text-muted-foreground text-sm">
-          No trend data available.
+          Tren data tidak tersedia.
         </CardContent>
       </Card>
     );
@@ -67,9 +67,9 @@ export function AnalysisTrendChart({ data }: AnalysisTrendChartProps) {
     if (prev > 0) {
       const diff = ((current - prev) / prev) * 100;
       isPositive = diff >= 0;
-      percentageLabel = `${diff >= 0 ? "+" : ""}${Math.round(diff)}% this month`;
+      percentageLabel = `${diff >= 0 ? "+" : ""}${Math.round(diff)}% bulan ini`;
     } else if (current > 0) {
-      percentageLabel = `+100% this month`;
+      percentageLabel = `+100% bulan ini`;
     }
   }
 
@@ -80,9 +80,9 @@ export function AnalysisTrendChart({ data }: AnalysisTrendChartProps) {
           <div>
             <CardTitle className="flex items-center gap-2 text-base">
               <TrendingUp className="size-4 text-primary" />
-              Analysis Trend
+              Tren Analisis
             </CardTitle>
-            <CardDescription>Number of analyses over time</CardDescription>
+            <CardDescription>Jumlah analisis dari waktu ke waktu</CardDescription>
           </div>
           <span className={`rounded-md px-2 py-1 text-xs font-medium ${
             isPositive ? "bg-success/10 text-success" : "bg-warning/10 text-warning"

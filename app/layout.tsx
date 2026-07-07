@@ -30,7 +30,7 @@ const fontMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "Aquality",
-  description: "AI-powered app to track water quality",
+  description: "Aplikasi bertenaga AI untuk memantau kualitas air",
 };
 
 export default function RootLayout({
@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning>
       <body
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
       >

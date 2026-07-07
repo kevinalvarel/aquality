@@ -16,8 +16,8 @@ const footerLinks = {
     links: [
       { label: "Dokumentasi", href: "#" },
       { label: "Panduan Pengguna", href: "#" },
-      { label: "API Reference", href: "#" },
-      { label: "Changelog", href: "#" },
+      { label: "Referensi API", href: "#" },
+      { label: "Catatan Perubahan", href: "#" },
     ],
   },
   legal: {

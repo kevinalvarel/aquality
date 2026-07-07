@@ -6,7 +6,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div suppressHydrationWarning>
       <NavbarApp />
       <main className=" max-w-6xl mx-auto">{children}</main>
     </div>

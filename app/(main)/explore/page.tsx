@@ -3,6 +3,8 @@ import { getExploreBeaches } from "@/services/explore.service";
 import { ExplorePageClient } from "./explore-client";
 import { ResultCardSkeleton } from "@/components/main/explore/result-card";
 
+export const dynamic = "force-dynamic";
+
 export default function ExplorePage() {
   return (
     <Suspense fallback={<ExplorePageFallback />}>

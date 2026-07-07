@@ -70,7 +70,7 @@ function DashboardKPICard({
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{progress}% average confidence</p>
+              <p>Rata-rata keyakinan: {progress}%</p>
             </TooltipContent>
           </Tooltip>
         )}
@@ -106,42 +106,42 @@ export function DashboardSummaryCards({ stats }: DashboardSummaryCardsProps) {
 
   const cards: DashboardKPICardProps[] = [
     {
-      title: "Total Analyses",
+      title: "Total Analisis",
       value: stats.totalAnalyses.toString(),
       icon: <BarChart3 className="size-4" />,
-      trend: { direction: "up", label: "Across Banten region" },
+      trend: { direction: "up", label: "Di seluruh wilayah Banten" },
     },
     {
-      title: "Healthy Beaches",
+      title: "Pantai Sehat",
       value: healthyCount.toString(),
       icon: <CheckCircle2 className="size-4" />,
       badge: {
         label: `${healthyPercentage}%`,
         className: "bg-success/15 text-success border border-success/30",
       },
-      trend: { direction: "up", label: "Excellent / Good status" },
+      trend: { direction: "up", label: "Status Sangat Baik / Baik" },
     },
     {
-      title: "Need Attention",
+      title: "Butuh Perhatian",
       value: attentionCount.toString(),
       icon: <AlertTriangle className="size-4" />,
       badge: {
-        label: attentionCount > 0 ? "Warning" : "Secure",
+        label: attentionCount > 0 ? "Peringatan" : "Aman",
         className: attentionCount > 0 
           ? "bg-warning/15 text-warning border border-warning/30" 
           : "bg-success/15 text-success border border-success/30",
       },
       trend: { 
         direction: attentionCount > 0 ? "down" : "up", 
-        label: "Moderate / Poor status" 
+        label: "Status Sedang / Buruk" 
       },
     },
     {
-      title: "Average AI Confidence",
+      title: "Rata-rata Keyakinan AI",
       value: `${stats.averageConfidence}%`,
       icon: <Brain className="size-4" />,
       progress: stats.averageConfidence,
-      trend: { direction: "up", label: "Quality assessment confidence" },
+      trend: { direction: "up", label: "Keyakinan penilaian kualitas" },
     },
   ];
 

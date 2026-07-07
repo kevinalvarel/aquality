@@ -57,7 +57,7 @@ export function LeaderboardFilters({
         <Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
         <Input
           id="leaderboard-search"
-          placeholder="Search beaches..."
+          placeholder="Cari pantai..."
           value={filters.search}
           onChange={(e) => onSearchChange(e.target.value)}
           className="pl-8"
@@ -73,11 +73,11 @@ export function LeaderboardFilters({
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Status</SelectItem>
-          <SelectItem value="Excellent">Excellent</SelectItem>
-          <SelectItem value="Good">Good</SelectItem>
-          <SelectItem value="Moderate">Moderate</SelectItem>
-          <SelectItem value="Poor">Poor</SelectItem>
+          <SelectItem value="all">Semua Status</SelectItem>
+          <SelectItem value="Excellent">Sangat Baik</SelectItem>
+          <SelectItem value="Good">Baik</SelectItem>
+          <SelectItem value="Moderate">Sedang</SelectItem>
+          <SelectItem value="Poor">Buruk</SelectItem>
         </SelectContent>
       </Select>
 
@@ -87,10 +87,10 @@ export function LeaderboardFilters({
         onValueChange={onLocationChange}
       >
         <SelectTrigger id="location-filter" className="w-[180px]">
-          <SelectValue placeholder="Location" />
+          <SelectValue placeholder="Lokasi" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Locations</SelectItem>
+          <SelectItem value="all">Semua Lokasi</SelectItem>
           {locations.map((loc) => (
             <SelectItem key={loc} value={loc}>
               {loc}
@@ -108,21 +108,21 @@ export function LeaderboardFilters({
         }}
       >
         <SelectTrigger id="sort-select" className="w-[190px]">
-          <SelectValue placeholder="Sort by" />
+          <SelectValue placeholder="Urutkan berdasarkan" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="environmentalScore:desc">
-            Score: High → Low
+            Skor: Tinggi → Rendah
           </SelectItem>
           <SelectItem value="environmentalScore:asc">
-            Score: Low → High
+            Skor: Rendah → Tinggi
           </SelectItem>
-          <SelectItem value="beachName:asc">Name: A → Z</SelectItem>
-          <SelectItem value="beachName:desc">Name: Z → A</SelectItem>
+          <SelectItem value="beachName:asc">Nama: A → Z</SelectItem>
+          <SelectItem value="beachName:desc">Nama: Z → A</SelectItem>
           <SelectItem value="aiConfidence:desc">
-            AI Confidence: High → Low
+            Keyakinan AI: Tinggi → Rendah
           </SelectItem>
-          <SelectItem value="lastAnalyzed:desc">Recently Analyzed</SelectItem>
+          <SelectItem value="lastAnalyzed:desc">Baru-baru Ini Dianalisis</SelectItem>
         </SelectContent>
       </Select>
 
@@ -138,10 +138,10 @@ export function LeaderboardFilters({
               className="gap-1.5"
             >
               <CalendarRange className="size-3.5" data-icon="inline-start" />
-              Date Range
+              Rentang Tanggal
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Coming soon</TooltipContent>
+          <TooltipContent>Segera hadir</TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
@@ -155,7 +155,7 @@ export function LeaderboardFilters({
           className="gap-1.5 text-muted-foreground hover:text-foreground"
         >
           <X className="size-3.5" data-icon="inline-start" />
-          Clear
+          Hapus Filter
         </Button>
       )}
     </section>

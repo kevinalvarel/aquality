@@ -10,6 +10,8 @@ import { RecentAnalysesTable } from "@/components/main/analyze/main/recent-analy
 import { Suspense } from "react";
 import { getDashboardStats } from "@/services/dashboard.service";
 
+export const dynamic = "force-dynamic";
+
 export default async function AnalyzePage() {
   const stats = await getDashboardStats();
 
@@ -23,22 +25,21 @@ export default async function AnalyzePage() {
               <Microscope className="size-5 text-primary" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">
-              Beach Analysis
+              Analisis Pantai
             </h1>
           </div>
           <p className="max-w-lg text-sm text-muted-foreground">
-            Monitor, manage, and review AI-powered coastal water quality
-            analyses.
+            Pantau, kelola, dan tinjau analisis kualitas air pantai bertenaga AI.
           </p>
         </div>
         <div className="flex gap-2">
           <Button>
             <ImagePlus className="size-4" />
-            Analyze New Image
+            Analisis Gambar Baru
           </Button>
           <Button variant="outline">
             <Download className="size-4" />
-            Export Report
+            Ekspor Laporan
           </Button>
         </div>
       </div>
@@ -59,12 +60,20 @@ export default async function AnalyzePage() {
 
       {/* Search & Filters */}
       <div className="space-y-4">
-        <Suspense fallback={<div className="h-10 w-full animate-pulse rounded-lg bg-muted" />}>
+        <Suspense
+          fallback={
+            <div className="h-10 w-full animate-pulse rounded-lg bg-muted" />
+          }
+        >
           <SearchAndFilters />
         </Suspense>
 
         {/* Recent Analyses Table */}
-        <Suspense fallback={<div className="h-64 w-full animate-pulse rounded-lg bg-muted" />}>
+        <Suspense
+          fallback={
+            <div className="h-64 w-full animate-pulse rounded-lg bg-muted" />
+          }
+        >
           <RecentAnalysesTable />
         </Suspense>
       </div>

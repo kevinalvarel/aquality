@@ -53,7 +53,9 @@ export function DestinationListItem({
         />
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-1">
-            <p className="truncate text-sm font-medium text-foreground">{destination.pantai}</p>
+            <p className="truncate text-sm font-medium text-foreground">
+              {destination.pantai}
+            </p>
             {isTrending && (
               <TrendingUp className="size-3 shrink-0 text-orange-500" />
             )}

@@ -33,19 +33,19 @@ export function BeachImagePreview() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle>Beach Image Preview</CardTitle>
+            <CardTitle>Pratinjau Gambar Pantai</CardTitle>
             <CardDescription>
-              Upload a coastal image for AI analysis
+              Unggah gambar pesisir untuk analisis AI
             </CardDescription>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
               <Upload className="size-3.5" />
-              Upload Image
+              Unggah Gambar
             </Button>
             <Button variant="ghost" size="sm">
               <RefreshCw className="size-3.5" />
-              Replace
+              Ganti
             </Button>
           </div>
         </div>
@@ -92,11 +92,11 @@ export function BeachImagePreview() {
                   className="gap-2 shadow-xl"
                 >
                   <ZoomIn className="size-5" />
-                  View Full Size
+                  Lihat Ukuran Penuh
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Open image in full resolution</p>
+                <p>Buka gambar dalam resolusi penuh</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -106,27 +106,27 @@ export function BeachImagePreview() {
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <MetadataItem
             icon={<MapPin className="size-3.5" />}
-            label="Beach Name"
-            value="Kuta Beach"
+            label="Nama Pantai"
+            value="Pantai Kuta"
           />
           <MetadataItem
             icon={<Navigation className="size-3.5" />}
-            label="Location"
+            label="Lokasi"
             value="Bali, Indonesia"
           />
           <MetadataItem
             icon={<Clock className="size-3.5" />}
-            label="Capture Time"
+            label="Waktu Pengambilan"
             value="30 Jun 2026, 14:30"
           />
           <MetadataItem
             icon={<CloudSun className="size-3.5" />}
-            label="Weather"
-            value="Partly Cloudy"
+            label="Cuaca"
+            value="Cerah Berawan"
           />
         </div>
         <div className="rounded-lg bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
-          <span className="font-medium">GPS Coordinates:</span>{" "}
+          <span className="font-medium">Koordinat GPS:</span>{" "}
           -8.7185° S, 115.1686° E
         </div>
       </CardContent>

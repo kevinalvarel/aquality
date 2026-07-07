@@ -12,10 +12,10 @@ import { Separator } from "@/components/ui/separator";
 import { CheckCircle2, ShieldCheck } from "lucide-react";
 
 const indicators = [
-  { label: "Clear water", detected: true },
-  { label: "Low turbidity", detected: true },
-  { label: "Minimal floating waste", detected: true },
-  { label: "Healthy shoreline", detected: true },
+  { label: "Air jernih", detected: true },
+  { label: "Kekeruhan rendah", detected: true },
+  { label: "Sampah terapung minimal", detected: true },
+  { label: "Garis pantai sehat", detected: true },
 ];
 
 export function AIAnalysisResult() {
@@ -26,28 +26,28 @@ export function AIAnalysisResult() {
           <div>
             <CardTitle className="flex items-center gap-2">
               <ShieldCheck className="size-4 text-primary" />
-              AI Analysis Result
+              Hasil Analisis AI
             </CardTitle>
             <CardDescription>
-              Classification output from the AQuality AI model
+              Output klasifikasi dari model AI AQuality
             </CardDescription>
           </div>
           <Badge
             variant="default"
             className="bg-success/15 text-success border border-success/30"
           >
-            Low Risk
+            Risiko Rendah
           </Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
-            <p className="text-xs text-muted-foreground">Water Status</p>
-            <p className="mt-1 text-lg font-semibold text-success">Good</p>
+            <p className="text-xs text-muted-foreground">Status Air</p>
+            <p className="mt-1 text-lg font-semibold text-success">Baik</p>
           </div>
           <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
-            <p className="text-xs text-muted-foreground">Confidence</p>
+            <p className="text-xs text-muted-foreground">Keyakinan</p>
             <p className="mt-1 text-lg font-semibold">97%</p>
           </div>
         </div>
@@ -56,7 +56,7 @@ export function AIAnalysisResult() {
 
         <div>
           <p className="mb-3 text-sm font-medium text-muted-foreground">
-            Indicators Detected
+            Indikator Terdeteksi
           </p>
           <div className="space-y-2">
             {indicators.map((indicator) => (

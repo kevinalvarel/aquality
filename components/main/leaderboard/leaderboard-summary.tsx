@@ -9,7 +9,7 @@ interface LeaderboardSummaryProps {
 const summaryCards = [
   {
     key: "totalBeaches" as const,
-    label: "Total Beaches",
+    label: "Total Pantai",
     icon: Hash,
     format: (v: number) => v.toString(),
     gradient: "from-primary/10 to-primary/5",
@@ -17,7 +17,7 @@ const summaryCards = [
   },
   {
     key: "averageScore" as const,
-    label: "Avg. Environmental Score",
+    label: "Skor Lingkungan Rata-rata",
     icon: BarChart3,
     format: (v: number) => `${v}/100`,
     gradient: "from-chart-2/10 to-chart-2/5",
@@ -25,7 +25,7 @@ const summaryCards = [
   },
   {
     key: "highestScore" as const,
-    label: "Highest Score",
+    label: "Skor Tertinggi",
     icon: Award,
     format: (v: number) => `${v}/100`,
     gradient: "from-success/10 to-success/5",
@@ -33,11 +33,11 @@ const summaryCards = [
   },
   {
     key: "lastUpdated" as const,
-    label: "Last Updated",
+    label: "Terakhir Diperbarui",
     icon: Clock,
     format: (_: number, date: string) => {
       const d = new Date(date);
-      return d.toLocaleDateString("en-US", {
+      return d.toLocaleDateString("id-ID", {
         month: "short",
         day: "numeric",
         hour: "2-digit",

@@ -14,10 +14,10 @@ export function LeaderboardEmpty({ onRefresh }: LeaderboardEmptyProps) {
       <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-muted">
         <Waves className="size-8 text-muted-foreground" />
       </div>
-      <h3 className="text-lg font-semibold">No leaderboard data available.</h3>
+      <h3 className="text-lg font-semibold">Data peringkat tidak tersedia.</h3>
       <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-        Beach rankings will appear here once AI analysis data is available. Try
-        refreshing or check back later.
+        Peringkat pantai akan muncul di sini setelah data analisis AI tersedia. Coba
+        perbarui data atau periksa kembali nanti.
       </p>
       {onRefresh && (
         <Button
@@ -28,7 +28,7 @@ export function LeaderboardEmpty({ onRefresh }: LeaderboardEmptyProps) {
           id="empty-refresh-btn"
         >
           <RefreshCw className="size-3.5" data-icon="inline-start" />
-          Refresh Data
+          Perbarui Data
         </Button>
       )}
     </section>

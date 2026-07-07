@@ -7,12 +7,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSession } from "@/lib/auth-client";
 import type { ExploreBeachItem } from "@/types/explore.type";
+import { useState } from "react";
 
 interface ExplorePageClientProps {
   beaches: ExploreBeachItem[];
 }
 
 export function ExplorePageClient({ beaches }: ExplorePageClientProps) {
+  const [showAll, setShowAll] = useState(false);
+
+  function showAllToggle() {
+    setShowAll((prev) => !prev);
+  }
+
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -32,10 +39,9 @@ export function ExplorePageClient({ beaches }: ExplorePageClientProps) {
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-base font-medium">Temukan destinasi</h1>
+                  <h1 className="text-base font-medium">Seluruh Pantai</h1>
                   <p className="text-sm text-muted-foreground">
-                    Berikut adalah rekomendasi destinasi berdasarkan preferensi
-                    Anda
+                    Berikut adalah Analisa pantai di Provinsi Banten
                   </p>
                 </div>
                 <div>
@@ -47,12 +53,22 @@ export function ExplorePageClient({ beaches }: ExplorePageClientProps) {
             </CardContent>
           </Card>
           <div className="grid grid-cols-1 gap-3">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <ResultCard beaches={beaches} />
-            </div>
+            {!showAll ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <ResultCard beaches={beaches.slice(0, 3)} />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <ResultCard beaches={beaches} />
+              </div>
+            )}
             {beaches.length > 0 && (
-              <Button className="w-full text-primary" variant="outline">
-                Muat lebih banyak
+              <Button
+                onClick={showAllToggle}
+                className="w-full text-primary"
+                variant="outline"
+              >
+                {!showAll ? "Muat lebih banyak" : "Tampilkan lebih sedikit"}
               </Button>
             )}
           </div>

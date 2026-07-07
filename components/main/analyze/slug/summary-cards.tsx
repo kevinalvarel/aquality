@@ -70,7 +70,7 @@ function SummaryCard({
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{progress}% confidence</p>
+              <p>Keyakinan: {progress}%</p>
             </TooltipContent>
           </Tooltip>
         )}
@@ -88,41 +88,41 @@ function SummaryCard({
 export function SummaryCards() {
   const cards: SummaryCardProps[] = [
     {
-      title: "Water Quality",
-      value: "Good",
+      title: "Kualitas Air",
+      value: "Baik",
       icon: <Droplets className="size-4" />,
       badge: {
-        label: "Good",
+        label: "Baik",
         variant: "default",
         className: "bg-success text-success-foreground",
       },
-      subtitle: "Improved from last analysis",
+      subtitle: "Meningkat dari analisis terakhir",
       trend: "up",
     },
     {
-      title: "AI Confidence",
+      title: "Keyakinan AI",
       value: "97%",
       icon: <Brain className="size-4" />,
       progress: 97,
-      subtitle: "High accuracy detection",
+      subtitle: "Deteksi akurasi tinggi",
     },
     {
-      title: "Pollution Level",
-      value: "Low",
+      title: "Tingkat Polusi",
+      value: "Rendah",
       icon: <AlertTriangle className="size-4" />,
       badge: {
-        label: "Low",
+        label: "Rendah",
         variant: "default",
         className: "bg-success/15 text-success border border-success/30",
       },
-      subtitle: "Below safe threshold",
+      subtitle: "Di bawah ambang batas aman",
       trend: "up",
     },
     {
-      title: "Last Analysis",
-      value: "30 June 2026",
+      title: "Analisis Terakhir",
+      value: "30 Juni 2026",
       icon: <Calendar className="size-4" />,
-      subtitle: "Just now",
+      subtitle: "Baru saja",
     },
   ];
 

@@ -25,6 +25,13 @@ import {
 } from "lucide-react";
 import { getStatusColor } from "@/lib/utils";
 
+const statusLabels: Record<string, string> = {
+  excellent: "Sangat Baik",
+  good: "Baik",
+  moderate: "Sedang",
+  poor: "Buruk",
+};
+
 interface LeaderboardSheetProps {
   beach: BeachLeaderboard | null;
   open: boolean;
@@ -34,14 +41,14 @@ interface LeaderboardSheetProps {
 const metrics = [
   {
     key: "waterClarity" as const,
-    label: "Water Clarity",
+    label: "Kejelasan Air",
     icon: Droplets,
     color: "text-primary",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-primary",
   },
   {
     key: "pollutionLevel" as const,
-    label: "Pollution Level",
+    label: "Tingkat Polusi",
     icon: AlertTriangle,
     color: "text-warning",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-warning",
@@ -49,14 +56,14 @@ const metrics = [
   },
   {
     key: "shorelineCleanliness" as const,
-    label: "Shoreline Cleanliness",
+    label: "Kebersihan Garis Pantai",
     icon: TreePalm,
     color: "text-success",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-success",
   },
   {
     key: "wasteDetection" as const,
-    label: "Waste Detection",
+    label: "Deteksi Sampah",
     icon: Trash2,
     color: "text-destructive",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-destructive",
@@ -64,7 +71,7 @@ const metrics = [
   },
   {
     key: "aiConfidence" as const,
-    label: "AI Confidence",
+    label: "Keyakinan AI",
     icon: Bot,
     color: "text-chart-2",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-chart-2",
@@ -97,7 +104,7 @@ export function LeaderboardSheet({
                 variant="outline"
                 className={`border-none ${statusColor.bg} ${statusColor.text}`}
               >
-                {beach.status}
+                {statusLabels[beach.status] || beach.status}
               </Badge>
             </div>
           </SheetHeader>
@@ -108,7 +115,7 @@ export function LeaderboardSheet({
               <div className="text-center">
                 <p className="text-3xl font-bold">{beach.environmentalScore}</p>
                 <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                  Env. Score
+                  Skor Lingk.
                 </p>
               </div>
               <Separator orientation="vertical" className="h-12" />
@@ -118,7 +125,7 @@ export function LeaderboardSheet({
                   className="h-2.5 [&_[data-slot=progress-indicator]]:bg-gradient-to-r [&_[data-slot=progress-indicator]]:from-primary [&_[data-slot=progress-indicator]]:to-success"
                 />
                 <p className="mt-1.5 text-xs text-muted-foreground">
-                  Overall environmental quality
+                  Kualitas lingkungan secara keseluruhan
                 </p>
               </div>
             </div>
@@ -127,12 +134,12 @@ export function LeaderboardSheet({
 
             {/* Metrics breakdown */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Score Breakdown</h4>
+              <h4 className="text-sm font-semibold">Rincian Skor</h4>
               {metrics.map((metric) => {
                 const Icon = metric.icon;
                 const value = beach[metric.key];
                 const displayLabel = metric.inverted
-                  ? `${value}% detected`
+                  ? `${value}% terdeteksi`
                   : `${value}%`;
 
                 return (
@@ -162,7 +169,7 @@ export function LeaderboardSheet({
             <Button asChild className="w-full">
               <Link href={`/analyze/${beach.slug}`}>
                 <ExternalLink className="size-3.5" data-icon="inline-start" />
-                View Full Analysis
+                Lihat Analisis Lengkap
               </Link>
             </Button>
           </SheetFooter>

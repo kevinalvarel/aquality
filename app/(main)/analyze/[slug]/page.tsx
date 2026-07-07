@@ -37,22 +37,22 @@ export default async function AnalysisDetailPage({
               <Microscope className="size-5 text-primary" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">
-              {analysis.beach.pantai} — Analysis
+              {analysis.beach.pantai} — Analisis
             </h1>
           </div>
           <p className="max-w-xl text-sm text-muted-foreground">
-            AI-powered coastal water quality analysis for{" "}
+            Analisis kualitas air pantai bertenaga AI untuk{" "}
             {analysis.beach.kecamatan}.
           </p>
         </div>
         <div className="flex gap-2">
           <Button>
             <Plus className="size-4" />
-            Analyze New Beach
+            Analisis Pantai Baru
           </Button>
           <Button variant="outline">
             <Download className="size-4" />
-            Export Report
+            Ekspor Laporan
           </Button>
         </div>
       </div>

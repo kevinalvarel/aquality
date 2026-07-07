@@ -23,6 +23,13 @@ interface BeachStatusDonutProps {
   data: { status: string; count: number }[];
 }
 
+const statusLabels: Record<string, string> = {
+  Excellent: "Sangat Baik",
+  Good: "Baik",
+  Moderate: "Sedang",
+  Poor: "Buruk",
+};
+
 export function BeachStatusDonut({ data }: BeachStatusDonutProps) {
   const configMap: Record<string, { color: string; tokenClass: string }> = {
     Excellent: { color: "var(--primary)", tokenClass: "text-primary" },
@@ -46,12 +53,12 @@ export function BeachStatusDonut({ data }: BeachStatusDonutProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <PieChart className="size-4 text-primary" />
-            Beach Status Distribution
+            Distribusi Status Pantai
           </CardTitle>
-          <CardDescription>Classification breakdown across all analyses</CardDescription>
+          <CardDescription>Rincian klasifikasi di semua analisis</CardDescription>
         </CardHeader>
         <CardContent className="flex h-[240px] items-center justify-center text-muted-foreground text-sm">
-          No analysis distribution data available.
+          Data distribusi analisis tidak tersedia.
         </CardContent>
       </Card>
     );
@@ -70,9 +77,9 @@ export function BeachStatusDonut({ data }: BeachStatusDonutProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
           <PieChart className="size-4 text-primary" />
-          Beach Status Distribution
+          Distribusi Status Pantai
         </CardTitle>
-        <CardDescription>Classification breakdown across all analyses</CardDescription>
+        <CardDescription>Rincian klasifikasi di semua analisis</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
@@ -131,7 +138,7 @@ export function BeachStatusDonut({ data }: BeachStatusDonutProps) {
                         style={{ backgroundColor: segment.color }}
                       />
                       <span className="text-sm text-muted-foreground">
-                        {segment.label}
+                        {statusLabels[segment.label] || segment.label}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -146,7 +153,7 @@ export function BeachStatusDonut({ data }: BeachStatusDonutProps) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    {segment.value} analyses classified as {segment.label}
+                    {segment.value} analisis diklasifikasikan sebagai {statusLabels[segment.label] || segment.label}
                   </p>
                 </TooltipContent>
               </Tooltip>

@@ -3,6 +3,8 @@ import { getBeachesForMap } from "@/services/explore.service";
 import { MapPageClient } from "./map-client";
 import { Skeleton } from "@/components/ui/skeleton";
 
+export const dynamic = "force-dynamic";
+
 export default function MapPage() {
   return (
     <Suspense fallback={<MapPageFallback />}>

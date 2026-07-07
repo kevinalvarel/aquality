@@ -19,32 +19,32 @@ interface TimelineItem {
 
 const timelineData: TimelineItem[] = [
   {
-    date: "30 Jun 2026",
-    quality: "Good",
+    date: "30 Juni 2026",
+    quality: "Baik",
     confidence: 97,
     qualityColor: "bg-success/15 text-success border border-success/30",
   },
   {
-    date: "23 Jun 2026",
-    quality: "Good",
+    date: "23 Juni 2026",
+    quality: "Baik",
     confidence: 94,
     qualityColor: "bg-success/15 text-success border border-success/30",
   },
   {
-    date: "16 Jun 2026",
-    quality: "Moderate",
+    date: "16 Juni 2026",
+    quality: "Sedang",
     confidence: 89,
     qualityColor: "bg-warning/15 text-warning border border-warning/30",
   },
   {
-    date: "09 Jun 2026",
-    quality: "Good",
+    date: "09 Juni 2026",
+    quality: "Baik",
     confidence: 92,
     qualityColor: "bg-success/15 text-success border border-success/30",
   },
   {
-    date: "02 Jun 2026",
-    quality: "Excellent",
+    date: "02 Juni 2026",
+    quality: "Sangat Baik",
     confidence: 98,
     qualityColor: "bg-primary/15 text-primary border border-primary/30",
   },
@@ -54,7 +54,7 @@ export function AnalysisTimeline() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Analysis Timeline</CardTitle>
+        <CardTitle className="text-sm">Riwayat Analisis</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="relative space-y-0">
@@ -85,7 +85,7 @@ export function AnalysisTimeline() {
                   className="h-6 text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
                 >
                   <Eye className="size-3" />
-                  Quick View
+                  Pratinjau Cepat
                 </Button>
               </div>
             </div>

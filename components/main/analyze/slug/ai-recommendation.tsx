@@ -2,17 +2,17 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Lightbulb, CheckCircle2 } from "lucide-react";
 
 const recommendations = [
-  "Beach is suitable for recreational activities.",
-  "Continue weekly monitoring.",
-  "Maintain waste management around shoreline.",
-  "No significant pollution detected.",
+  "Pantai cocok untuk aktivitas rekreasi.",
+  "Lanjutkan pemantauan mingguan.",
+  "Pertahankan pengelolaan sampah di sekitar garis pantai.",
+  "Tidak ada polusi signifikan yang terdeteksi.",
 ];
 
 export function AIRecommendation() {
   return (
     <Alert className="border-primary/20 bg-primary/5">
       <Lightbulb className="size-4 text-primary" />
-      <AlertTitle className="font-semibold">AI Recommendation</AlertTitle>
+      <AlertTitle className="font-semibold">Rekomendasi AI</AlertTitle>
       <AlertDescription>
         <ul className="mt-2 space-y-2">
           {recommendations.map((rec) => (

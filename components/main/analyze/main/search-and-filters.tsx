@@ -50,7 +50,7 @@ export function SearchAndFilters() {
       <div className="relative max-w-sm flex-1">
         <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
-          placeholder="Search beaches..."
+          placeholder="Cari pantai..."
           className="pl-9"
           value={searchVal}
           onChange={(e) => setSearchVal(e.target.value)}
@@ -68,11 +68,11 @@ export function SearchAndFilters() {
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="excellent">Excellent</SelectItem>
-            <SelectItem value="good">Good</SelectItem>
-            <SelectItem value="moderate">Moderate</SelectItem>
-            <SelectItem value="poor">Poor</SelectItem>
+            <SelectItem value="all">Semua Status</SelectItem>
+            <SelectItem value="excellent">Sangat Baik</SelectItem>
+            <SelectItem value="good">Baik</SelectItem>
+            <SelectItem value="moderate">Sedang</SelectItem>
+            <SelectItem value="poor">Buruk</SelectItem>
           </SelectContent>
         </Select>
 
@@ -81,14 +81,14 @@ export function SearchAndFilters() {
           onValueChange={(val) => handleFilterChange("date", val)}
         >
           <SelectTrigger className="w-[140px]">
-            <SelectValue placeholder="Date" />
+            <SelectValue placeholder="Tanggal" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all-time">All Time</SelectItem>
-            <SelectItem value="today">Today</SelectItem>
-            <SelectItem value="week">This Week</SelectItem>
-            <SelectItem value="month">This Month</SelectItem>
-            <SelectItem value="quarter">This Quarter</SelectItem>
+            <SelectItem value="all-time">Semua Waktu</SelectItem>
+            <SelectItem value="today">Hari Ini</SelectItem>
+            <SelectItem value="week">Minggu Ini</SelectItem>
+            <SelectItem value="month">Bulan Ini</SelectItem>
+            <SelectItem value="quarter">Kuartal Ini</SelectItem>
           </SelectContent>
         </Select>
 
@@ -97,13 +97,13 @@ export function SearchAndFilters() {
           onValueChange={(val) => handleFilterChange("sort", val)}
         >
           <SelectTrigger className="w-[170px]">
-            <SelectValue placeholder="Sort by" />
+            <SelectValue placeholder="Urutkan berdasarkan" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="newest">Newest First</SelectItem>
-            <SelectItem value="oldest">Oldest First</SelectItem>
-            <SelectItem value="highest">Highest Confidence</SelectItem>
-            <SelectItem value="lowest">Lowest Confidence</SelectItem>
+            <SelectItem value="newest">Terbaru Dahulu</SelectItem>
+            <SelectItem value="oldest">Terlama Dahulu</SelectItem>
+            <SelectItem value="highest">Keyakinan Tertinggi</SelectItem>
+            <SelectItem value="lowest">Keyakinan Terendah</SelectItem>
           </SelectContent>
         </Select>
       </div>

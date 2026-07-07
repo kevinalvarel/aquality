@@ -22,18 +22,19 @@ interface MetricItem {
 }
 
 const metrics: MetricItem[] = [
-  { label: "Water Clarity", value: 86, colorClass: "[&>div]:bg-info" },
-  { label: "Turbidity", value: 18, colorClass: "[&>div]:bg-success" },
-  { label: "Floating Waste", value: 7, colorClass: "[&>div]:bg-success" },
-  { label: "Algae Presence", value: 12, colorClass: "[&>div]:bg-success" },
-  { label: "Shoreline Cleanliness", value: 91, colorClass: "[&>div]:bg-primary" },
+  { label: "Kejelasan Air", value: 86, colorClass: "[&>div]:bg-info" },
+  { label: "Kekeruhan", value: 18, colorClass: "[&>div]:bg-success" },
+  { label: "Sampah Terapung", value: 7, colorClass: "[&>div]:bg-success" },
+  { label: "Keberadaan Alga", value: 12, colorClass: "[&>div]:bg-success" },
+  { label: "Kebersihan Garis Pantai", value: 91, colorClass: "[&>div]:bg-primary" },
 ];
 
 function getStatusLabel(label: string, value: number): string {
-  if (label === "Water Clarity" || label === "Shoreline Cleanliness") {
-    return value >= 80 ? "Excellent" : value >= 60 ? "Good" : value >= 40 ? "Moderate" : "Poor";
+  const isPositive = label === "Kejelasan Air" || label === "Kebersihan Garis Pantai" || label === "Water Clarity" || label === "Shoreline Cleanliness";
+  if (isPositive) {
+    return value >= 80 ? "Sangat Baik" : value >= 60 ? "Baik" : value >= 40 ? "Sedang" : "Buruk";
   }
-  return value <= 15 ? "Excellent" : value <= 30 ? "Good" : value <= 50 ? "Moderate" : "Poor";
+  return value <= 15 ? "Sangat Baik" : value <= 30 ? "Baik" : value <= 50 ? "Sedang" : "Buruk";
 }
 
 export function EnvironmentalMetrics() {
@@ -42,10 +43,10 @@ export function EnvironmentalMetrics() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="size-4 text-primary" />
-          Environmental Metrics
+          Metrik Lingkungan
         </CardTitle>
         <CardDescription>
-          Real-time environmental indicators from image analysis
+          Indikator lingkungan real-time dari analisis gambar
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">

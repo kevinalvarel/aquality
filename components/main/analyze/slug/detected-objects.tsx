@@ -8,12 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { ScanSearch } from "lucide-react";
 
 const detectedObjects = [
-  { label: "Plastic Waste", variant: "destructive" as const },
-  { label: "Seaweed", variant: "secondary" as const },
-  { label: "Rocks", variant: "outline" as const },
-  { label: "Sand", variant: "outline" as const },
-  { label: "Ocean Water", variant: "default" as const },
-  { label: "Vegetation", variant: "secondary" as const },
+  { label: "Sampah Plastik", variant: "destructive" as const },
+  { label: "Rumput Laut", variant: "secondary" as const },
+  { label: "Batu", variant: "outline" as const },
+  { label: "Pasir", variant: "outline" as const },
+  { label: "Air Laut", variant: "default" as const },
+  { label: "Vegetasi", variant: "secondary" as const },
 ];
 
 export function DetectedObjects() {
@@ -22,7 +22,7 @@ export function DetectedObjects() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm">
           <ScanSearch className="size-4 text-primary" />
-          Detected Objects
+          Objek Terdeteksi
         </CardTitle>
       </CardHeader>
       <CardContent>

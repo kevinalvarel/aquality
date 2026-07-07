@@ -39,10 +39,14 @@ interface AnalysisRow {
   createdAt: string;
 }
 
-const statusConfig: Record<
-  AnalysisRow["status"],
-  { className: string }
-> = {
+const statusLabels: Record<string, string> = {
+  Excellent: "Sangat Baik",
+  Good: "Baik",
+  Moderate: "Sedang",
+  Poor: "Buruk",
+};
+
+const statusConfig: Record<AnalysisRow["status"], { className: string }> = {
   Excellent: {
     className: "bg-primary/15 text-primary border border-primary/30",
   },
@@ -53,7 +57,8 @@ const statusConfig: Record<
     className: "bg-warning/15 text-warning border border-warning/30",
   },
   Poor: {
-    className: "bg-destructive/15 text-destructive border border-destructive/30",
+    className:
+      "bg-destructive/15 text-destructive border border-destructive/30",
   },
 };
 
@@ -76,53 +81,63 @@ export function RecentAnalysesTable() {
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadData = useCallback(async (isPoll = false) => {
-    if (!isPoll) setIsLoading(true);
+  const loadData = useCallback(
+    async (isPoll = false) => {
+      if (!isPoll) setIsLoading(true);
 
-    // Map URL sort to API sortField and sortDirection
-    let sortField: "createdAt" | "aiConfidence" = "createdAt";
-    let sortDirection: "asc" | "desc" = "desc";
+      // Map URL sort to API sortField and sortDirection
+      let sortField: "createdAt" | "aiConfidence" = "createdAt";
+      let sortDirection: "asc" | "desc" = "desc";
 
-    if (sort === "oldest") {
-      sortField = "createdAt";
-      sortDirection = "asc";
-    } else if (sort === "highest") {
-      sortField = "aiConfidence";
-      sortDirection = "desc";
-    } else if (sort === "lowest") {
-      sortField = "aiConfidence";
-      sortDirection = "asc";
-    }
+      if (sort === "oldest") {
+        sortField = "createdAt";
+        sortDirection = "asc";
+      } else if (sort === "highest") {
+        sortField = "aiConfidence";
+        sortDirection = "desc";
+      } else if (sort === "lowest") {
+        sortField = "aiConfidence";
+        sortDirection = "asc";
+      }
 
-    const filters: any = {
-      page: 1,
-      pageSize: 8,
-      sortField,
-      sortDirection,
-    };
+      const filters: {
+        page: number;
+        pageSize: number;
+        sortField: "createdAt" | "aiConfidence";
+        sortDirection: "asc" | "desc";
+        search?: string;
+        status?: string;
+      } = {
+        page: 1,
+        pageSize: 8,
+        sortField,
+        sortDirection,
+      };
 
-    if (search.trim() !== "") {
-      filters.search = search;
-    }
-    if (status !== "all") {
-      filters.status = status;
-    }
+      if (search.trim() !== "") {
+        filters.search = search;
+      }
+      if (status !== "all") {
+        filters.status = status;
+      }
 
-    const result = await fetchAnalysesAction(filters);
-    if (result.success && result.data) {
-      const mapped: AnalysisRow[] = result.data.map((item) => ({
-        id: item.id,
-        slug: item.slug,
-        beachName: item.beachName,
-        status: mapStatus(item.overallStatus),
-        confidence: item.aiConfidence ?? 0,
-        createdAt: item.createdAt,
-      }));
-      setAnalyses(mapped);
-      setTotalCount(result.total);
-    }
-    setIsLoading(false);
-  }, [search, status, sort]);
+      const result = await fetchAnalysesAction(filters);
+      if (result.success && result.data) {
+        const mapped: AnalysisRow[] = result.data.map((item) => ({
+          id: item.id,
+          slug: item.slug,
+          beachName: item.beachName,
+          status: mapStatus(item.overallStatus),
+          confidence: item.aiConfidence ?? 0,
+          createdAt: item.createdAt,
+        }));
+        setAnalyses(mapped);
+        setTotalCount(result.total);
+      }
+      setIsLoading(false);
+    },
+    [search, status, sort],
+  );
 
   useEffect(() => {
     loadData();
@@ -140,17 +155,15 @@ export function RecentAnalysesTable() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-base">Recent Analyses</CardTitle>
+            <CardTitle className="text-base">Analisis Terbaru</CardTitle>
             <CardDescription>
-              Latest AI-powered beach water quality assessments
+              Penilaian kualitas air pantai bertenaga AI terbaru
             </CardDescription>
           </div>
           <span className="text-xs text-muted-foreground">
-            {isLoading && analyses.length === 0 ? (
-              "Loading results..."
-            ) : (
-              `Showing ${analyses.length} of ${totalCount} results`
-            )}
+            {isLoading && analyses.length === 0
+              ? "Memuat hasil..."
+              : `Menampilkan ${analyses.length} dari ${totalCount} hasil`}
           </span>
         </div>
       </CardHeader>
@@ -158,12 +171,12 @@ export function RecentAnalysesTable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Beach Name</TableHead>
+              <TableHead>Nama Pantai</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>AI Confidence</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Last Updated</TableHead>
-              <TableHead className="text-right">Action</TableHead>
+              <TableHead>Keyakinan AI</TableHead>
+              <TableHead>Tanggal</TableHead>
+              <TableHead>Terakhir Diperbarui</TableHead>
+              <TableHead className="text-right">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -192,17 +205,14 @@ export function RecentAnalysesTable() {
               ))
             ) : analyses.length > 0 ? (
               analyses.map((row) => (
-                <TableRow
-                  key={row.id}
-                  className="group transition-colors"
-                >
+                <TableRow key={row.id} className="group transition-colors">
                   <TableCell className="font-medium">{row.beachName}</TableCell>
                   <TableCell>
                     <Badge
                       variant="default"
                       className={statusConfig[row.status].className}
                     >
-                      {row.status}
+                      {statusLabels[row.status] || row.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
@@ -219,7 +229,7 @@ export function RecentAnalysesTable() {
                         </div>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>AI confidence: {row.confidence}%</p>
+                        <p>Keyakinan AI: {row.confidence}%</p>
                       </TooltipContent>
                     </Tooltip>
                   </TableCell>
@@ -233,7 +243,7 @@ export function RecentAnalysesTable() {
                     <Button variant="ghost" size="sm" asChild>
                       <Link href={`/analyze/${row.slug}`}>
                         <Eye className="size-3.5" />
-                        View Details
+                        Lihat Detail
                         <ExternalLink className="size-3 opacity-0 transition-opacity group-hover:opacity-100" />
                       </Link>
                     </Button>
@@ -246,7 +256,7 @@ export function RecentAnalysesTable() {
                   colSpan={6}
                   className="h-24 text-center text-muted-foreground"
                 >
-                  No analyses found.
+                  Tidak ada analisis ditemukan.
                 </TableCell>
               </TableRow>
             )}

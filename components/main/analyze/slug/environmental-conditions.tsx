@@ -22,32 +22,32 @@ interface ConditionItem {
 const conditions: ConditionItem[] = [
   {
     icon: <Thermometer className="size-4" />,
-    label: "Temperature",
+    label: "Suhu",
     value: "29°C",
     color: "text-orange-500",
   },
   {
     icon: <Droplets className="size-4" />,
-    label: "Humidity",
+    label: "Kelembapan",
     value: "81%",
     color: "text-sky-500",
   },
   {
     icon: <Wind className="size-4" />,
-    label: "Wind",
-    value: "12 km/h",
+    label: "Angin",
+    value: "12 km/jam",
     color: "text-slate-500",
   },
   {
     icon: <Waves className="size-4" />,
-    label: "Tide",
-    value: "High",
+    label: "Pasang Surut",
+    value: "Tinggi",
     color: "text-cyan-500",
   },
   {
     icon: <Sun className="size-4" />,
-    label: "UV Index",
-    value: "Moderate",
+    label: "Indeks UV",
+    value: "Sedang",
     color: "text-amber-500",
   },
 ];
@@ -56,7 +56,7 @@ export function EnvironmentalConditions() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Environmental Conditions</CardTitle>
+        <CardTitle className="text-sm">Kondisi Lingkungan</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">

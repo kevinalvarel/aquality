@@ -12,6 +12,13 @@ interface AIInsightsCardProps {
   stats: DashboardStats;
 }
 
+const statusLabels: Record<string, string> = {
+  Excellent: "Sangat Baik",
+  Good: "Baik",
+  Moderate: "Sedang",
+  Poor: "Buruk",
+};
+
 export function AIInsightsCard({ stats }: AIInsightsCardProps) {
   // Find most common status
   let mostCommonStatus = "Good";
@@ -28,17 +35,14 @@ export function AIInsightsCard({ stats }: AIInsightsCardProps) {
     .filter((d) => d.status === "Moderate" || d.status === "Poor")
     .reduce((sum, d) => sum + d.count, 0);
 
+  const translatedStatus = statusLabels[mostCommonStatus] || mostCommonStatus;
   const insights = [
-    `Most beaches analyzed are currently classified as ${mostCommonStatus}.`,
-    "Water quality across monitored Banten beaches remains stable.",
+    `Sebagian besar pantai yang dianalisis saat ini diklasifikasikan sebagai ${translatedStatus}.`,
+    "Kualitas air di seluruh pantai Banten yang dipantau tetap stabil.",
     attentionCount > 0
-      ? `${attentionCount} beach${
-          attentionCount > 1 ? "es" : ""
-        } require${
-          attentionCount === 1 ? "s" : ""
-        } closer monitoring due to lowered quality markers.`
-      : "No beaches currently require urgent environmental intervention.",
-    `AI classification confidence remains consistently high, averaging ${stats.averageConfidence}%.`,
+      ? `${attentionCount} pantai memerlukan pemantauan lebih ketat karena penurunan indikator kualitas.`
+      : "Tidak ada pantai yang saat ini memerlukan tindakan penanganan lingkungan darurat.",
+    `Tingkat keyakinan klasifikasi AI tetap tinggi, dengan rata-rata ${stats.averageConfidence}%.`,
   ];
 
   return (
@@ -51,9 +55,9 @@ export function AIInsightsCard({ stats }: AIInsightsCardProps) {
             <Sparkles className="size-4 text-primary" />
           </div>
           <div>
-            <CardTitle className="text-base">AI Insights</CardTitle>
+            <CardTitle className="text-base">Wawasan AI</CardTitle>
             <CardDescription>
-              Automatically generated analysis summary
+              Ringkasan analisis yang dibuat secara otomatis
             </CardDescription>
           </div>
         </div>

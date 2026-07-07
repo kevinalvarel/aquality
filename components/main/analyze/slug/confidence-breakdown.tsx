@@ -20,11 +20,11 @@ interface ConfidenceItem {
 }
 
 const breakdownData: ConfidenceItem[] = [
-  { label: "Water", value: 42, color: "bg-sky-500" },
-  { label: "Sand", value: 28, color: "bg-amber-400" },
-  { label: "Vegetation", value: 15, color: "bg-emerald-500" },
-  { label: "Waste", value: 8, color: "bg-red-400" },
-  { label: "Other", value: 7, color: "bg-slate-400" },
+  { label: "Air", value: 42, color: "bg-sky-500" },
+  { label: "Pasir", value: 28, color: "bg-amber-400" },
+  { label: "Vegetasi", value: 15, color: "bg-emerald-500" },
+  { label: "Sampah", value: 8, color: "bg-red-400" },
+  { label: "Lainnya", value: 7, color: "bg-slate-400" },
 ];
 
 export function ConfidenceBreakdown() {
@@ -33,7 +33,7 @@ export function ConfidenceBreakdown() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm">
           <Layers className="size-4 text-primary" />
-          Confidence Breakdown
+          Rincian Keyakinan
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -51,7 +51,7 @@ export function ConfidenceBreakdown() {
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Classification confidence distribution</p>
+            <p>Distribusi keyakinan klasifikasi</p>
           </TooltipContent>
         </Tooltip>
 

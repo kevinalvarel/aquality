@@ -8,6 +8,13 @@ import { Bot, Crown, Waves } from "lucide-react";
 import { getStatusColor } from "@/lib/utils";
 import Image from "next/image";
 
+const statusLabels: Record<string, string> = {
+  excellent: "Sangat Baik",
+  good: "Baik",
+  moderate: "Sedang",
+  poor: "Buruk",
+};
+
 interface LeaderboardPodiumProps {
   topBeaches: BeachLeaderboard[];
 }
@@ -16,7 +23,7 @@ const podiumConfig = [
   {
     rank: 2,
     medal: "🥈",
-    label: "2nd Place",
+    label: "Peringkat 2",
     cardClass: "order-1 lg:order-0",
     ringClass: "ring-chart-2/30",
     badgeClass: "bg-chart-2/10 text-chart-2",
@@ -25,7 +32,7 @@ const podiumConfig = [
   {
     rank: 1,
     medal: "🥇",
-    label: "1st Place",
+    label: "Peringkat 1",
     cardClass: "order-0 lg:order-1",
     ringClass: "ring-warning/40",
     badgeClass: "bg-warning/10 text-warning",
@@ -35,7 +42,7 @@ const podiumConfig = [
   {
     rank: 3,
     medal: "🥉",
-    label: "3rd Place",
+    label: "Peringkat 3",
     cardClass: "order-2",
     ringClass: "ring-orange-500/20",
     badgeClass: "bg-orange-500/10 text-orange-600",
@@ -48,7 +55,7 @@ export function LeaderboardPodium({ topBeaches }: LeaderboardPodiumProps) {
 
   return (
     <section id="leaderboard-podium" className="space-y-4">
-      <h2 className="text-lg font-semibold">Top Performers</h2>
+      <h2 className="text-lg font-semibold">Performa Terbaik</h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {podiumConfig.map((config) => {
           const beach = topBeaches[config.rank - 1];
@@ -109,7 +116,7 @@ export function LeaderboardPodium({ topBeaches }: LeaderboardPodiumProps) {
                         {beach.environmentalScore}
                       </p>
                       <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                        Env. Score
+                        Skor Lingk.
                       </p>
                     </div>
 
@@ -118,7 +125,7 @@ export function LeaderboardPodium({ topBeaches }: LeaderboardPodiumProps) {
                         variant="outline"
                         className={`border-none ${statusColor.bg} ${statusColor.text}`}
                       >
-                        {beach.status}
+                        {statusLabels[beach.status] || beach.status}
                       </Badge>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground">
                         <Bot className="size-3" />

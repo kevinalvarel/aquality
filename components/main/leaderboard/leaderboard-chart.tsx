@@ -23,6 +23,13 @@ const COLORS: Record<string, string> = {
   Poor: "#ef4444",
 };
 
+const statusLabels: Record<string, string> = {
+  Excellent: "Sangat Baik",
+  Good: "Baik",
+  Moderate: "Sedang",
+  Poor: "Buruk",
+};
+
 export function LeaderboardChart({ data }: ScoreDistributionProps) {
   if (data.every((d) => d.count === 0)) return null;
 
@@ -31,7 +38,7 @@ export function LeaderboardChart({ data }: ScoreDistributionProps) {
       <Card>
         <CardHeader>
           <CardTitle className="text-sm font-semibold">
-            Score Distribution
+            Distribusi Skor
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -52,6 +59,7 @@ export function LeaderboardChart({ data }: ScoreDistributionProps) {
                   stroke="var(--color-muted-foreground)"
                   tickLine={false}
                   axisLine={false}
+                  tickFormatter={(val) => statusLabels[val] || val}
                 />
                 <YAxis
                   allowDecimals={false}
@@ -63,13 +71,13 @@ export function LeaderboardChart({ data }: ScoreDistributionProps) {
                 <Tooltip
                   cursor={{ fill: "var(--color-muted)", opacity: 0.3 }}
                   contentStyle={{
-                    backgroundColor: "var(--color-popover)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: "0.5rem",
-                    fontSize: "0.75rem",
-                    boxShadow: "var(--shadow-md)",
+                     backgroundColor: "var(--color-popover)",
+                     border: "1px solid var(--color-border)",
+                     borderRadius: "0.5rem",
+                     fontSize: "0.75rem",
+                     boxShadow: "var(--shadow-md)",
                   }}
-                  formatter={(value) => [`${value} beaches`, "Count"]}
+                  formatter={(value) => [`${value} pantai`, "Jumlah"]}
                 />
                 <Bar dataKey="count" radius={[6, 6, 0, 0]} barSize={48}>
                   {data.map((entry) => (
@@ -94,7 +102,7 @@ export function LeaderboardChart({ data }: ScoreDistributionProps) {
                   }}
                 />
                 <span className="text-xs text-muted-foreground">
-                  {entry.status} ({entry.count})
+                  {statusLabels[entry.status] || entry.status} ({entry.count})
                 </span>
               </div>
             ))}
