@@ -57,10 +57,12 @@ export function DestinationMarker({
   destination,
   isSelected,
   onClick,
+  hidePopup = false,
 }: {
   destination: Destination;
   isSelected: boolean;
   onClick: () => void;
+  hidePopup?: boolean;
 }) {
   const analysis = useMemo(
     () =>
@@ -114,7 +116,7 @@ export function DestinationMarker({
         </button>
       </MarkerContent>
 
-      {isSelected && (
+      {isSelected && !hidePopup && (
         <MarkerPopup closeButton offset={20} anchor="top">
           <div className="max-w-full space-y-3 sm:w-80">
             {/* Header */}

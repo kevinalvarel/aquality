@@ -22,7 +22,9 @@ interface BeachAnalysisInput {
  * Generate a lightweight derived analysis from existing beach data.
  * Maps beach status and scores to human-readable labels and recommendations.
  */
-export function generateBeachAnalysis(beach: BeachAnalysisInput): BeachAnalysis {
+export function generateBeachAnalysis(
+  beach: BeachAnalysisInput,
+): BeachAnalysis {
   const waterQuality = deriveWaterQuality(beach.status);
   const safetyStatus = deriveSafetyStatus(beach.status, beach.latestScore);
   const cleanliness = deriveCleanliness(beach.status, beach.latestScore);
