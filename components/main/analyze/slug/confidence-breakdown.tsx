@@ -12,28 +12,43 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Layers } from "lucide-react";
+import type { BeachApiResponse } from "@/types/beach-api.type";
 
-interface ConfidenceItem {
-  label: string;
-  value: number;
-  color: string;
+interface ConfidenceBreakdownProps {
+  data: BeachApiResponse;
 }
 
-const breakdownData: ConfidenceItem[] = [
-  { label: "Air", value: 42, color: "bg-sky-500" },
-  { label: "Pasir", value: 28, color: "bg-amber-400" },
-  { label: "Vegetasi", value: 15, color: "bg-emerald-500" },
-  { label: "Sampah", value: 8, color: "bg-red-400" },
-  { label: "Lainnya", value: 7, color: "bg-slate-400" },
-];
+export function ConfidenceBreakdown({ data }: ConfidenceBreakdownProps) {
+  const rawData = [
+    { 
+      label: "Skor Dampak Industri", 
+      value: Math.round(data.skor_detail.skor_industri), 
+      color: "bg-sky-500" 
+    },
+    { 
+      label: "Skor Kepadatan Penduduk", 
+      value: Math.round(data.skor_detail.skor_kepadatan_penduduk), 
+      color: "bg-amber-400" 
+    },
+    { 
+      label: "Skor Pengaruh Urban", 
+      value: Math.round(data.skor_detail.skor_pengaruh_urban), 
+      color: "bg-emerald-500" 
+    },
+  ];
 
-export function ConfidenceBreakdown() {
+  const total = rawData.reduce((acc, curr) => acc + curr.value, 0);
+  const breakdownData = rawData.map(item => ({
+    ...item,
+    percent: total > 0 ? (item.value / total) * 100 : 0
+  }));
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm">
           <Layers className="size-4 text-primary" />
-          Rincian Keyakinan
+          Rincian Skor Kelayakan
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -45,13 +60,13 @@ export function ConfidenceBreakdown() {
                 <div
                   key={item.label}
                   className={`${item.color} transition-all duration-500 first:rounded-l-full last:rounded-r-full`}
-                  style={{ width: `${item.value}%` }}
+                  style={{ width: `${item.percent}%` }}
                 />
               ))}
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Distribusi keyakinan klasifikasi</p>
+            <p>Distribusi proporsional skor kelayakan</p>
           </TooltipContent>
         </Tooltip>
 
@@ -75,3 +90,4 @@ export function ConfidenceBreakdown() {
     </Card>
   );
 }
+

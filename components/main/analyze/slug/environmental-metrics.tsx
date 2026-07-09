@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { BarChart3 } from "lucide-react";
+import type { BeachApiResponse } from "@/types/beach-api.type";
 
 interface MetricItem {
   label: string;
@@ -21,32 +22,42 @@ interface MetricItem {
   colorClass: string;
 }
 
-const metrics: MetricItem[] = [
-  { label: "Kejelasan Air", value: 86, colorClass: "[&>div]:bg-info" },
-  { label: "Kekeruhan", value: 18, colorClass: "[&>div]:bg-success" },
-  { label: "Sampah Terapung", value: 7, colorClass: "[&>div]:bg-success" },
-  { label: "Keberadaan Alga", value: 12, colorClass: "[&>div]:bg-success" },
-  { label: "Kebersihan Garis Pantai", value: 91, colorClass: "[&>div]:bg-primary" },
-];
-
-function getStatusLabel(label: string, value: number): string {
-  const isPositive = label === "Kejelasan Air" || label === "Kebersihan Garis Pantai" || label === "Water Clarity" || label === "Shoreline Cleanliness";
-  if (isPositive) {
-    return value >= 80 ? "Sangat Baik" : value >= 60 ? "Baik" : value >= 40 ? "Sedang" : "Buruk";
-  }
-  return value <= 15 ? "Sangat Baik" : value <= 30 ? "Baik" : value <= 50 ? "Sedang" : "Buruk";
+function getStatusLabel(value: number): string {
+  return value >= 80 ? "Sangat Baik" : value >= 60 ? "Baik" : value >= 40 ? "Sedang" : "Buruk";
 }
 
-export function EnvironmentalMetrics() {
+interface EnvironmentalMetricsProps {
+  data: BeachApiResponse;
+}
+
+export function EnvironmentalMetrics({ data }: EnvironmentalMetricsProps) {
+  const metrics: MetricItem[] = [
+    { 
+      label: "Skor Dampak Industri", 
+      value: Math.round(data.skor_detail.skor_industri), 
+      colorClass: "[&>div]:bg-info" 
+    },
+    { 
+      label: "Skor Kepadatan Penduduk", 
+      value: Math.round(data.skor_detail.skor_kepadatan_penduduk), 
+      colorClass: "[&>div]:bg-success" 
+    },
+    { 
+      label: "Skor Pengaruh Urban", 
+      value: Math.round(data.skor_detail.skor_pengaruh_urban), 
+      colorClass: "[&>div]:bg-primary" 
+    },
+  ];
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="size-4 text-primary" />
-          Metrik Lingkungan
+          Rincian Skor Kelayakan
         </CardTitle>
         <CardDescription>
-          Indikator lingkungan real-time dari analisis gambar
+          Analisis rincian nilai kelayakan lingkungan pesisir
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">
@@ -56,7 +67,7 @@ export function EnvironmentalMetrics() {
               <span className="text-muted-foreground">{metric.label}</span>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-muted-foreground">
-                  {getStatusLabel(metric.label, metric.value)}
+                  {getStatusLabel(metric.value)}
                 </span>
                 <span className="font-semibold tabular-nums">{metric.value}%</span>
               </div>
@@ -73,7 +84,7 @@ export function EnvironmentalMetrics() {
               <TooltipContent>
                 <p>
                   {metric.label}: {metric.value}% —{" "}
-                  {getStatusLabel(metric.label, metric.value)}
+                  {getStatusLabel(metric.value)}
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -83,3 +94,4 @@ export function EnvironmentalMetrics() {
     </Card>
   );
 }
+

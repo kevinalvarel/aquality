@@ -6,23 +6,30 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScanSearch } from "lucide-react";
+import type { BeachApiResponse } from "@/types/beach-api.type";
 
-const detectedObjects = [
-  { label: "Sampah Plastik", variant: "destructive" as const },
-  { label: "Rumput Laut", variant: "secondary" as const },
-  { label: "Batu", variant: "outline" as const },
-  { label: "Pasir", variant: "outline" as const },
-  { label: "Air Laut", variant: "default" as const },
-  { label: "Vegetasi", variant: "secondary" as const },
-];
+interface DetectedObjectsProps {
+  data: BeachApiResponse;
+}
 
-export function DetectedObjects() {
+export function DetectedObjects({ data }: DetectedObjectsProps) {
+  const detectedObjects = [
+    { label: data.pantai, variant: "default" as const },
+    { label: `Kecamatan: ${data.kecamatan}`, variant: "secondary" as const },
+    { 
+      label: `Kualitas: ${data.status_kualitas_2026}`, 
+      variant: data.status_kualitas_2026.toUpperCase() === "SEHAT" ? ("default" as const) : ("destructive" as const) 
+    },
+    { label: `Tren: ${data.tren_kualitas}`, variant: "outline" as const },
+    { label: `Dampak: ${data.kategori_dampak_industri}`, variant: "secondary" as const },
+  ];
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm">
           <ScanSearch className="size-4 text-primary" />
-          Objek Terdeteksi
+          Faktor Pantai Terdeteksi
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -37,3 +44,4 @@ export function DetectedObjects() {
     </Card>
   );
 }
+

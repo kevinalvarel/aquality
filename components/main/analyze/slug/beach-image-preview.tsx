@@ -22,10 +22,14 @@ import {
   Clock,
   Navigation,
   CloudSun,
-  ImageIcon,
 } from "lucide-react";
+import type { BeachApiResponse } from "@/types/beach-api.type";
 
-export function BeachImagePreview() {
+interface BeachImagePreviewProps {
+  data: BeachApiResponse;
+}
+
+export function BeachImagePreview({ data }: BeachImagePreviewProps) {
   const [isHovering, setIsHovering] = useState(false);
 
   return (
@@ -35,7 +39,7 @@ export function BeachImagePreview() {
           <div>
             <CardTitle>Pratinjau Gambar Pantai</CardTitle>
             <CardDescription>
-              Unggah gambar pesisir untuk analisis AI
+              Gambar pesisir yang dianalisis
             </CardDescription>
           </div>
           <div className="flex gap-2">
@@ -57,25 +61,14 @@ export function BeachImagePreview() {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          {/* Placeholder gradient simulating a beach image */}
+          {/* Real image with fallback gradient */}
           <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-gradient-to-br from-sky-400 via-cyan-300 to-emerald-200 dark:from-sky-600 dark:via-cyan-500 dark:to-emerald-400">
-            {/* Simulated beach scene with CSS */}
-            <div className="absolute inset-0">
-              {/* Sky */}
-              <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-sky-300 to-sky-200 dark:from-sky-700 dark:to-sky-500" />
-              {/* Ocean */}
-              <div className="absolute inset-x-0 top-[35%] h-[30%] bg-gradient-to-b from-cyan-400 to-blue-500 dark:from-cyan-600 dark:to-blue-700">
-                <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_40px,rgba(255,255,255,0.1)_40px,rgba(255,255,255,0.1)_80px)]" />
-              </div>
-              {/* Sand */}
-              <div className="absolute inset-x-0 bottom-0 h-[35%] bg-gradient-to-b from-amber-200 to-amber-300 dark:from-amber-400 dark:to-amber-500" />
-              {/* Center icon */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="rounded-2xl bg-white/20 p-6 backdrop-blur-sm">
-                  <ImageIcon className="size-12 text-white" />
-                </div>
-              </div>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={data.url_gambar}
+              alt={data.pantai}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
           </div>
 
           {/* Hover overlay */}
@@ -90,6 +83,7 @@ export function BeachImagePreview() {
                   variant="secondary"
                   size="lg"
                   className="gap-2 shadow-xl"
+                  onClick={() => window.open(data.url_gambar, "_blank")}
                 >
                   <ZoomIn className="size-5" />
                   Lihat Ukuran Penuh
@@ -107,27 +101,27 @@ export function BeachImagePreview() {
           <MetadataItem
             icon={<MapPin className="size-3.5" />}
             label="Nama Pantai"
-            value="Pantai Kuta"
+            value={data.pantai}
           />
           <MetadataItem
             icon={<Navigation className="size-3.5" />}
-            label="Lokasi"
-            value="Bali, Indonesia"
+            label="Kecamatan"
+            value={data.kecamatan}
           />
           <MetadataItem
             icon={<Clock className="size-3.5" />}
-            label="Waktu Pengambilan"
-            value="30 Jun 2026, 14:30"
+            label="Kabupaten / Kota"
+            value={data.kabupaten_kota}
           />
           <MetadataItem
             icon={<CloudSun className="size-3.5" />}
-            label="Cuaca"
-            value="Cerah Berawan"
+            label="Status Kualitas"
+            value={data.status_kualitas_2026}
           />
         </div>
         <div className="rounded-lg bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
           <span className="font-medium">Koordinat GPS:</span>{" "}
-          -8.7185° S, 115.1686° E
+          {data.latitude}° latitude, {data.longitude}° longitude
         </div>
       </CardContent>
     </Card>
@@ -153,3 +147,4 @@ function MetadataItem({
     </div>
   );
 }
+
