@@ -1,9 +1,9 @@
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Lightbulb } from "lucide-react";
-import type { BeachApiResponse } from "@/types/beach-api.type";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 interface AIRecommendationProps {
-  data: BeachApiResponse;
+  data: AnalyzeApiResponse;
 }
 
 function parseMarkdown(text: string) {
@@ -24,11 +24,10 @@ export function AIRecommendation({ data }: AIRecommendationProps) {
   return (
     <Alert className="border-primary/20 bg-primary/5">
       <Lightbulb className="size-4 text-primary" />
-      <AlertTitle className="font-semibold">Rekomendasi AI</AlertTitle>
+      <AlertTitle className="font-semibold">Penjelasan Kualitas AI</AlertTitle>
       <AlertDescription className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        {parseMarkdown(data.narasi_rekomendasi)}
+        {parseMarkdown(data.penjelasan_kualitas)}
       </AlertDescription>
     </Alert>
   );
 }
-

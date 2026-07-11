@@ -8,7 +8,7 @@ import type {
   AnalysisListResponse,
   AnalysisFilters,
 } from "@/types/analysis.type";
-import type { BeachApiResponse } from "@/types/beach-api.type";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 // ─── Analysis Service ───────────────────────────────────────────────────────
 // Provides CRUD and query operations for AI-powered coastal analyses.
@@ -155,21 +155,25 @@ export async function getAnalyses(
 }
 
 /**
- * Fetch beach recommendation details by slug from the AQuality external API.
+ * Fetch beach analysis details by slug from the AQuality external API.
+ * Calls GET /api/analyze/{slug} which returns a single beach analysis object.
  */
-export async function getBeachRecommendationBySlug(
+export async function getBeachAnalysisBySlug(
   slug: string,
-): Promise<BeachApiResponse | null> {
+): Promise<AnalyzeApiResponse | null> {
   const apiUrl = process.env.NEXT_PUBLIC_AQUALITY_API_URL;
-  const res = await fetch(`${apiUrl}/api/recommendation/beaches`, {
+  const res = await fetch(`${apiUrl}/api/analyze/${slug}`, {
     next: { revalidate: 3600 },
   });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch beach data: ${res.statusText}`);
+  if (res.status === 404) {
+    return null;
   }
 
-  const result = await res.json();
-  const recommendations: BeachApiResponse[] = result.recommendations || [];
-  return recommendations.find((item) => item.slug === slug) || null;
+  if (!res.ok) {
+    throw new Error(`Failed to fetch beach analysis data: ${res.statusText}`);
+  }
+
+  const data: AnalyzeApiResponse = await res.json();
+  return data;
 }

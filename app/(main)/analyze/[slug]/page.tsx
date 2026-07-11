@@ -15,8 +15,8 @@ import { EnvironmentalConditions } from "@/components/main/analyze/slug/environm
 import { DetectedObjects } from "@/components/main/analyze/slug/detected-objects";
 import { ConfidenceBreakdown } from "@/components/main/analyze/slug/confidence-breakdown";
 import { AnalysisTabs } from "@/components/main/analyze/slug/analysis-tabs";
-import type { BeachApiResponse } from "@/types/beach-api.type";
-import { getBeachRecommendationBySlug } from "@/services/analysis.service";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
+import { getBeachAnalysisBySlug } from "@/services/analysis.service";
 
 interface AnalysisDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -27,11 +27,11 @@ export default async function AnalysisDetailPage({
 }: AnalysisDetailPageProps) {
   const { slug } = await params;
 
-  let beachData: BeachApiResponse | null = null;
+  let beachData: AnalyzeApiResponse | null = null;
   let hasError = false;
 
   try {
-    beachData = await getBeachRecommendationBySlug(slug);
+    beachData = await getBeachAnalysisBySlug(slug);
   } catch (error) {
     console.error("Error fetching beach analysis data:", error);
     hasError = true;
@@ -95,7 +95,7 @@ export default async function AnalysisDetailPage({
           </div>
           <p className="max-w-xl text-sm text-muted-foreground">
             Analisis kualitas air pantai bertenaga AI untuk{" "}
-            {beachData.kecamatan}.
+            {beachData.Kecamatan}.
           </p>
         </div>
         <div className="flex gap-2">

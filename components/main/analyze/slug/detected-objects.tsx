@@ -6,22 +6,25 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScanSearch } from "lucide-react";
-import type { BeachApiResponse } from "@/types/beach-api.type";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 interface DetectedObjectsProps {
-  data: BeachApiResponse;
+  data: AnalyzeApiResponse;
 }
 
 export function DetectedObjects({ data }: DetectedObjectsProps) {
   const detectedObjects = [
     { label: data.pantai, variant: "default" as const },
-    { label: `Kecamatan: ${data.kecamatan}`, variant: "secondary" as const },
+    { label: `Kecamatan: ${data.Kecamatan}`, variant: "secondary" as const },
     { 
-      label: `Kualitas: ${data.status_kualitas_2026}`, 
-      variant: data.status_kualitas_2026.toUpperCase() === "SEHAT" ? ("default" as const) : ("destructive" as const) 
+      label: `Kualitas: ${data.Status_Kualitas_2026}`, 
+      variant: data.Status_Kualitas_2026.toUpperCase() === "SEHAT" ? ("default" as const) : ("destructive" as const) 
     },
-    { label: `Tren: ${data.tren_kualitas}`, variant: "outline" as const },
+    { label: `Tren: ${data.Tren_Kualitas}`, variant: "outline" as const },
     { label: `Dampak: ${data.kategori_dampak_industri}`, variant: "secondary" as const },
+    { label: `${data.industri_terdekat} (${data.tipe_industri})`, variant: "outline" as const },
+    ...(data.industri_terdekat_2 ? [{ label: `${data.industri_terdekat_2} (${data.tipe_industri_2})`, variant: "outline" as const }] : []),
+    ...(data.industri_terdekat_3 ? [{ label: `${data.industri_terdekat_3} (${data.tipe_industri_3})`, variant: "outline" as const }] : []),
   ];
 
   return (
@@ -44,4 +47,3 @@ export function DetectedObjects({ data }: DetectedObjectsProps) {
     </Card>
   );
 }
-

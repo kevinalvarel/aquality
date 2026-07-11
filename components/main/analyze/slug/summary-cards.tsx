@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -15,13 +10,13 @@ import {
 } from "@/components/ui/tooltip";
 import {
   Droplets,
-  Brain,
+  Waves,
   AlertTriangle,
-  Calendar,
+  BarChart3,
   TrendingUp,
   TrendingDown,
 } from "lucide-react";
-import type { BeachApiResponse } from "@/types/beach-api.type";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 interface SummaryCardProps {
   title: string;
@@ -79,7 +74,9 @@ function SummaryCard({
         {subtitle && (
           <p className="flex items-center gap-1 text-xs text-muted-foreground">
             {trend === "up" && <TrendingUp className="size-3 text-success" />}
-            {trend === "down" && <TrendingDown className="size-3 text-destructive" />}
+            {trend === "down" && (
+              <TrendingDown className="size-3 text-destructive" />
+            )}
             {subtitle}
           </p>
         )}
@@ -89,33 +86,44 @@ function SummaryCard({
 }
 
 interface SummaryCardsProps {
-  data: BeachApiResponse;
+  data: AnalyzeApiResponse;
 }
 
 export function SummaryCards({ data }: SummaryCardsProps) {
-  const isSehat = data.status_kualitas_2026.toUpperCase() === "SEHAT";
-  const isDampakRendah = data.kategori_dampak_industri.toUpperCase().includes("RENDAH");
-  const isDampakSedang = data.kategori_dampak_industri.toUpperCase().includes("SEDANG");
+  const isSehat = (data.Status_Kualitas_2026 || "").toUpperCase() === "SEHAT";
+  const isDampakRendah = (data.kategori_dampak_industri || "")
+    .toUpperCase()
+    .includes("RENDAH");
+  const isDampakSedang = (data.kategori_dampak_industri || "")
+    .toUpperCase()
+    .includes("SEDANG");
 
   const cards: SummaryCardProps[] = [
     {
       title: "Kualitas Air",
-      value: data.status_kualitas_2026,
+      value: data.Status_Kualitas_2026,
       icon: <Droplets className="size-4" />,
       badge: {
-        label: data.status_kualitas_2026,
+        label: data.Status_Kualitas_2026,
         variant: isSehat ? "default" : "destructive",
-        className: isSehat ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground",
+        className: isSehat
+          ? "bg-success text-success-foreground"
+          : "bg-destructive text-destructive-foreground",
       },
-      subtitle: `Tren Kualitas: ${data.tren_kualitas}`,
-      trend: data.tren_kualitas.toUpperCase() === "MEMBAIK" ? "up" : data.tren_kualitas.toUpperCase() === "MEMBURUK" ? "down" : "stable",
+      subtitle: `Tren Kualitas: ${data.Tren_Kualitas}`,
+      trend:
+        (data.Tren_Kualitas || "").toUpperCase() === "MEMBAIK"
+          ? "up"
+          : (data.Tren_Kualitas || "").toUpperCase() === "MEMBURUK"
+            ? "down"
+            : "stable",
     },
     {
-      title: "Skor Kesehatan",
-      value: `${data.health_score}%`,
-      icon: <Brain className="size-4" />,
-      progress: data.health_score,
-      subtitle: data.label_rekomendasi,
+      title: "Area Sehat",
+      value: `${data.Pct_Sehat_2026}%`,
+      icon: <Waves className="size-4" />,
+      progress: data.Pct_Sehat_2026,
+      subtitle: `${data.Sehat_2026_Ha} Ha dari ${data.Luas_Air_2026_Ha} Ha`,
     },
     {
       title: "Dampak Industri",
@@ -123,20 +131,25 @@ export function SummaryCards({ data }: SummaryCardsProps) {
       icon: <AlertTriangle className="size-4" />,
       badge: {
         label: data.kategori_dampak_industri,
-        variant: isDampakRendah ? "default" : isDampakSedang ? "secondary" : "destructive",
-        className: isDampakRendah 
-          ? "bg-success/15 text-success border border-success/30" 
-          : isDampakSedang 
-          ? "bg-warning/15 text-warning border border-warning/30"
-          : "bg-destructive/15 text-destructive border border-destructive/30",
+        variant: isDampakRendah
+          ? "default"
+          : isDampakSedang
+            ? "secondary"
+            : "destructive",
+        className: isDampakRendah
+          ? "bg-success/15 text-success border border-success/30"
+          : isDampakSedang
+            ? "bg-warning/15 text-warning border border-warning/30"
+            : "bg-destructive/15 text-destructive border border-destructive/30",
       },
       subtitle: `Indeks Dampak: ${data.indeks_dampak_industri}`,
     },
     {
-      title: "Peringkat Pantai",
-      value: `#${data.ranking}`,
-      icon: <Calendar className="size-4" />,
-      subtitle: "Dari 25 pantai terkelola",
+      title: "Perubahan Kualitas",
+      value: `${data.Delta_Pct_Sehat > 0 ? "+" : ""}${data.Delta_Pct_Sehat}%`,
+      icon: <BarChart3 className="size-4" />,
+      subtitle: `Dari ${data.Pct_Sehat_2017}% (2017) ke ${data.Pct_Sehat_2026}% (2026)`,
+      trend: data.Delta_Pct_Sehat > 0 ? "up" : data.Delta_Pct_Sehat < 0 ? "down" : "stable",
     },
   ];
 
@@ -148,4 +161,3 @@ export function SummaryCards({ data }: SummaryCardsProps) {
     </div>
   );
 }
-

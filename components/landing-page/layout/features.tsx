@@ -2,62 +2,62 @@ import {
   Map,
   BarChart3,
   Droplets,
-  Wind,
-  Users,
-  Bell,
+  Brain,
+  Factory,
+  Trophy,
 } from "lucide-react";
 
 const features = [
   {
     icon: Map,
-    title: "Peta Interaktif Banten",
+    title: "Interactive Map",
     description:
-      "Visualisasi geospasial semua pantai di Banten dengan layer indeks kualitas, polusi, dan keramaian yang dapat dikustomisasi.",
+      "Geospatial visualization of all monitored beaches with water quality overlays, industrial zones, and environmental data layers.",
     color: "text-primary",
     bgColor: "bg-primary/8",
     borderColor: "group-hover:border-primary/20",
   },
   {
     icon: Droplets,
-    title: "Index Pencemaran Air",
+    title: "Water Quality Prediction",
     description:
-      "Pantau kadar pH, salinitas, logam berat, dan indikator biologis pencemaran air laut secara berkala.",
+      "AI-powered predictions for coastal water quality using machine learning models trained on environmental and industrial data.",
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/8",
     borderColor: "group-hover:border-cyan-500/20",
   },
   {
-    icon: Wind,
-    title: "Index Polusi Udara",
+    icon: Brain,
+    title: "Beach Analysis",
     description:
-      "Monitoring AQI (Air Quality Index) dan konsentrasi partikel PM2.5 di kawasan pantai Banten.",
+      "Deep environmental analysis per beach — covering healthy water percentage, quality status, and ecosystem summary.",
     color: "text-sky-500",
     bgColor: "bg-sky-500/8",
     borderColor: "group-hover:border-sky-500/20",
   },
   {
-    icon: Users,
-    title: "Tingkat Keramaian",
+    icon: Factory,
+    title: "Industrial Impact Analysis",
     description:
-      "Estimasi real-time kepadatan pengunjung di setiap pantai berdasarkan data pergerakan dan input komunitas.",
+      "Assess the impact of nearby industries on water quality, including distance, category, and pollution contribution.",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/8",
     borderColor: "group-hover:border-emerald-500/20",
   },
   {
     icon: BarChart3,
-    title: "Dashboard Analitik",
+    title: "Historical Analysis",
     description:
-      "Visualisasi tren kualitas pantai mingguan, bulanan, dan tahunan dalam grafik interaktif yang mudah dibaca.",
+      "Explore historical water quality trends, seasonal patterns, and long-term environmental changes across all beaches.",
     color: "text-chart-2",
     bgColor: "bg-chart-2/8",
     borderColor: "group-hover:border-chart-2/20",
   },
   {
-    icon: Bell,
-    title: "Notifikasi Peringatan",
+    icon: Trophy,
+    title: "Quality Leaderboard",
     description:
-      "Dapatkan notifikasi otomatis ketika kondisi pantai melampaui batas aman untuk kunjungan wisatawan.",
+      "Rank beaches by their water quality index score — helping users quickly identify the cleanest and safest coastal destinations.",
     color: "text-amber-500",
     bgColor: "bg-amber-500/8",
     borderColor: "group-hover:border-amber-500/20",
@@ -71,16 +71,16 @@ export function Features() {
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-16 sm:mb-20">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary mb-4">
-            Fitur Utama
+            Platform Features
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-            Semua Informasi yang Anda Butuhkan untuk{" "}
-            <span className="text-primary">Pilih Pantai Terbaik</span>
+            Everything You Need for{" "}
+            <span className="text-primary">Coastal Water Intelligence</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Aquality menyediakan data lengkap kondisi lingkungan pantai di
-            wilayah Banten — dari polusi udara, pencemaran air, hingga
-            keramaian pengunjung.
+            Aquality combines AI, machine learning, and environmental data to
+            give you comprehensive insights into coastal water quality —
+            from industrial impact to real-time predictions.
           </p>
         </div>
 
@@ -134,3 +134,4 @@ function FeatureCard({
     </div>
   );
 }
+

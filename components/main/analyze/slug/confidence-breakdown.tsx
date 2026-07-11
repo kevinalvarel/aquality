@@ -12,28 +12,28 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Layers } from "lucide-react";
-import type { BeachApiResponse } from "@/types/beach-api.type";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 interface ConfidenceBreakdownProps {
-  data: BeachApiResponse;
+  data: AnalyzeApiResponse;
 }
 
 export function ConfidenceBreakdown({ data }: ConfidenceBreakdownProps) {
   const rawData = [
     { 
-      label: "Skor Dampak Industri", 
-      value: Math.round(data.skor_detail.skor_industri), 
-      color: "bg-sky-500" 
+      label: "Area Sehat", 
+      value: data.Pct_Sehat_2026, 
+      color: "bg-emerald-500" 
     },
     { 
-      label: "Skor Kepadatan Penduduk", 
-      value: Math.round(data.skor_detail.skor_kepadatan_penduduk), 
+      label: "Area Sedang", 
+      value: data.Pct_Sedang_2026, 
       color: "bg-amber-400" 
     },
     { 
-      label: "Skor Pengaruh Urban", 
-      value: Math.round(data.skor_detail.skor_pengaruh_urban), 
-      color: "bg-emerald-500" 
+      label: "Area Tidak Sehat", 
+      value: data.Pct_TidakSehat_2026, 
+      color: "bg-rose-500" 
     },
   ];
 
@@ -48,7 +48,7 @@ export function ConfidenceBreakdown({ data }: ConfidenceBreakdownProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm">
           <Layers className="size-4 text-primary" />
-          Rincian Skor Kelayakan
+          Distribusi Kualitas Area
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -66,7 +66,7 @@ export function ConfidenceBreakdown({ data }: ConfidenceBreakdownProps) {
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Distribusi proporsional skor kelayakan</p>
+            <p>Distribusi proporsional kualitas area perairan</p>
           </TooltipContent>
         </Tooltip>
 
@@ -90,4 +90,3 @@ export function ConfidenceBreakdown({ data }: ConfidenceBreakdownProps) {
     </Card>
   );
 }
-

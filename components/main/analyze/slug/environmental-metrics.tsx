@@ -14,7 +14,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { BarChart3 } from "lucide-react";
-import type { BeachApiResponse } from "@/types/beach-api.type";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 interface MetricItem {
   label: string;
@@ -27,24 +27,28 @@ function getStatusLabel(value: number): string {
 }
 
 interface EnvironmentalMetricsProps {
-  data: BeachApiResponse;
+  data: AnalyzeApiResponse;
 }
 
 export function EnvironmentalMetrics({ data }: EnvironmentalMetricsProps) {
+  // Normalize indeks_dampak_industri (0-100 scale) and indeks_pengaruh_urban (0-100 scale)
+  // kepadatan_penduduk_kecamatan: use inverse (lower = better), cap at 5000
+  const normalizedKepadatan = Math.max(0, Math.min(100, 100 - (data.kepadatan_penduduk_kecamatan / 5000) * 100));
+
   const metrics: MetricItem[] = [
     { 
-      label: "Skor Dampak Industri", 
-      value: Math.round(data.skor_detail.skor_industri), 
+      label: "Indeks Dampak Industri", 
+      value: Math.round(100 - data.indeks_dampak_industri), 
       colorClass: "[&>div]:bg-info" 
     },
     { 
       label: "Skor Kepadatan Penduduk", 
-      value: Math.round(data.skor_detail.skor_kepadatan_penduduk), 
+      value: Math.round(normalizedKepadatan), 
       colorClass: "[&>div]:bg-success" 
     },
     { 
-      label: "Skor Pengaruh Urban", 
-      value: Math.round(data.skor_detail.skor_pengaruh_urban), 
+      label: "Indeks Pengaruh Urban", 
+      value: Math.round(100 - data.indeks_pengaruh_urban), 
       colorClass: "[&>div]:bg-primary" 
     },
   ];
@@ -94,4 +98,3 @@ export function EnvironmentalMetrics({ data }: EnvironmentalMetricsProps) {
     </Card>
   );
 }
-

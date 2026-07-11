@@ -1,26 +1,26 @@
-import { Droplets, Wind, Users } from "lucide-react";
+import { Brain, Activity, Factory } from "lucide-react";
 
-const indexTypes = [
+const analysisTypes = [
   {
-    icon: <Droplets className="size-5" />,
-    label: "Kualitas Air",
+    icon: <Brain className="size-5" />,
+    label: "ML Prediction",
     color: "text-primary",
     bgColor: "bg-primary/8",
-    desc: "pH, salinitas, dan tingkat polutan berbahaya.",
+    desc: "Machine learning models predict water quality status.",
   },
   {
-    icon: <Wind className="size-5" />,
-    label: "Polusi Udara",
+    icon: <Activity className="size-5" />,
+    label: "Water Quality",
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/8",
-    desc: "Indeks AQI dan partikel PM2.5 di sekitar pantai.",
+    desc: "Healthy water percentage and environmental indicators.",
   },
   {
-    icon: <Users className="size-5" />,
-    label: "Keramaian",
+    icon: <Factory className="size-5" />,
+    label: "Industrial Impact",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/8",
-    desc: "Estimasi kepadatan pengunjung per pantai.",
+    desc: "Distance and category of nearby industrial sources.",
   },
 ];
 
@@ -36,17 +36,19 @@ export function About() {
           <div className="space-y-8">
             <div className="space-y-4">
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-                Tentang Aquality
+                About Aquality
               </p>
               <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-                Mengetahui Kondisi Pantai{" "}
-                <span className="text-primary">Sebelum Berkunjung</span>
+                AI-Powered Coastal{" "}
+                <span className="text-primary">Environmental Intelligence</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed max-w-lg">
-                Aquality mengumpulkan dan memvisualisasikan data kualitas
-                lingkungan pantai-pantai di wilayah Banten secara nyata.
-                Dengan data polusi, pencemaran air, dan keramaian, wisatawan
-                dan peneliti dapat membuat keputusan yang lebih cerdas.
+                Aquality is an environmental monitoring platform that uses
+                machine learning to analyze and predict coastal water quality
+                across Banten&apos;s coastline. By evaluating environmental
+                indicators and nearby industrial activity, Aquality helps
+                visitors, researchers, and policymakers make data-driven
+                decisions.
               </p>
             </div>
 
@@ -54,18 +56,18 @@ export function About() {
             <div className="space-y-5">
               <AboutDetail
                 number="01"
-                title="Data Akurat & Terkini"
-                description="Indeks kualitas air diperbarui berkala dari sensor lapangan dan data satelit lingkungan."
+                title="Machine Learning Predictions"
+                description="AI models trained on environmental data predict water quality status, giving you accurate assessments before you visit."
               />
               <AboutDetail
                 number="02"
-                title="18+ Pantai Banten Terpantau"
-                description="Dari Pantai Anyer, Carita, Sawarna, hingga Tanjung Lesung — semua dalam satu platform."
+                title="Industrial Impact Assessment"
+                description="Evaluate the proximity and category of industrial sources near each beach to understand their effect on water quality."
               />
               <AboutDetail
                 number="03"
-                title="Peringatan Dini Pencemaran"
-                description="Notifikasi otomatis ketika indeks polusi atau pencemaran air melewati ambang aman."
+                title="18+ Monitored Beaches"
+                description="From Anyer, Carita, Sawarna, to Tanjung Lesung — all beaches analyzed and ranked in a single platform."
               />
             </div>
           </div>
@@ -86,21 +88,21 @@ export function About() {
                 {/* Mission statement */}
                 <div className="space-y-3">
                   <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                    Misi Kami
+                    Our Mission
                   </p>
                   <p className="text-lg font-medium text-foreground leading-relaxed">
-                    &ldquo;Membantu masyarakat dan peneliti mengetahui
-                    kondisi nyata pantai Banten — bersih, aman, dan layak
-                    dikunjungi.&rdquo;
+                    &ldquo;Empowering communities and researchers with AI-driven
+                    insights into coastal water quality — making environmental
+                    data accessible to everyone.&rdquo;
                   </p>
                 </div>
 
                 {/* Divider */}
                 <div className="h-px bg-gradient-to-r from-border/80 via-primary/20 to-transparent" />
 
-                {/* Index Icons */}
+                {/* Analysis Icons */}
                 <div className="grid grid-cols-3 gap-4">
-                  {indexTypes.map((item) => (
+                  {analysisTypes.map((item) => (
                     <div
                       key={item.label}
                       className="flex flex-col items-center gap-2.5 py-3"
@@ -120,11 +122,11 @@ export function About() {
                 {/* Sample beach quality scores */}
                 <div className="space-y-3">
                   <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground/60">
-                    Skor Kualitas Hari Ini
+                    Water Quality Index Today
                   </p>
-                  <BeachScore name="Pantai Anyer" score={82} level="Baik" color="emerald" />
-                  <BeachScore name="Pantai Carita" score={67} level="Sedang" color="amber" />
-                  <BeachScore name="Pantai Sawarna" score={91} level="Sangat Baik" color="emerald" />
+                  <BeachScore name="Pantai Anyer" score={82} level="Healthy" color="emerald" />
+                  <BeachScore name="Pantai Carita" score={67} level="Moderate" color="amber" />
+                  <BeachScore name="Pantai Sawarna" score={91} level="Excellent" color="emerald" />
                 </div>
               </div>
 
@@ -208,3 +210,4 @@ function BeachScore({
     </div>
   );
 }
+

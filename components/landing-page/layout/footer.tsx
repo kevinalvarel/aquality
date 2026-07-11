@@ -5,27 +5,27 @@ const footerLinks = {
   platform: {
     title: "Platform",
     links: [
-      { label: "Peta Interaktif", href: "/interactive-map" },
-      { label: "Analisis Abrasi", href: "/abrasion-analysis" },
-      { label: "Kesehatan Mangrove", href: "/mangrove-health" },
-      { label: "Dashboard", href: "/dashboard" },
+      { label: "Explore Beaches", href: "/explore" },
+      { label: "Interactive Map", href: "/map" },
+      { label: "Leaderboard", href: "/leaderboard" },
+      { label: "Beach Analysis", href: "/analyze" },
     ],
   },
   resources: {
-    title: "Sumber Daya",
+    title: "Resources",
     links: [
-      { label: "Dokumentasi", href: "#" },
-      { label: "Panduan Pengguna", href: "#" },
-      { label: "Referensi API", href: "#" },
-      { label: "Catatan Perubahan", href: "#" },
+      { label: "Documentation", href: "#" },
+      { label: "User Guide", href: "#" },
+      { label: "API Reference", href: "#" },
+      { label: "Changelog", href: "#" },
     ],
   },
   legal: {
     title: "Legal",
     links: [
-      { label: "Kebijakan Privasi", href: "#" },
-      { label: "Syarat & Ketentuan", href: "#" },
-      { label: "Lisensi", href: "#" },
+      { label: "Privacy Policy", href: "#" },
+      { label: "Terms & Conditions", href: "#" },
+      { label: "License", href: "#" },
     ],
   },
 };
@@ -49,9 +49,9 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Aquality adalah platform pemantauan pesisir berbasis web untuk
-              analisis kualitas air laut dan pantai berdasarkan lingkungan
-              sekitar
+              Aquality is an AI-powered coastal water quality analysis platform —
+              predicting beach conditions using machine learning and
+              environmental data.
             </p>
           </div>
 
@@ -80,3 +80,4 @@ export function Footer() {
     </footer>
   );
 }
+

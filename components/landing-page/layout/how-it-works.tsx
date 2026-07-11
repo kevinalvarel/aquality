@@ -1,56 +1,56 @@
 "use client";
 
 import { useState } from "react";
-import { Map, Droplets, BarChart3, Bell } from "lucide-react";
+import { Database, Factory, Brain, BarChart3 } from "lucide-react";
 
 const steps = [
   {
-    id: "select",
-    icon: Map,
+    id: "collect",
+    icon: Database,
     number: "01",
-    title: "Pilih Pantai di Banten",
-    subtitle: "Peta Interaktif",
+    title: "Collect Coastal & Environmental Data",
+    subtitle: "Data Collection",
     description:
-      "Gunakan peta interaktif untuk memilih pantai di wilayah Banten yang ingin Anda pantau. Tersedia 18+ lokasi pantai dari Anyer, Carita, Sawarna, hingga Tanjung Lesung.",
+      "Aquality gathers comprehensive environmental data from coastal stations across Banten — including water quality indicators, ecosystem measurements, and geographic data for each beach.",
     visual: {
       gradient: "from-primary/10 to-sky-500/5",
       accent: "bg-primary",
     },
   },
   {
-    id: "index",
-    icon: Droplets,
+    id: "industrial",
+    icon: Factory,
     number: "02",
-    title: "Baca Indeks Kualitas",
-    subtitle: "Index Polusi & Air",
+    title: "Analyze Industrial Activity & Environmental Factors",
+    subtitle: "Impact Assessment",
     description:
-      "Lihat indeks pencemaran air (pH, salinitas, E. coli), indeks polusi udara (AQI, PM2.5), serta skor keramaian pengunjung dalam satu tampilan yang jelas.",
+      "The platform identifies and evaluates nearby industrial sources, assessing their distance, category, and potential contribution to water quality degradation through environmental indicators.",
     visual: {
       gradient: "from-cyan-500/10 to-primary/5",
       accent: "bg-cyan-500",
     },
   },
   {
-    id: "analyze",
-    icon: BarChart3,
+    id: "predict",
+    icon: Brain,
     number: "03",
-    title: "Analisis Tren & Riwayat",
-    subtitle: "Dashboard Analitik",
+    title: "Run Machine Learning Predictions",
+    subtitle: "AI Prediction Engine",
     description:
-      "Pantau tren perubahan kualitas pantai dari waktu ke waktu. Bandingkan kondisi antar pantai dan identifikasi pola musiman pencemaran.",
+      "Trained machine learning models process the collected environmental and industrial data to predict water quality status, healthy water percentage, and pollution risk for each beach.",
     visual: {
       gradient: "from-emerald-500/10 to-cyan-500/5",
       accent: "bg-emerald-500",
     },
   },
   {
-    id: "alert",
-    icon: Bell,
+    id: "insights",
+    icon: BarChart3,
     number: "04",
-    title: "Aktifkan Notifikasi",
-    subtitle: "Peringatan Dini",
+    title: "Present Water Quality Insights & Recommendations",
+    subtitle: "Actionable Insights",
     description:
-      "Berlangganan notifikasi untuk pantai favorit Anda. Dapatkan peringatan segera ketika kualitas air atau polusi melewati ambang batas yang aman.",
+      "Results are presented through interactive maps, beach profiles, and leaderboards — giving visitors, researchers, and policymakers clear, data-driven water quality insights.",
     visual: {
       gradient: "from-amber-500/10 to-primary/5",
       accent: "bg-amber-500",
@@ -73,15 +73,15 @@ export function HowItWorks() {
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-16 sm:mb-20">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary mb-4">
-            Cara Kerja
+            How It Works
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-            Empat Langkah{" "}
-            <span className="text-primary">Menuju Pantai Terbaik</span>
+            From Raw Data to{" "}
+            <span className="text-primary">Water Quality Intelligence</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Proses sederhana untuk mengetahui kualitas, polusi, dan keramaian
-            pantai di wilayah Banten sebelum berkunjung.
+            A four-step AI pipeline that transforms coastal environmental data
+            into actionable water quality insights.
           </p>
         </div>
 
@@ -189,7 +189,7 @@ export function HowItWorks() {
                       key={i}
                       type="button"
                       onClick={() => setActiveStep(i)}
-                      aria-label={`Langkah ${i + 1}`}
+                      aria-label={`Step ${i + 1}`}
                       className={`h-1 rounded-full transition-all duration-300 ${
                         i === activeStep
                           ? `w-8 ${steps[activeStep].visual.accent}`
@@ -211,3 +211,4 @@ export function HowItWorks() {
     </section>
   );
 }
+

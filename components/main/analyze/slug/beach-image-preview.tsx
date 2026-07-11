@@ -23,10 +23,10 @@ import {
   Navigation,
   CloudSun,
 } from "lucide-react";
-import type { BeachApiResponse } from "@/types/beach-api.type";
+import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 interface BeachImagePreviewProps {
-  data: BeachApiResponse;
+  data: AnalyzeApiResponse;
 }
 
 export function BeachImagePreview({ data }: BeachImagePreviewProps) {
@@ -38,9 +38,7 @@ export function BeachImagePreview({ data }: BeachImagePreviewProps) {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>Pratinjau Gambar Pantai</CardTitle>
-            <CardDescription>
-              Gambar pesisir yang dianalisis
-            </CardDescription>
+            <CardDescription>Gambar pesisir yang dianalisis</CardDescription>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
@@ -106,22 +104,22 @@ export function BeachImagePreview({ data }: BeachImagePreviewProps) {
           <MetadataItem
             icon={<Navigation className="size-3.5" />}
             label="Kecamatan"
-            value={data.kecamatan}
+            value={data.Kecamatan}
           />
           <MetadataItem
             icon={<Clock className="size-3.5" />}
             label="Kabupaten / Kota"
-            value={data.kabupaten_kota}
+            value={data.Kabupaten_Kota}
           />
           <MetadataItem
             icon={<CloudSun className="size-3.5" />}
             label="Status Kualitas"
-            value={data.status_kualitas_2026}
+            value={data.Status_Kualitas_2026}
           />
         </div>
         <div className="rounded-lg bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
-          <span className="font-medium">Koordinat GPS:</span>{" "}
-          {data.latitude}° latitude, {data.longitude}° longitude
+          <span className="font-medium">Koordinat GPS:</span> {data.latitude}°
+          latitude, {data.longitude}° longitude
         </div>
       </CardContent>
     </Card>
@@ -147,4 +145,3 @@ function MetadataItem({
     </div>
   );
 }
-
