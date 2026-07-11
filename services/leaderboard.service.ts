@@ -1,6 +1,3 @@
-import { db } from "@/db";
-import { beaches, analyses } from "@/db/schema/index";
-import { eq, desc, sql, count, avg } from "drizzle-orm";
 import { withCache } from "@/lib/cache";
 import { CACHE_KEYS, CACHE_TTL } from "@/constants/cache-keys";
 
@@ -11,28 +8,11 @@ import type {
   LeaderboardSummary,
   BeachStatus,
 } from "@/types/leaderboard.type";
+import type { BeachRecommendation } from "@/types/explore.type";
 
 // ─── Leaderboard Service ────────────────────────────────────────────────────
 // Provides ranked beach data for the leaderboard view.
 // All reads use cache-first strategy with a 10-minute TTL.
-
-/**
- * Map a database status string to the UI BeachStatus type.
- */
-function mapStatus(status: string | null): BeachStatus {
-  switch (status?.toLowerCase()) {
-    case "excellent":
-      return "Excellent";
-    case "good":
-      return "Good";
-    case "moderate":
-      return "Moderate";
-    case "poor":
-      return "Poor";
-    default:
-      return "Moderate";
-  }
-}
 
 /**
  * Fetch all beaches with their latest analysis data for leaderboard ranking.
@@ -40,50 +20,59 @@ function mapStatus(status: string | null): BeachStatus {
  */
 async function fetchLeaderboardData(): Promise<BeachLeaderboard[]> {
   return withCache(CACHE_KEYS.leaderboard, CACHE_TTL.leaderboard, async () => {
-    // Get all beaches with their latest completed analysis
-    // Using a subquery to get only the latest analysis per beach
-    const rows = await db
-      .select({
-        beachId: beaches.id,
-        beachSlug: beaches.slug,
-        beachName: beaches.pantai,
-        location: beaches.kecamatan,
-        image: beaches.image,
-        environmentalScore: analyses.environmentalScore,
-        aiConfidence: analyses.aiConfidence,
-        waterClarity: analyses.waterClarity,
-        pollutionLevel: analyses.pollutionLevel,
-        shorelineCleanliness: analyses.shorelineCleanliness,
-        wasteDetection: analyses.wasteDetection,
-        overallStatus: analyses.overallStatus,
-        lastAnalyzed: analyses.createdAt,
-      })
-      .from(beaches)
-      .innerJoin(
-        analyses,
-        sql`${analyses.beachId} = ${beaches.id} AND ${analyses.id} = (
-          SELECT a.id FROM analyses a 
-          WHERE a.beach_id = ${beaches.id} AND a.status = 'completed' 
-          ORDER BY a.created_at DESC LIMIT 1
-        )`,
-      )
-      .orderBy(desc(analyses.environmentalScore));
+    const apiUrl = process.env.NEXT_PUBLIC_AQUALITY_API_URL;
+    const res = await fetch(`${apiUrl}/api/recommendation/beaches`, {
+      next: { revalidate: 3600 },
+    });
 
-    return rows.map((row) => ({
-      id: row.beachId,
-      slug: row.beachSlug,
-      beachName: row.beachName,
-      location: row.location,
-      image: row.image ?? "/beaches/default.jpg",
-      environmentalScore: row.environmentalScore ?? 0,
-      status: mapStatus(row.overallStatus),
-      aiConfidence: row.aiConfidence !== null ? Math.round(row.aiConfidence * 100) : 0,
-      waterClarity: row.waterClarity ?? 0,
-      pollutionLevel: row.pollutionLevel ?? 0,
-      shorelineCleanliness: row.shorelineCleanliness ?? 0,
-      wasteDetection: row.wasteDetection ?? 0,
-      lastAnalyzed: row.lastAnalyzed?.toISOString() ?? new Date().toISOString(),
-    }));
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch leaderboard recommendation data: ${res.statusText}`,
+      );
+    }
+
+    const json = await res.json();
+    const recommendations: BeachRecommendation[] = json.recommendations || [];
+
+    return recommendations.map((rec) => {
+      // Map label_rekomendasi (SANGAT DIREKOMENDASIKAN / DIREKOMENDASIKAN / CUKUP / KURANG) to BeachStatus
+      let status: BeachStatus = "Moderate";
+      const label = (rec.label_rekomendasi || "").toUpperCase();
+      if (label.includes("SANGAT") || label.includes("EXCELLENT")) {
+        status = "Excellent";
+      } else if (label.includes("DIREKOMENDASIKAN") || label.includes("GOOD")) {
+        status = "Good";
+      } else if (label.includes("CUKUP") || label.includes("MODERATE")) {
+        status = "Moderate";
+      } else if (label.includes("KURANG") || label.includes("POOR")) {
+        status = "Poor";
+      }
+
+      return {
+        id: rec.slug,
+        slug: rec.slug,
+        beachName: rec.pantai,
+        location: `${rec.kecamatan}, ${rec.kabupaten_kota}`,
+        image: rec.url_gambar || "/beaches/default.jpg",
+        environmentalScore: Math.round(rec.health_score),
+        status,
+        aiConfidence: Math.round(rec.skor_detail.skor_industri),
+        waterClarity: Math.round(rec.skor_detail.skor_kepadatan_penduduk),
+        pollutionLevel: Math.round(rec.skor_detail.skor_pengaruh_urban),
+        shorelineCleanliness: Math.round(100 - rec.indeks_dampak_industri),
+        wasteDetection: Math.round(rec.indeks_pengaruh_urban),
+        lastAnalyzed: new Date().toISOString(),
+
+        // Optional recommendations fields
+        narasi_rekomendasi: rec.narasi_rekomendasi,
+        indeks_dampak_industri: rec.indeks_dampak_industri,
+        kepadatan_penduduk_kecamatan: rec.kepadatan_penduduk_kecamatan,
+        indeks_pengaruh_urban: rec.indeks_pengaruh_urban,
+        label_rekomendasi: rec.label_rekomendasi,
+        industri_terdekat: rec.industri_terdekat,
+        jarak_industri_km: rec.jarak_industri_km,
+      };
+    });
   });
 }
 

@@ -14,6 +14,15 @@ export interface BeachLeaderboard {
   shorelineCleanliness: number;
   wasteDetection: number;
   lastAnalyzed: string;
+  
+  // Optional fields from /api/recommendation/beaches response
+  narasi_rekomendasi?: string;
+  indeks_dampak_industri?: number;
+  kepadatan_penduduk_kecamatan?: number;
+  indeks_pengaruh_urban?: number;
+  label_rekomendasi?: string;
+  industri_terdekat?: string;
+  jarak_industri_km?: number;
 }
 
 export type SortField =

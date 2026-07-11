@@ -61,3 +61,22 @@ export function formatRelativeDate(dateString: string): string {
   if (days < 7) return `${days}d ago`;
   return formatDate(dateString);
 }
+
+export function extractStatusFromExplanation(penjelasan: string | undefined | null): string {
+  if (!penjelasan) return "TIDAK DIKETAHUI";
+  
+  // Example: memiliki kelayakan lingkungan **SANGAT BAIK (Lestari)**
+  const matchEnv = penjelasan.match(/kelayakan lingkungan \*\*([^*]+)\*\*/i);
+  if (matchEnv) {
+    return matchEnv[1];
+  }
+  
+  // Fallback: look for the first bold pattern
+  const matchBold = penjelasan.match(/\*\*([^*]+)\*\*/);
+  if (matchBold) {
+    return matchBold[1];
+  }
+  
+  return "TERANALISIS";
+}
+

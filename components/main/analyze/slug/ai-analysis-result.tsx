@@ -11,13 +11,16 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CheckCircle2, AlertCircle, ShieldCheck } from "lucide-react";
 import type { AnalyzeApiResponse } from "@/types/beach-api.type";
+import { extractStatusFromExplanation } from "@/lib/utils";
 
 interface AIAnalysisResultProps {
   data: AnalyzeApiResponse;
 }
 
 export function AIAnalysisResult({ data }: AIAnalysisResultProps) {
-  const isSehat = data.Status_Kualitas_2026.toUpperCase() === "SEHAT";
+  const statusEnv = extractStatusFromExplanation(data.penjelasan_kualitas);
+  const isLestari = statusEnv.toUpperCase().includes("LESTARI") || statusEnv.toUpperCase().includes("BAIK");
+  
   const isDampakRendah = data.kategori_dampak_industri
     .toUpperCase()
     .includes("RENDAH");
@@ -39,8 +42,8 @@ export function AIAnalysisResult({ data }: AIAnalysisResultProps) {
       positive: data.kepadatan_penduduk_kecamatan < 1000,
     },
     {
-      label: `Tren Kualitas Air: ${data.Tren_Kualitas}`,
-      positive: data.Tren_Kualitas.toUpperCase() !== "MEMBURUK",
+      label: `Pengaruh Urban: ${data.indeks_pengaruh_urban.toFixed(2)}`,
+      positive: data.indeks_pengaruh_urban < 50,
     },
   ];
 
@@ -74,16 +77,16 @@ export function AIAnalysisResult({ data }: AIAnalysisResultProps) {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
-            <p className="text-xs text-muted-foreground">Status Air</p>
+            <p className="text-xs text-muted-foreground">Kelayakan Lingkungan</p>
             <p
-              className={`mt-1 text-lg font-semibold ${isSehat ? "text-success" : "text-destructive"}`}
+              className={`mt-1 text-base font-semibold ${isLestari ? "text-success" : "text-destructive"}`}
             >
-              {data.Status_Kualitas_2026}
+              {statusEnv}
             </p>
           </div>
           <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
-            <p className="text-xs text-muted-foreground">Area Sehat</p>
-            <p className="mt-1 text-lg font-semibold">{data.Pct_Sehat_2026}%</p>
+            <p className="text-xs text-muted-foreground">Indeks Dampak Industri</p>
+            <p className="mt-1 text-lg font-semibold">{data.indeks_dampak_industri.toFixed(2)}</p>
           </div>
         </div>
 

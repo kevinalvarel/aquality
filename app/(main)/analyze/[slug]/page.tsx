@@ -10,10 +10,9 @@ import { BeachImagePreview } from "@/components/main/analyze/slug/beach-image-pr
 import { AIAnalysisResult } from "@/components/main/analyze/slug/ai-analysis-result";
 import { EnvironmentalMetrics } from "@/components/main/analyze/slug/environmental-metrics";
 import { AIRecommendation } from "@/components/main/analyze/slug/ai-recommendation";
-import { AnalysisTimeline } from "@/components/main/analyze/slug/analysis-timeline";
+import { NearestIndustries } from "@/components/main/analyze/slug/nearest-industries";
 import { EnvironmentalConditions } from "@/components/main/analyze/slug/environmental-conditions";
 import { DetectedObjects } from "@/components/main/analyze/slug/detected-objects";
-import { ConfidenceBreakdown } from "@/components/main/analyze/slug/confidence-breakdown";
 import { AnalysisTabs } from "@/components/main/analyze/slug/analysis-tabs";
 import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 import { getBeachAnalysisBySlug } from "@/services/analysis.service";
@@ -123,10 +122,9 @@ export default async function AnalysisDetailPage({
         </div>
         {/* Right Sidebar */}
         <div className="space-y-6">
-          <AnalysisTimeline data={beachData} />
+          <NearestIndustries data={beachData} />
           <EnvironmentalConditions />
           <DetectedObjects data={beachData} />
-          <ConfidenceBreakdown data={beachData} />
         </div>
       </div>
       {/* Bottom Tabs Section */}

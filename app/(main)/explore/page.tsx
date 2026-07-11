@@ -1,7 +1,10 @@
 import { Suspense } from "react";
-import { getExploreBeaches } from "@/services/explore.service";
+import {
+  getExploreBeaches,
+  getBeachRecommendations,
+} from "@/services/explore.service";
 import { ExplorePageClient } from "./explore-client";
-import { ResultCardSkeleton } from "@/components/main/explore/result-card";
+import { ResultCardSkeleton } from "@/components/main/explore/ui/result-skeleton";
 
 export const dynamic = "force-dynamic";
 
@@ -14,8 +17,13 @@ export default function ExplorePage() {
 }
 
 async function ExplorePageData() {
-  const beaches = await getExploreBeaches();
-  return <ExplorePageClient beaches={beaches} />;
+  const [beaches, recommendations] = await Promise.all([
+    getExploreBeaches(),
+    getBeachRecommendations(),
+  ]);
+  return (
+    <ExplorePageClient beaches={beaches} recommendations={recommendations} />
+  );
 }
 
 function ExplorePageFallback() {

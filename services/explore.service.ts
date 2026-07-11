@@ -3,7 +3,7 @@ import { beaches, analyses } from "@/db/schema/index";
 import { eq, desc, isNotNull, and } from "drizzle-orm";
 import { withCache } from "@/lib/cache";
 import { CACHE_KEYS, CACHE_TTL } from "@/constants/cache-keys";
-import type { ExploreBeachItem, MapBeachItem } from "@/types/explore.type";
+import type { ExploreBeachItem, MapBeachItem, BeachRecommendation } from "@/types/explore.type";
 import type { DbBeachStatus } from "@/types/beach.type";
 
 // ─── Explore Service ────────────────────────────────────────────────────────
@@ -180,3 +180,18 @@ export async function getBeachesForMap(): Promise<MapBeachItem[]> {
     },
   );
 }
+
+export async function getBeachRecommendations(): Promise<BeachRecommendation[]> {
+  const apiUrl = process.env.NEXT_PUBLIC_AQUALITY_API_URL;
+  const res = await fetch(`${apiUrl}/api/recommendation/beaches`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch beach recommendations: ${res.statusText}`);
+  }
+
+  const data = await res.json();
+  return data.recommendations || [];
+}
+

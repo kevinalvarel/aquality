@@ -24,6 +24,7 @@ import {
   CloudSun,
 } from "lucide-react";
 import type { AnalyzeApiResponse } from "@/types/beach-api.type";
+import { extractStatusFromExplanation } from "@/lib/utils";
 
 interface BeachImagePreviewProps {
   data: AnalyzeApiResponse;
@@ -31,6 +32,7 @@ interface BeachImagePreviewProps {
 
 export function BeachImagePreview({ data }: BeachImagePreviewProps) {
   const [isHovering, setIsHovering] = useState(false);
+  const statusEnv = extractStatusFromExplanation(data.penjelasan_kualitas);
 
   return (
     <Card>
@@ -113,8 +115,8 @@ export function BeachImagePreview({ data }: BeachImagePreviewProps) {
           />
           <MetadataItem
             icon={<CloudSun className="size-3.5" />}
-            label="Status Kualitas"
-            value={data.Status_Kualitas_2026}
+            label="Status Kelayakan"
+            value={statusEnv}
           />
         </div>
         <div className="rounded-lg bg-muted/50 px-3 py-2 text-xs text-muted-foreground">

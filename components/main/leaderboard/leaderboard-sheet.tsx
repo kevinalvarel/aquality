@@ -24,6 +24,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { getStatusColor } from "@/lib/utils";
+import { parseMarkdown } from "@/lib/parse-markdown";
 
 const statusLabels: Record<string, string> = {
   excellent: "Sangat Baik",
@@ -40,41 +41,40 @@ interface LeaderboardSheetProps {
 
 const metrics = [
   {
+    key: "aiConfidence" as const,
+    label: "Skor Industri",
+    icon: Bot,
+    color: "text-chart-2",
+    progressColor: "[&_[data-slot=progress-indicator]]:bg-chart-2",
+  },
+  {
     key: "waterClarity" as const,
-    label: "Kejelasan Air",
+    label: "Skor Kepadatan Penduduk",
     icon: Droplets,
     color: "text-primary",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-primary",
   },
   {
     key: "pollutionLevel" as const,
-    label: "Tingkat Polusi",
+    label: "Skor Pengaruh Urban",
     icon: AlertTriangle,
     color: "text-warning",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-warning",
-    inverted: true,
   },
   {
     key: "shorelineCleanliness" as const,
-    label: "Kebersihan Garis Pantai",
+    label: "Skor Bebas Dampak Industri",
     icon: TreePalm,
     color: "text-success",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-success",
   },
   {
     key: "wasteDetection" as const,
-    label: "Deteksi Sampah",
+    label: "Indeks Pengaruh Urban",
     icon: Trash2,
     color: "text-destructive",
     progressColor: "[&_[data-slot=progress-indicator]]:bg-destructive",
     inverted: true,
-  },
-  {
-    key: "aiConfidence" as const,
-    label: "Keyakinan AI",
-    icon: Bot,
-    color: "text-chart-2",
-    progressColor: "[&_[data-slot=progress-indicator]]:bg-chart-2",
   },
 ];
 
@@ -104,7 +104,7 @@ export function LeaderboardSheet({
                 variant="outline"
                 className={`border-none ${statusColor.bg} ${statusColor.text}`}
               >
-                {statusLabels[beach.status] || beach.status}
+                {statusLabels[beach.status.toLowerCase()] || beach.status}
               </Badge>
             </div>
           </SheetHeader>
@@ -130,6 +130,21 @@ export function LeaderboardSheet({
               </div>
             </div>
 
+            {beach.narasi_rekomendasi && (
+              <>
+                <Separator />
+                <div className="rounded-lg bg-primary/5 border border-primary/20 p-4 space-y-2">
+                  <h4 className="text-sm font-semibold flex items-center gap-1.5 text-primary">
+                    <Bot className="size-4" />
+                    Rekomendasi & Analisis AI
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {parseMarkdown(beach.narasi_rekomendasi)}
+                  </p>
+                </div>
+              </>
+            )}
+
             <Separator />
 
             {/* Metrics breakdown */}
@@ -137,10 +152,11 @@ export function LeaderboardSheet({
               <h4 className="text-sm font-semibold">Rincian Skor</h4>
               {metrics.map((metric) => {
                 const Icon = metric.icon;
-                const value = beach[metric.key];
-                const displayLabel = metric.inverted
-                  ? `${value}% terdeteksi`
-                  : `${value}%`;
+                const value = beach[metric.key] ?? 0;
+                const displayLabel =
+                  metric.key === "wasteDetection"
+                    ? `${value}/100`
+                    : `${value}%`;
 
                 return (
                   <div key={metric.key} className="space-y-1.5">

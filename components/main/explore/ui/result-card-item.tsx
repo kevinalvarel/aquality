@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Waves, MapPin, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ExploreBeachItem } from "@/types/explore.type";
 import { cn } from "@/lib/utils";
+import { parseMarkdown } from "@/lib/parse-markdown";
 
 //Status Badge Config
 const statusConfig = {
@@ -31,29 +31,7 @@ const statusConfig = {
   },
 } as const;
 
-// ─── ResultCard ─────────────────────────────────────────────────────────────
-
-interface ResultCardProps {
-  beaches: ExploreBeachItem[];
-}
-
-export function ResultCard({ beaches }: ResultCardProps) {
-  if (beaches.length === 0) {
-    return <ResultCardEmpty />;
-  }
-
-  return (
-    <>
-      {beaches.map((beach) => (
-        <ResultCardItem key={beach.id} beach={beach} />
-      ))}
-    </>
-  );
-}
-
-// ─── Individual Card ────────────────────────────────────────────────────────
-
-function ResultCardItem({ beach }: { beach: ExploreBeachItem }) {
+export function ResultCardItem({ beach }: { beach: ExploreBeachItem }) {
   const config = statusConfig[beach.status];
   const hasAnalysis = beach.latestScore !== null;
 
@@ -94,16 +72,16 @@ function ResultCardItem({ beach }: { beach: ExploreBeachItem }) {
           </div>
         </CardHeader>
         <CardContent className="space-y-1.5 p-3">
-          <CardTitle className="text-sm font-semibold leading-tight line-clamp-1">
+          <CardTitle className="text-base font-semibold leading-tight line-clamp-1">
             {beach.pantai}
           </CardTitle>
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <MapPin className="size-3 shrink-0" />
             <span className="truncate">{beach.kecamatan}</span>
           </div>
           {beach.description && (
-            <p className="text-xs leading-relaxed text-muted-foreground line-clamp-2">
-              {beach.description}
+            <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
+              {parseMarkdown(beach.description)}
             </p>
           )}
         </CardContent>
@@ -112,9 +90,7 @@ function ResultCardItem({ beach }: { beach: ExploreBeachItem }) {
   );
 }
 
-// ─── Empty State ────────────────────────────────────────────────────────────
-
-function ResultCardEmpty() {
+export function ResultCardEmpty() {
   return (
     <div className="col-span-full flex flex-col items-center gap-3 py-16 text-center">
       <div className="rounded-full bg-muted p-4">
@@ -127,26 +103,5 @@ function ResultCardEmpty() {
         </p>
       </div>
     </div>
-  );
-}
-
-// ─── Loading Skeleton ───────────────────────────────────────────────────────
-
-export function ResultCardSkeleton() {
-  return (
-    <>
-      {Array.from({ length: 6 }).map((_, index) => (
-        <Card key={index} className="overflow-hidden">
-          <CardHeader className="p-0">
-            <Skeleton className="aspect-[4/3] w-full rounded-none" />
-          </CardHeader>
-          <CardContent className="space-y-2 p-3">
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-3 w-1/2" />
-            <Skeleton className="h-3 w-full" />
-          </CardContent>
-        </Card>
-      ))}
-    </>
   );
 }

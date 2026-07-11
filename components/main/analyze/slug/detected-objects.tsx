@@ -7,21 +7,24 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScanSearch } from "lucide-react";
 import type { AnalyzeApiResponse } from "@/types/beach-api.type";
+import { extractStatusFromExplanation } from "@/lib/utils";
 
 interface DetectedObjectsProps {
   data: AnalyzeApiResponse;
 }
 
 export function DetectedObjects({ data }: DetectedObjectsProps) {
+  const statusEnv = extractStatusFromExplanation(data.penjelasan_kualitas);
+  const isLestari = statusEnv.toUpperCase().includes("LESTARI") || statusEnv.toUpperCase().includes("BAIK");
+
   const detectedObjects = [
     { label: data.pantai, variant: "default" as const },
     { label: `Kecamatan: ${data.Kecamatan}`, variant: "secondary" as const },
     { 
-      label: `Kualitas: ${data.Status_Kualitas_2026}`, 
-      variant: data.Status_Kualitas_2026.toUpperCase() === "SEHAT" ? ("default" as const) : ("destructive" as const) 
+      label: `Kelayakan: ${statusEnv}`, 
+      variant: isLestari ? ("default" as const) : ("destructive" as const) 
     },
-    { label: `Tren: ${data.Tren_Kualitas}`, variant: "outline" as const },
-    { label: `Dampak: ${data.kategori_dampak_industri}`, variant: "secondary" as const },
+    { label: `Dampak Industri: ${data.kategori_dampak_industri}`, variant: "secondary" as const },
     { label: `${data.industri_terdekat} (${data.tipe_industri})`, variant: "outline" as const },
     ...(data.industri_terdekat_2 ? [{ label: `${data.industri_terdekat_2} (${data.tipe_industri_2})`, variant: "outline" as const }] : []),
     ...(data.industri_terdekat_3 ? [{ label: `${data.industri_terdekat_3} (${data.tipe_industri_3})`, variant: "outline" as const }] : []),
