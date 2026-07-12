@@ -1,136 +1,95 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
-import type { ChatMessage, ChatState } from "@/lib/aquasisten/types";
-import { SendMessageSchema } from "@/lib/aquasisten/types";
-import { sendMessageAction } from "@/lib/aquasisten/actions";
+import { useCallback, useMemo, useRef } from "react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
+import type { ChatMessage } from "@/types/aquasisten.type";
+import { SendMessageSchema } from "@/types/aquasisten.type";
 import { toast } from "sonner";
 
-function generateId() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-}
-
 export function useAquasistenChat() {
-  const [state, setState] = useState<ChatState>({
-    messages: [],
-    isLoading: false,
-    error: null,
+  const timestampsRef = useRef<Record<string, Date>>({});
+
+  const {
+    messages,
+    status,
+    error,
+    sendMessage: sendChatMessage,
+    setMessages,
+    stop,
+  } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+    }),
+    onError: (err) => {
+      toast.error("Gagal mendapatkan respons", {
+        description: err.message || "Terjadi kesalahan pada server.",
+      });
+    },
   });
 
-  // Abort controller for cancelling in-flight requests
-  const abortRef = useRef<AbortController | null>(null);
+  const isLoading = status === "submitted" || status === "streaming";
 
-  const sendMessage = useCallback(async (input: string) => {
-    // Validate with Zod
-    const parsed = SendMessageSchema.safeParse({ message: input });
-    if (!parsed.success) {
-      const errorMsg = parsed.error.issues.map((i) => i.message).join(", ");
-      toast.error(errorMsg);
-      return;
-    }
-
-    // Cancel any in-flight request
-    abortRef.current?.abort();
-    abortRef.current = new AbortController();
-
-    const userMessage: ChatMessage = {
-      id: generateId(),
-      role: "user",
-      content: parsed.data.message,
-      timestamp: new Date(),
-    };
-
-    const assistantPlaceholder: ChatMessage = {
-      id: generateId(),
-      role: "assistant",
-      content: "",
-      timestamp: new Date(),
-      isStreaming: true,
-    };
-
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, userMessage, assistantPlaceholder],
-      isLoading: true,
-      error: null,
-    }));
-
-    try {
-      const response = await sendMessageAction({ message: parsed.data.message });
-
-      if (!response.success || !response.content) {
-        throw new Error(response.error ?? "Respons kosong dari server.");
+  const sendMessage = useCallback(
+    async (input: string) => {
+      // Validate with Zod
+      const parsed = SendMessageSchema.safeParse({ message: input });
+      if (!parsed.success) {
+        const errorMsg = parsed.error.issues.map((i) => i.message).join(", ");
+        toast.error(errorMsg);
+        return;
       }
 
-      const fullContent = response.content;
-
-      // Simulate streaming effect (word by word)
-      const words = fullContent.split(" ");
-      let accumulated = "";
-
-      for (let i = 0; i < words.length; i++) {
-        accumulated += (i === 0 ? "" : " ") + words[i];
-        const currentContent = accumulated;
-
-        setState((prev) => ({
-          ...prev,
-          messages: prev.messages.map((m) =>
-            m.id === assistantPlaceholder.id
-              ? { ...m, content: currentContent }
-              : m,
-          ),
-        }));
-
-        // Small delay between words for streaming effect
-        await new Promise((resolve) => setTimeout(resolve, 25));
+      try {
+        await sendChatMessage({
+          text: parsed.data.message,
+        });
+      } catch (err) {
+        console.error("Error sending message:", err);
       }
-
-      // Mark streaming as complete
-      setState((prev) => ({
-        ...prev,
-        messages: prev.messages.map((m) =>
-          m.id === assistantPlaceholder.id
-            ? { ...m, isStreaming: false, timestamp: new Date() }
-            : m,
-        ),
-        isLoading: false,
-      }));
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : "Terjadi kesalahan yang tidak terduga.";
-
-      // Remove the placeholder and show error
-      setState((prev) => ({
-        ...prev,
-        messages: prev.messages.filter(
-          (m) => m.id !== assistantPlaceholder.id,
-        ),
-        isLoading: false,
-        error: errorMessage,
-      }));
-
-      toast.error("Gagal mendapatkan respons", {
-        description: errorMessage,
-      });
-    }
-  }, []);
+    },
+    [sendChatMessage],
+  );
 
   const clearChat = useCallback(() => {
-    abortRef.current?.abort();
-    setState({ messages: [], isLoading: false, error: null });
+    stop();
+    setMessages([]);
     toast.success("Riwayat chat telah dihapus");
-  }, []);
+  }, [stop, setMessages]);
 
   const dismissError = useCallback(() => {
-    setState((prev) => ({ ...prev, error: null }));
+    // In useChat, error is handled via toast. No need for additional state.
   }, []);
 
+  const chatMessages = useMemo((): ChatMessage[] => {
+    return messages.map((m) => {
+      // Extract text content from parts
+      const textContent = m.parts
+        .filter((part) => part.type === "text")
+        .map((part) => (part as any).text)
+        .join("");
+
+      if (!timestampsRef.current[m.id]) {
+        timestampsRef.current[m.id] = new Date();
+      }
+
+      return {
+        id: m.id,
+        role: m.role === "user" ? "user" : "assistant",
+        content: textContent,
+        timestamp: timestampsRef.current[m.id],
+        isStreaming:
+          isLoading &&
+          m.role === "assistant" &&
+          m.id === messages[messages.length - 1]?.id,
+      };
+    });
+  }, [messages, isLoading]);
+
   return {
-    messages: state.messages,
-    isLoading: state.isLoading,
-    error: state.error,
+    messages: chatMessages,
+    isLoading,
+    error: error ? error.message : null,
     sendMessage,
     clearChat,
     dismissError,

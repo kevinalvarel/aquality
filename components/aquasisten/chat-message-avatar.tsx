@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import type { MessageRole } from "@/lib/aquasisten/types";
+import type { MessageRole } from "@/types/aquasisten.type";
 import { cn } from "@/lib/utils";
 import { Bot, User } from "lucide-react";
 
@@ -29,11 +29,7 @@ export function ChatMessageAvatar({ role, className }: ChatMessageAvatarProps) {
             : "bg-muted text-muted-foreground",
         )}
       >
-        {isAssistant ? (
-          <Bot className="size-4" />
-        ) : (
-          <User className="size-4" />
-        )}
+        {isAssistant ? <Bot className="size-4" /> : <User className="size-4" />}
       </AvatarFallback>
     </Avatar>
   );

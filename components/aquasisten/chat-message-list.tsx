@@ -5,13 +5,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChatMessageItem } from "./chat-message-item";
 import { ChatEmptyState } from "./chat-empty-state";
 import { ChatTypingIndicator } from "./chat-typing-indicator";
-import type { ChatMessage } from "@/lib/aquasisten/types";
+import type { ChatMessage } from "@/types/aquasisten.type";
 import { cn } from "@/lib/utils";
 
 interface ChatMessageListProps {
   messages: ChatMessage[];
   isLoading: boolean;
   onSelectSuggestion: (prompt: string) => void;
+  onSend?: (message: string) => void;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export function ChatMessageList({
   messages,
   isLoading,
   onSelectSuggestion,
+  onSend,
   className,
 }: ChatMessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -29,7 +31,16 @@ export function ChatMessageList({
   }, [messages, isLoading]);
 
   if (messages.length === 0) {
-    return <ChatEmptyState onSelectSuggestion={onSelectSuggestion} />;
+    return (
+      <ScrollArea className={cn("flex-1 [&>div>div]:min-h-full", className)}>
+        <ChatEmptyState
+          onSelectSuggestion={onSelectSuggestion}
+          onSend={onSend || (() => {})}
+          isLoading={isLoading}
+          className="min-h-full"
+        />
+      </ScrollArea>
+    );
   }
 
   return (

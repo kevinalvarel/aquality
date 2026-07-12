@@ -1,7 +1,7 @@
 "use client";
 
 import { ChatMessageAvatar } from "./chat-message-avatar";
-import type { ChatMessage } from "@/lib/aquasisten/types";
+import type { ChatMessage } from "@/types/aquasisten.type";
 import { cn } from "@/lib/utils";
 
 interface ChatMessageItemProps {
