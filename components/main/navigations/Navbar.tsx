@@ -34,12 +34,12 @@ const navList = [
     href: "/map",
   },
   {
-    label: "Analisis",
-    href: "/analyze",
-  },
-  {
     label: "Peringkat",
     href: "/leaderboard",
+  },
+  {
+    label: "Aquasisten",
+    href: "/aquasisten",
   },
 ];
 
@@ -130,11 +130,21 @@ export function NavbarApp() {
                 <span className="sr-only">Menu Utama</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col justify-between p-6">
+            <SheetContent
+              side="right"
+              className="flex flex-col justify-between p-6"
+            >
               <div className="space-y-6">
                 <SheetHeader className="p-0 flex flex-row items-center gap-2">
-                  <Image alt="Logo" src="/images/logo.png" height={40} width={40} />
-                  <SheetTitle className="font-bold text-lg text-primary">Aquality</SheetTitle>
+                  <Image
+                    alt="Logo"
+                    src="/images/logo.png"
+                    height={40}
+                    width={40}
+                  />
+                  <SheetTitle className="font-bold text-lg text-primary">
+                    Aquality
+                  </SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col gap-2 mt-6">
                   {navList.map((item) => {

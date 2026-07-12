@@ -36,7 +36,7 @@ export function ResultCardItem({ beach }: { beach: ExploreBeachItem }) {
   const hasAnalysis = beach.latestScore !== null;
 
   return (
-    <Link href={`/analyze/${beach.slug}`} className="group block">
+    <Link href={`/explore/${beach.slug}`} className="group block">
       <Card className="overflow-hidden transition-all duration-200 hover:shadow-md hover:border-primary/30">
         <CardHeader className="p-0">
           <div className="relative aspect-[4/3] w-full overflow-hidden">

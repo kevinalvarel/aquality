@@ -5,17 +5,17 @@ import { Microscope, Plus, Download } from "lucide-react";
 import Link from "next/link";
 
 // ─── Components ─────────────────────────────────────────────────────────────
-import { SummaryCards } from "@/components/main/analyze/slug/summary-cards";
-import { BeachImagePreview } from "@/components/main/analyze/slug/beach-image-preview";
-import { AIAnalysisResult } from "@/components/main/analyze/slug/ai-analysis-result";
-import { EnvironmentalMetrics } from "@/components/main/analyze/slug/environmental-metrics";
-import { AIRecommendation } from "@/components/main/analyze/slug/ai-recommendation";
-import { NearestIndustries } from "@/components/main/analyze/slug/nearest-industries";
-import { EnvironmentalConditions } from "@/components/main/analyze/slug/environmental-conditions";
-import { DetectedObjects } from "@/components/main/analyze/slug/detected-objects";
-import { AnalysisTabs } from "@/components/main/analyze/slug/analysis-tabs";
+import { SummaryCards } from "@/components/main/explore/slug/summary-cards";
+import { BeachImagePreview } from "@/components/main/explore/slug/beach-image-preview";
+import { AIAnalysisResult } from "@/components/main/explore/slug/ai-analysis-result";
+import { EnvironmentalMetrics } from "@/components/main/explore/slug/environmental-metrics";
+import { AIRecommendation } from "@/components/main/explore/slug/ai-recommendation";
+import { NearestIndustries } from "@/components/main/explore/slug/nearest-industries";
+import { EnvironmentalConditions } from "@/components/main/explore/slug/environmental-conditions";
+import { DetectedObjects } from "@/components/main/explore/slug/detected-objects";
+import { AnalysisTabs } from "@/components/main/explore/slug/analysis-tabs";
 import type { AnalyzeApiResponse } from "@/types/beach-api.type";
-import { getBeachAnalysisBySlug } from "@/services/analysis.service";
+import { getBeachAnalysisBySlug } from "@/services/explore.service";
 
 interface AnalysisDetailPageProps {
   params: Promise<{ slug: string }>;

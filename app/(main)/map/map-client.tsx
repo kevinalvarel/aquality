@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
+import type MapLibreGL from "maplibre-gl";
 import { Map, MapControls } from "@/components/ui/map";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -90,6 +91,7 @@ function toDestination(beach: MapBeachItem): Destination {
 }
 
 export function MapPageClient({ beaches }: MapPageClientProps) {
+  const mapRef = useRef<MapLibreGL.Map | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -114,14 +116,37 @@ export function MapPageClient({ beaches }: MapPageClientProps) {
     );
   });
 
-  const handleSelectDestination = useCallback((id: string) => {
-    setSelectedId((prev) => (prev === id ? null : id));
+  const flyToDestination = useCallback((longitude: number, latitude: number) => {
+    if (mapRef.current) {
+      mapRef.current.flyTo({
+        center: [longitude, latitude],
+        zoom: 12.5,
+        essential: true,
+      });
+    }
   }, []);
+
+  const handleSelectDestination = useCallback((id: string) => {
+    setSelectedId((prev) => {
+      const next = prev === id ? null : id;
+      if (next) {
+        const dest = destinations.find((d) => d.id === next);
+        if (dest) {
+          flyToDestination(dest.longitude, dest.latitude);
+        }
+      }
+      return next;
+    });
+  }, [destinations, flyToDestination]);
 
   const handleSelectFromList = useCallback((id: string) => {
     setSelectedId(id);
     setIsSheetOpen(false);
-  }, []);
+    const dest = destinations.find((d) => d.id === id);
+    if (dest) {
+      flyToDestination(dest.longitude, dest.latitude);
+    }
+  }, [destinations, flyToDestination]);
 
   const selectedBeach = useMemo(() => {
     if (!selectedId) return null;
@@ -324,6 +349,7 @@ export function MapPageClient({ beaches }: MapPageClientProps) {
           </div>
 
           <Map
+            ref={mapRef}
             center={[106.0, -6.4]}
             zoom={9}
             minZoom={8.5}
@@ -490,7 +516,7 @@ export function MapPageClient({ beaches }: MapPageClientProps) {
                     size="sm"
                     className="w-full gap-1 text-[11px] h-8 mt-1"
                   >
-                    <Link href={`/analyze/${selectedBeach.slug}`}>
+                    <Link href={`/explore/${selectedBeach.slug}`}>
                       <Activity className="size-3" />
                       <span>Lihat Analisis Lengkap</span>
                       <ChevronRight className="size-3" />

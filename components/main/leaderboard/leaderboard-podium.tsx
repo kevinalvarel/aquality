@@ -65,7 +65,7 @@ export function LeaderboardPodium({ topBeaches }: LeaderboardPodiumProps) {
           return (
             <Link
               key={beach.id}
-              href={`/analyze/${beach.slug}`}
+              href={`/explore/${beach.slug}`}
               className={config.cardClass}
             >
               <Card

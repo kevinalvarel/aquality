@@ -1,4 +1,5 @@
 import { Waves } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const footerLinks = {
@@ -11,23 +12,6 @@ const footerLinks = {
       { label: "Beach Analysis", href: "/analyze" },
     ],
   },
-  resources: {
-    title: "Resources",
-    links: [
-      { label: "Documentation", href: "#" },
-      { label: "User Guide", href: "#" },
-      { label: "API Reference", href: "#" },
-      { label: "Changelog", href: "#" },
-    ],
-  },
-  legal: {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms & Conditions", href: "#" },
-      { label: "License", href: "#" },
-    ],
-  },
 };
 
 export function Footer() {
@@ -37,20 +21,25 @@ export function Footer() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-8">
           {/* Brand column */}
-          <div className="space-y-4">
+          <div className="space-y-4 col-span-2">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
-              <div className="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
-                <Waves className="size-4" />
+              <div className="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary/15 ">
+                <Image
+                  src="/images/logo.png"
+                  alt="Logo"
+                  width={50}
+                  height={50}
+                />
               </div>
               <span className="text-base font-semibold tracking-tight text-foreground">
                 Aquality
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Aquality is an AI-powered coastal water quality analysis platform —
-              predicting beach conditions using machine learning and
+              Aquality is an AI-powered coastal water quality analysis platform
+              — predicting beach conditions using machine learning and
               environmental data.
             </p>
           </div>
@@ -80,4 +69,3 @@ export function Footer() {
     </footer>
   );
 }
-

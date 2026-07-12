@@ -154,7 +154,7 @@ export function LeaderboardTable({
                       asChild
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <Link href={`/analyze/${beach.slug}`}>
+                      <Link href={`/explore/${beach.slug}`}>
                         <ExternalLink
                           className="size-3"
                           data-icon="inline-start"

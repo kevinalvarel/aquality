@@ -3,8 +3,13 @@ import { beaches, analyses } from "@/db/schema/index";
 import { eq, desc, isNotNull, and } from "drizzle-orm";
 import { withCache } from "@/lib/cache";
 import { CACHE_KEYS, CACHE_TTL } from "@/constants/cache-keys";
-import type { ExploreBeachItem, MapBeachItem, BeachRecommendation } from "@/types/explore.type";
+import type {
+  ExploreBeachItem,
+  MapBeachItem,
+  BeachRecommendation,
+} from "@/types/explore.type";
 import type { DbBeachStatus } from "@/types/beach.type";
+import { AnalyzeApiResponse } from "@/types/beach-api.type";
 
 // ─── Explore Service ────────────────────────────────────────────────────────
 // Provides data for the Explore page (ResultCard) and Map page (markers).
@@ -15,78 +20,77 @@ import type { DbBeachStatus } from "@/types/beach.type";
  * Returns data shaped for the ResultCard component.
  */
 export async function getExploreBeaches(): Promise<ExploreBeachItem[]> {
-  return withCache(
-    CACHE_KEYS.exploreBeaches,
-    CACHE_TTL.explore,
-    async () => {
-      // Subquery: latest completed analysis per beach
-      const latestAnalysis = db
-        .select({
-          beachId: analyses.beachId,
-          environmentalScore: analyses.environmentalScore,
-          aiConfidence: analyses.aiConfidence,
-          createdAt: analyses.createdAt,
-        })
-        .from(analyses)
-        .where(eq(analyses.status, "completed"))
-        .orderBy(analyses.beachId, desc(analyses.createdAt))
-        .as("latest_analysis");
+  return withCache(CACHE_KEYS.exploreBeaches, CACHE_TTL.explore, async () => {
+    // Subquery: latest completed analysis per beach
+    const latestAnalysis = db
+      .select({
+        beachId: analyses.beachId,
+        environmentalScore: analyses.environmentalScore,
+        aiConfidence: analyses.aiConfidence,
+        createdAt: analyses.createdAt,
+      })
+      .from(analyses)
+      .where(eq(analyses.status, "completed"))
+      .orderBy(analyses.beachId, desc(analyses.createdAt))
+      .as("latest_analysis");
 
-      const rows = await db
-        .select({
-          id: beaches.id,
-          slug: beaches.slug,
-          pantai: beaches.pantai,
-          kecamatan: beaches.kecamatan,
-          kabupatenKota: beaches.kabupatenKota,
-          pctSehat2026: beaches.pctSehat2026,
-          statusKualitas2026: beaches.statusKualitas2026,
-          industriTerdekat: beaches.industriTerdekat,
-          jarakIndustriKm: beaches.jarakIndustriKm,
-          kategoriDampakIndustri: beaches.kategoriDampakIndustri,
-          description: beaches.description,
-          image: beaches.image,
-          status: beaches.status,
-          latestScore: latestAnalysis.environmentalScore,
-          latestConfidence: latestAnalysis.aiConfidence,
-          lastAnalyzed: latestAnalysis.createdAt,
-        })
-        .from(beaches)
-        .leftJoin(latestAnalysis, eq(beaches.id, latestAnalysis.beachId));
+    const rows = await db
+      .select({
+        id: beaches.id,
+        slug: beaches.slug,
+        pantai: beaches.pantai,
+        kecamatan: beaches.kecamatan,
+        kabupatenKota: beaches.kabupatenKota,
+        pctSehat2026: beaches.pctSehat2026,
+        statusKualitas2026: beaches.statusKualitas2026,
+        industriTerdekat: beaches.industriTerdekat,
+        jarakIndustriKm: beaches.jarakIndustriKm,
+        kategoriDampakIndustri: beaches.kategoriDampakIndustri,
+        description: beaches.description,
+        image: beaches.image,
+        status: beaches.status,
+        latestScore: latestAnalysis.environmentalScore,
+        latestConfidence: latestAnalysis.aiConfidence,
+        lastAnalyzed: latestAnalysis.createdAt,
+      })
+      .from(beaches)
+      .leftJoin(latestAnalysis, eq(beaches.id, latestAnalysis.beachId));
 
-      // Deduplicate (leftJoin may produce multiples), keep the most recent analysis
-      const beachMap = new Map<string, ExploreBeachItem>();
-      for (const row of rows) {
-        const existing = beachMap.get(row.id);
-        if (
-          !existing ||
-          (row.lastAnalyzed &&
-            (!existing.lastAnalyzed || row.lastAnalyzed > existing.lastAnalyzed))
-        ) {
-          beachMap.set(row.id, {
-            id: row.id,
-            slug: row.slug,
-            pantai: row.pantai,
-            kecamatan: row.kecamatan,
-            kabupatenKota: row.kabupatenKota,
-            pctSehat2026: row.pctSehat2026,
-            statusKualitas2026: row.statusKualitas2026,
-            industriTerdekat: row.industriTerdekat,
-            jarakIndustriKm: row.jarakIndustriKm,
-            kategoriDampakIndustri: row.kategoriDampakIndustri,
-            description: row.description,
-            image: row.image,
-            status: row.status as DbBeachStatus,
-            latestScore: row.latestScore,
-            latestConfidence: row.latestConfidence !== null ? Math.round(row.latestConfidence * 100) : null,
-            lastAnalyzed: row.lastAnalyzed,
-          });
-        }
+    // Deduplicate (leftJoin may produce multiples), keep the most recent analysis
+    const beachMap = new Map<string, ExploreBeachItem>();
+    for (const row of rows) {
+      const existing = beachMap.get(row.id);
+      if (
+        !existing ||
+        (row.lastAnalyzed &&
+          (!existing.lastAnalyzed || row.lastAnalyzed > existing.lastAnalyzed))
+      ) {
+        beachMap.set(row.id, {
+          id: row.id,
+          slug: row.slug,
+          pantai: row.pantai,
+          kecamatan: row.kecamatan,
+          kabupatenKota: row.kabupatenKota,
+          pctSehat2026: row.pctSehat2026,
+          statusKualitas2026: row.statusKualitas2026,
+          industriTerdekat: row.industriTerdekat,
+          jarakIndustriKm: row.jarakIndustriKm,
+          kategoriDampakIndustri: row.kategoriDampakIndustri,
+          description: row.description,
+          image: row.image,
+          status: row.status as DbBeachStatus,
+          latestScore: row.latestScore,
+          latestConfidence:
+            row.latestConfidence !== null
+              ? Math.round(row.latestConfidence * 100)
+              : null,
+          lastAnalyzed: row.lastAnalyzed,
+        });
       }
+    }
 
-      return Array.from(beachMap.values());
-    },
-  );
+    return Array.from(beachMap.values());
+  });
 }
 
 /**
@@ -94,94 +98,90 @@ export async function getExploreBeaches(): Promise<ExploreBeachItem[]> {
  * Filters out beaches without lat/lng since they can't be placed on a map.
  */
 export async function getBeachesForMap(): Promise<MapBeachItem[]> {
-  return withCache(
-    CACHE_KEYS.mapBeaches,
-    CACHE_TTL.map,
-    async () => {
-      // Subquery: latest completed analysis per beach
-      const latestAnalysis = db
-        .select({
-          beachId: analyses.beachId,
-          environmentalScore: analyses.environmentalScore,
-          aiConfidence: analyses.aiConfidence,
-          createdAt: analyses.createdAt,
-        })
-        .from(analyses)
-        .where(eq(analyses.status, "completed"))
-        .orderBy(analyses.beachId, desc(analyses.createdAt))
-        .as("latest_analysis_map");
+  return withCache(CACHE_KEYS.mapBeaches, CACHE_TTL.map, async () => {
+    // Subquery: latest completed analysis per beach
+    const latestAnalysis = db
+      .select({
+        beachId: analyses.beachId,
+        environmentalScore: analyses.environmentalScore,
+        aiConfidence: analyses.aiConfidence,
+        createdAt: analyses.createdAt,
+      })
+      .from(analyses)
+      .where(eq(analyses.status, "completed"))
+      .orderBy(analyses.beachId, desc(analyses.createdAt))
+      .as("latest_analysis_map");
 
-      const rows = await db
-        .select({
-          id: beaches.id,
-          slug: beaches.slug,
-          pantai: beaches.pantai,
-          kecamatan: beaches.kecamatan,
-          kabupatenKota: beaches.kabupatenKota,
-          pctSehat2026: beaches.pctSehat2026,
-          statusKualitas2026: beaches.statusKualitas2026,
-          industriTerdekat: beaches.industriTerdekat,
-          jarakIndustriKm: beaches.jarakIndustriKm,
-          kategoriDampakIndustri: beaches.kategoriDampakIndustri,
-          description: beaches.description,
-          latitude: beaches.latitude,
-          longitude: beaches.longitude,
-          image: beaches.image,
-          status: beaches.status,
-          latestScore: latestAnalysis.environmentalScore,
-          latestConfidence: latestAnalysis.aiConfidence,
-          lastAnalyzed: latestAnalysis.createdAt,
-        })
-        .from(beaches)
-        .leftJoin(latestAnalysis, eq(beaches.id, latestAnalysis.beachId))
-        .where(
-          and(
-            isNotNull(beaches.latitude),
-            isNotNull(beaches.longitude),
-          ),
-        );
+    const rows = await db
+      .select({
+        id: beaches.id,
+        slug: beaches.slug,
+        pantai: beaches.pantai,
+        kecamatan: beaches.kecamatan,
+        kabupatenKota: beaches.kabupatenKota,
+        pctSehat2026: beaches.pctSehat2026,
+        statusKualitas2026: beaches.statusKualitas2026,
+        industriTerdekat: beaches.industriTerdekat,
+        jarakIndustriKm: beaches.jarakIndustriKm,
+        kategoriDampakIndustri: beaches.kategoriDampakIndustri,
+        description: beaches.description,
+        latitude: beaches.latitude,
+        longitude: beaches.longitude,
+        image: beaches.image,
+        status: beaches.status,
+        latestScore: latestAnalysis.environmentalScore,
+        latestConfidence: latestAnalysis.aiConfidence,
+        lastAnalyzed: latestAnalysis.createdAt,
+      })
+      .from(beaches)
+      .leftJoin(latestAnalysis, eq(beaches.id, latestAnalysis.beachId))
+      .where(and(isNotNull(beaches.latitude), isNotNull(beaches.longitude)));
 
-      // Deduplicate, keep the most recent analysis per beach
-      const beachMap = new Map<string, MapBeachItem>();
-      for (const row of rows) {
-        // latitude and longitude are guaranteed non-null by the WHERE clause
-        if (row.latitude === null || row.longitude === null) continue;
+    // Deduplicate, keep the most recent analysis per beach
+    const beachMap = new Map<string, MapBeachItem>();
+    for (const row of rows) {
+      // latitude and longitude are guaranteed non-null by the WHERE clause
+      if (row.latitude === null || row.longitude === null) continue;
 
-        const existing = beachMap.get(row.id);
-        if (
-          !existing ||
-          (row.lastAnalyzed &&
-            (!existing.lastAnalyzed || row.lastAnalyzed > existing.lastAnalyzed))
-        ) {
-          beachMap.set(row.id, {
-            id: row.id,
-            slug: row.slug,
-            pantai: row.pantai,
-            kecamatan: row.kecamatan,
-            kabupatenKota: row.kabupatenKota,
-            pctSehat2026: row.pctSehat2026,
-            statusKualitas2026: row.statusKualitas2026,
-            industriTerdekat: row.industriTerdekat,
-            jarakIndustriKm: row.jarakIndustriKm,
-            kategoriDampakIndustri: row.kategoriDampakIndustri,
-            description: row.description,
-            latitude: row.latitude,
-            longitude: row.longitude,
-            image: row.image,
-            status: row.status as DbBeachStatus,
-            latestScore: row.latestScore,
-            latestConfidence: row.latestConfidence !== null ? Math.round(row.latestConfidence * 100) : null,
-            lastAnalyzed: row.lastAnalyzed,
-          });
-        }
+      const existing = beachMap.get(row.id);
+      if (
+        !existing ||
+        (row.lastAnalyzed &&
+          (!existing.lastAnalyzed || row.lastAnalyzed > existing.lastAnalyzed))
+      ) {
+        beachMap.set(row.id, {
+          id: row.id,
+          slug: row.slug,
+          pantai: row.pantai,
+          kecamatan: row.kecamatan,
+          kabupatenKota: row.kabupatenKota,
+          pctSehat2026: row.pctSehat2026,
+          statusKualitas2026: row.statusKualitas2026,
+          industriTerdekat: row.industriTerdekat,
+          jarakIndustriKm: row.jarakIndustriKm,
+          kategoriDampakIndustri: row.kategoriDampakIndustri,
+          description: row.description,
+          latitude: row.latitude,
+          longitude: row.longitude,
+          image: row.image,
+          status: row.status as DbBeachStatus,
+          latestScore: row.latestScore,
+          latestConfidence:
+            row.latestConfidence !== null
+              ? Math.round(row.latestConfidence * 100)
+              : null,
+          lastAnalyzed: row.lastAnalyzed,
+        });
       }
+    }
 
-      return Array.from(beachMap.values());
-    },
-  );
+    return Array.from(beachMap.values());
+  });
 }
 
-export async function getBeachRecommendations(): Promise<BeachRecommendation[]> {
+export async function getBeachRecommendations(): Promise<
+  BeachRecommendation[]
+> {
   const apiUrl = process.env.NEXT_PUBLIC_AQUALITY_API_URL;
   const res = await fetch(`${apiUrl}/api/recommendation/beaches`, {
     next: { revalidate: 3600 },
@@ -195,3 +195,22 @@ export async function getBeachRecommendations(): Promise<BeachRecommendation[]> 
   return data.recommendations || [];
 }
 
+export async function getBeachAnalysisBySlug(
+  slug: string,
+): Promise<AnalyzeApiResponse | null> {
+  const apiUrl = process.env.NEXT_PUBLIC_AQUALITY_API_URL;
+  const res = await fetch(`${apiUrl}/api/analyze/${slug}`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (res.status === 404) {
+    return null;
+  }
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch beach analysis data: ${res.statusText}`);
+  }
+
+  const data: AnalyzeApiResponse = await res.json();
+  return data;
+}

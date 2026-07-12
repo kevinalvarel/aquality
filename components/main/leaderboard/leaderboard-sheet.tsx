@@ -183,7 +183,7 @@ export function LeaderboardSheet({
 
           <SheetFooter className="px-5 pb-5">
             <Button asChild className="w-full">
-              <Link href={`/analyze/${beach.slug}`}>
+              <Link href={`/explore/${beach.slug}`}>
                 <ExternalLink className="size-3.5" data-icon="inline-start" />
                 Lihat Analisis Lengkap
               </Link>

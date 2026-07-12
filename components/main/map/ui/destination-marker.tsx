@@ -225,7 +225,7 @@ export function DestinationMarker({
 
             {/* CTA Button */}
             <Button asChild size="sm" className="w-full gap-1.5 text-xs">
-              <Link href={`/analyze/${destination.slug}`}>
+              <Link href={`/explore/${destination.slug}`}>
                 <Activity className="size-3" />
                 Lihat Analisis Lengkap
                 <ChevronRight className="size-3" />

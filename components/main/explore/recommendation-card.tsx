@@ -35,7 +35,7 @@ export function RecommendationCard({ rec }: { rec: BeachRecommendation }) {
     .includes("SANGAT");
 
   return (
-    <Link href={`/analyze/${rec.slug}`} className="group block">
+    <Link href={`/explore/${rec.slug}`} className="group block">
       <Card className="overflow-hidden border border-primary/15 hover:border-primary/40 transition-all duration-300 hover:shadow-lg bg-gradient-to-r from-background via-background to-primary/5 dark:from-background dark:via-background dark:to-primary/10">
         <CardContent className="p-0 flex flex-col md:flex-row">
           {/* Image Container */}
