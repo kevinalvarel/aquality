@@ -4,7 +4,6 @@ import { useState, useMemo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   MessageSquare,
   Search,
@@ -12,6 +11,7 @@ import {
   Trash2,
   Clock,
   ChevronRight,
+  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -20,73 +20,98 @@ interface HistoryItem {
   id: string;
   title: string;
   timestamp: string;
-  group: "Hari Ini" | "Kemarin" | "Minggu Ini";
+  group: "Hari Ini" | "Kemarin" | "Minggu Ini" | "Sebelumnya";
 }
 
-const INITIAL_HISTORY: HistoryItem[] = [
-  {
-    id: "1",
-    title: "Analisis Abrasi Pantai Kuta",
-    timestamp: "14:32",
-    group: "Hari Ini",
-  },
-  {
-    id: "2",
-    title: "Kesehatan Mangrove Muara Gembong",
-    timestamp: "10:15",
-    group: "Hari Ini",
-  },
-  {
-    id: "3",
-    title: "Kualitas Air Danau Toba",
-    timestamp: "Kemarin",
-    group: "Kemarin",
-  },
-  {
-    id: "4",
-    title: "Pencemaran Plastik Kepulauan Seribu",
-    timestamp: "Kemarin",
-    group: "Kemarin",
-  },
-  {
-    id: "5",
-    title: "Restorasi Pesisir Surabaya",
-    timestamp: "3 hari yang lalu",
-    group: "Minggu Ini",
-  },
-  {
-    id: "6",
-    title: "Suhu Permukaan Selat Sunda",
-    timestamp: "5 hari yang lalu",
-    group: "Minggu Ini",
-  },
-];
+function getGroupAndTimestamp(dateString: string | Date): {
+  group: "Hari Ini" | "Kemarin" | "Minggu Ini" | "Sebelumnya";
+  timestamp: string;
+} {
+  const date = new Date(dateString);
+  const now = new Date();
+  
+  const dMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  
+  const diffTime = nowMidnight.getTime() - dMidnight.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  let group: "Hari Ini" | "Kemarin" | "Minggu Ini" | "Sebelumnya" = "Sebelumnya";
+
+  if (diffDays === 0) {
+    group = "Hari Ini";
+  } else if (diffDays === 1) {
+    group = "Kemarin";
+  } else if (diffDays < 7) {
+    group = "Minggu Ini";
+  } else {
+    group = "Sebelumnya";
+  }
+
+  let timestamp = "";
+  if (group === "Hari Ini") {
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    timestamp = `${hours}:${minutes}`;
+  } else if (group === "Kemarin") {
+    timestamp = "Kemarin";
+  } else if (group === "Minggu Ini") {
+    timestamp = `${diffDays} hari yang lalu`;
+  } else {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    timestamp = `${day}/${month}/${year}`;
+  }
+
+  return { group, timestamp };
+}
 
 interface ChatHistorySidebarProps {
   onNewChat: () => void;
+  conversations: any[];
+  activeConversationId: string | null;
+  onSelectConversation: (id: string) => void;
+  onDeleteConversation: (id: string) => void;
+  isLoading: boolean;
   className?: string;
 }
 
 export function ChatHistorySidebar({
   onNewChat,
+  conversations,
+  activeConversationId,
+  onSelectConversation,
+  onDeleteConversation,
+  isLoading,
   className,
 }: ChatHistorySidebarProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [history, setHistory] = useState<HistoryItem[]>(INITIAL_HISTORY);
 
-  // Filter items by search query
+  const historyItems = useMemo((): HistoryItem[] => {
+    return conversations.map((conv) => {
+      const { group, timestamp } = getGroupAndTimestamp(conv.updatedAt);
+      return {
+        id: conv.id,
+        title: conv.title,
+        timestamp,
+        group,
+      };
+    });
+  }, [conversations]);
+
   const filteredHistory = useMemo(() => {
-    return history.filter((item) =>
+    return historyItems.filter((item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
-  }, [history, searchQuery]);
+  }, [historyItems, searchQuery]);
 
-  // Group items
   const groups = useMemo(() => {
     const grouped: Record<string, HistoryItem[]> = {
       "Hari Ini": [],
       "Kemarin": [],
       "Minggu Ini": [],
+      "Sebelumnya": [],
     };
 
     filteredHistory.forEach((item) => {
@@ -96,17 +121,15 @@ export function ChatHistorySidebar({
     return grouped;
   }, [filteredHistory]);
 
-  const handleDeleteItem = useCallback((id: string, title: string, e: React.MouseEvent) => {
-    e.stopPropagation(); // Avoid triggering chat loading
-    setHistory((prev) => prev.filter((item) => item.id !== id));
-    toast.success(`Riwayat "${title}" berhasil dihapus`);
-  }, []);
-
-  const handleSelectHistory = useCallback((title: string) => {
-    toast.info(`Memuat percakapan: "${title}"`, {
-      description: "Fitur sinkronisasi riwayat akan segera hadir.",
-    });
-  }, []);
+  const handleDeleteItem = useCallback(
+    (id: string, title: string, e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (confirm(`Apakah Anda yakin ingin menghapus riwayat "${title}"?`)) {
+        onDeleteConversation(id);
+      }
+    },
+    [onDeleteConversation],
+  );
 
   return (
     <Card
@@ -126,9 +149,9 @@ export function ChatHistorySidebar({
               Riwayat Chat
             </h2>
           </div>
-          <span className="text-[10px] bg-muted px-2 py-0.5 rounded-full text-muted-foreground font-medium">
-            Demo UI
-          </span>
+          {isLoading && (
+            <Loader2 className="size-3 text-muted-foreground animate-spin" />
+          )}
         </div>
 
         {/* Start New Chat Button */}
@@ -166,7 +189,7 @@ export function ChatHistorySidebar({
             <div className="flex flex-col items-center justify-center py-8 text-center">
               <MessageSquare className="size-8 text-muted-foreground/30 mb-2" />
               <p className="text-xs text-muted-foreground font-medium">
-                Tidak ada riwayat ditemukan
+                {isLoading ? "Memuat riwayat..." : "Tidak ada riwayat ditemukan"}
               </p>
             </div>
           ) : (
@@ -179,44 +202,62 @@ export function ChatHistorySidebar({
                     {groupName}
                   </h3>
                   <div className="space-y-1">
-                    {items.map((item) => (
-                      <div
-                        key={item.id}
-                        onClick={() => handleSelectHistory(item.title)}
-                        className={cn(
-                          "group flex items-center justify-between gap-2 p-2.5 rounded-xl text-left cursor-pointer",
-                          "transition-all duration-150 border border-transparent",
-                          "hover:bg-muted/70 hover:border-border/40",
-                          "dark:hover:bg-muted/20",
-                        )}
-                      >
-                        <div className="flex items-start gap-2.5 min-w-0 flex-1">
-                          <MessageSquare className="size-4 text-muted-foreground/60 group-hover:text-primary transition-colors mt-0.5 shrink-0" />
-                          <div className="min-w-0 flex-1">
-                            <p className="text-xs font-medium text-foreground truncate group-hover:text-foreground transition-colors leading-normal">
-                              {item.title}
-                            </p>
-                            <span className="text-[9px] text-muted-foreground/60 leading-none">
-                              {item.timestamp}
-                            </span>
+                    {items.map((item) => {
+                      const isActive = item.id === activeConversationId;
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => onSelectConversation(item.id)}
+                          className={cn(
+                            "group flex items-center justify-between gap-2 p-2.5 rounded-xl text-left cursor-pointer",
+                            "transition-all duration-150 border",
+                            isActive
+                              ? "bg-primary/5 border-primary/20 hover:bg-primary/10"
+                              : "border-transparent hover:bg-muted/70 hover:border-border/40 dark:hover:bg-muted/20",
+                          )}
+                        >
+                          <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                            <MessageSquare
+                              className={cn(
+                                "size-4 mt-0.5 shrink-0 transition-colors",
+                                isActive
+                                  ? "text-primary"
+                                  : "text-muted-foreground/60 group-hover:text-primary",
+                              )}
+                            />
+                            <div className="min-w-0 flex-1">
+                              <p
+                                className={cn(
+                                  "text-xs font-medium truncate leading-normal transition-colors",
+                                  isActive
+                                    ? "text-primary font-semibold"
+                                    : "text-foreground group-hover:text-foreground",
+                                )}
+                              >
+                                {item.title}
+                              </p>
+                              <span className="text-[9px] text-muted-foreground/60 leading-none">
+                                {item.timestamp}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Hover Actions */}
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="icon-xs"
+                              onClick={(e) => handleDeleteItem(item.id, item.title, e)}
+                              className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md"
+                              title="Hapus riwayat"
+                            >
+                              <Trash2 className="size-3" />
+                            </Button>
+                            <ChevronRight className="size-3.5 text-muted-foreground/40" />
                           </div>
                         </div>
-
-                        {/* Hover Actions */}
-                        <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                          <Button
-                            variant="ghost"
-                            size="icon-xs"
-                            onClick={(e) => handleDeleteItem(item.id, item.title, e)}
-                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md"
-                            title="Hapus riwayat"
-                          >
-                            <Trash2 className="size-3" />
-                          </Button>
-                          <ChevronRight className="size-3.5 text-muted-foreground/40" />
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               );

@@ -9,6 +9,8 @@ import { aiDetections } from "../schema/ai-detections";
 import { recommendations } from "../schema/recommendations";
 import { files } from "../schema/files";
 import { activities } from "../schema/activities";
+import { chatConversations } from "../schema/chat-conversation";
+import { chatMessages } from "../schema/chat-messages";
 // ═══════════════════════════════════════════════════════════════════════════
 // Auth Relations (extended with domain references)
 // ═══════════════════════════════════════════════════════════════════════════
@@ -18,6 +20,7 @@ export const userRelations = relations(user, ({ many }) => ({
   analyses: many(analyses),
   files: many(files),
   activities: many(activities),
+  conversations: many(chatConversations),
 }));
 export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, {
@@ -111,5 +114,25 @@ export const activityRelations = relations(activities, ({ one }) => ({
   analysis: one(analyses, {
     fields: [activities.analysisId],
     references: [analyses.id],
+  }),
+}));
+
+// AI Schema (Chat Message & Chat Conversation)
+export const chatConversationRelations = relations(
+  chatConversations,
+  ({ one, many }) => ({
+    user: one(user, {
+      fields: [chatConversations.userId],
+      references: [user.id],
+    }),
+
+    messages: many(chatMessages),
+  }),
+);
+
+export const chatMessageRelations = relations(chatMessages, ({ one }) => ({
+  conversation: one(chatConversations, {
+    fields: [chatMessages.conversationId],
+    references: [chatConversations.id],
   }),
 }));

@@ -7,3 +7,5 @@ export { aiDetections } from "./ai-detections";
 export { recommendations } from "./recommendations";
 export { files } from "./files";
 export { activities } from "./activities";
+export { chatConversations } from "./chat-conversation";
+export { chatMessages } from "./chat-messages";

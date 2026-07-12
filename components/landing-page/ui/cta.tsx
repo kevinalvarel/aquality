@@ -11,7 +11,12 @@ export function CallToAction() {
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </Button>
-      <Button variant="outline" size="lg" className="px-7 gap-2 text-sm" asChild>
+      <Button
+        variant="outline"
+        size="lg"
+        className="px-7 gap-2 text-sm"
+        asChild
+      >
         <Link href="/map">
           <Map className="size-4" />
           View Interactive Map

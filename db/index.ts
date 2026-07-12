@@ -14,6 +14,8 @@ export {
   recommendations,
   files,
   activities,
+  chatConversations,
+  chatMessages,
 } from "./schema/index";
 // Enums
 export {
@@ -36,4 +38,6 @@ export {
   recommendationRelations,
   fileRelations,
   activityRelations,
+  chatConversationRelations,
+  chatMessageRelations,
 } from "./relations/index";

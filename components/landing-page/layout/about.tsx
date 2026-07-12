@@ -1,3 +1,4 @@
+import GlowingCard from "@/components/glowing-card";
 import { Brain, Activity, Factory } from "lucide-react";
 
 const analysisTypes = [
@@ -73,72 +74,79 @@ export function About() {
           </div>
 
           {/* Right: Visual card */}
-          <div className="relative">
-            <div className="relative rounded-3xl border border-border/50 bg-gradient-to-br from-card via-card to-primary/[0.03] p-8 sm:p-10 overflow-hidden">
-              {/* Decorative dot pattern */}
-              <div
-                className="absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 1px)`,
-                  backgroundSize: "24px 24px",
-                }}
-              />
-
-              <div className="relative space-y-8">
-                {/* Mission statement */}
-                <div className="space-y-3">
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                    Our Mission
-                  </p>
-                  <p className="text-lg font-medium text-foreground leading-relaxed">
-                    &ldquo;Empowering communities and researchers with AI-driven
-                    insights into coastal water quality — making environmental
-                    data accessible to everyone.&rdquo;
-                  </p>
-                </div>
-
-                {/* Divider */}
-                <div className="h-px bg-gradient-to-r from-border/80 via-primary/20 to-transparent" />
-
-                {/* Analysis Icons */}
-                <div className="grid grid-cols-3 gap-4">
-                  {analysisTypes.map((item) => (
-                    <div
-                      key={item.label}
-                      className="flex flex-col items-center gap-2.5 py-3"
-                    >
-                      <div
-                        className={`flex items-center justify-center size-11 rounded-xl ${item.bgColor} ${item.color} transition-transform hover:scale-105`}
-                      >
-                        {item.icon}
-                      </div>
-                      <span className="text-xs font-medium text-muted-foreground text-center">
-                        {item.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Sample beach quality scores */}
-                <div className="space-y-3">
-                  <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground/60">
-                    Water Quality Index Today
-                  </p>
-                  <BeachScore name="Pantai Anyer" score={82} level="Healthy" color="emerald" />
-                  <BeachScore name="Pantai Carita" score={67} level="Moderate" color="amber" />
-                  <BeachScore name="Pantai Sawarna" score={91} level="Excellent" color="emerald" />
-                </div>
+          <GlowingCard
+            edgeSensitivity={30}
+            glowColor="40 80 80"
+            backgroundColor="#242526"
+            borderRadius={28}
+            glowRadius={40}
+            glowIntensity={1}
+            coneSpread={25}
+            animated={false}
+            colors={["#5795d9", "#2d5bb4", "#dce3e9"]}
+            className="relative rounded-3xl border border-border/50 bg-gradient-to-br from-card via-card to-primary/[0.03] p-8 sm:p-10 overflow-hidden"
+          >
+            <div className="relative space-y-8">
+              {/* Mission statement */}
+              <div className="space-y-3">
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                  Our Mission
+                </p>
+                <p className="text-lg font-medium text-foreground leading-relaxed">
+                  &ldquo;Empowering communities and researchers with AI-driven
+                  insights into coastal water quality — making environmental
+                  data accessible to everyone.&rdquo;
+                </p>
               </div>
 
-              {/* Corner accents */}
-              <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-primary/5 blur-2xl" />
-              <div className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-cyan-500/5 blur-2xl" />
-            </div>
+              {/* Divider */}
+              <div className="h-px bg-gradient-to-r from-border/80 via-primary/20 to-transparent" />
 
-            {/* Floating decorators */}
-            <div className="absolute -top-3 -right-3 w-6 h-6 rounded-full border border-primary/20 bg-background" />
-            <div className="absolute -bottom-2 -left-2 w-4 h-4 rounded-full border border-cyan-500/20 bg-background" />
-          </div>
+              {/* Analysis Icons */}
+              <div className="grid grid-cols-3 gap-4">
+                {analysisTypes.map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex flex-col items-center gap-2.5 py-3"
+                  >
+                    <div
+                      className={`flex items-center justify-center size-11 rounded-xl ${item.bgColor} ${item.color} transition-transform hover:scale-105`}
+                    >
+                      {item.icon}
+                    </div>
+                    <span className="text-xs font-medium text-muted-foreground text-center">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Sample beach quality scores */}
+              <div className="space-y-3">
+                <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground/60">
+                  Water Quality Index Today
+                </p>
+                <BeachScore
+                  name="Pantai Anyer"
+                  score={82}
+                  level="Healthy"
+                  color="emerald"
+                />
+                <BeachScore
+                  name="Pantai Carita"
+                  score={67}
+                  level="Moderate"
+                  color="amber"
+                />
+                <BeachScore
+                  name="Pantai Sawarna"
+                  score={91}
+                  level="Excellent"
+                  color="emerald"
+                />
+              </div>
+            </div>
+          </GlowingCard>
         </div>
       </div>
     </section>
@@ -197,17 +205,20 @@ function BeachScore({
   const c = colorMap[color];
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs text-muted-foreground w-28 flex-shrink-0 truncate">{name}</span>
+      <span className="text-xs text-muted-foreground w-28 flex-shrink-0 truncate">
+        {name}
+      </span>
       <div className="flex-1 h-1.5 bg-border/50 rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full ${c.bar} transition-all duration-500`}
           style={{ width: `${score}%` }}
         />
       </div>
-      <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0 ${c.badge}`}>
+      <span
+        className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0 ${c.badge}`}
+      >
         {level}
       </span>
     </div>
   );
 }
-

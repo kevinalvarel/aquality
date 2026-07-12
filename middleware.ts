@@ -22,11 +22,11 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/analyze",
     "/explore",
     "/leaderboard",
     "/map",
     "/login",
     "/register",
+    "/aquasisten",
   ],
 };

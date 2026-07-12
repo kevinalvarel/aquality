@@ -13,8 +13,19 @@ import { AlertCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function ChatContainer() {
-  const { messages, isLoading, error, sendMessage, clearChat, dismissError } =
-    useAquasistenChat();
+  const {
+    messages,
+    isLoading,
+    error,
+    sendMessage,
+    clearChat,
+    dismissError,
+    conversations,
+    activeConversationId,
+    selectConversation,
+    deleteConversation,
+    isConversationsLoading,
+  } = useAquasistenChat();
 
   const [pendingSuggestion, setPendingSuggestion] = useState<string | null>(
     null,
@@ -88,7 +99,14 @@ export function ChatContainer() {
 
       {/* Sidebar - shown on desktop */}
       <div className="hidden lg:flex w-80 shrink-0">
-        <ChatHistorySidebar onNewChat={clearChat} />
+        <ChatHistorySidebar
+          onNewChat={clearChat}
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+          onSelectConversation={selectConversation}
+          onDeleteConversation={deleteConversation}
+          isLoading={isConversationsLoading}
+        />
       </div>
     </div>
   );
