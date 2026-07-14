@@ -8,10 +8,10 @@ const steps = [
     id: "collect",
     icon: Database,
     number: "01",
-    title: "Collect Coastal & Environmental Data",
-    subtitle: "Data Collection",
+    title: "Kumpulkan Data Pesisir & Lingkungan",
+    subtitle: "Pengumpulan Data",
     description:
-      "Aquality gathers comprehensive environmental data from coastal stations across Banten — including water quality indicators, ecosystem measurements, and geographic data for each beach.",
+      "Aquality mengumpulkan data lingkungan komprehensif dari stasiun pesisir di seluruh Banten — termasuk indikator kualitas air, pengukuran ekosistem, dan data geografis untuk setiap pantai.",
     visual: {
       gradient: "from-primary/10 to-sky-500/5",
       accent: "bg-primary",
@@ -21,10 +21,10 @@ const steps = [
     id: "industrial",
     icon: Factory,
     number: "02",
-    title: "Analyze Industrial Activity & Environmental Factors",
-    subtitle: "Impact Assessment",
+    title: "Analisis Aktivitas Industri & Faktor Lingkungan",
+    subtitle: "Penilaian Dampak",
     description:
-      "The platform identifies and evaluates nearby industrial sources, assessing their distance, category, and potential contribution to water quality degradation through environmental indicators.",
+      "Platform ini mengidentifikasi dan mengevaluasi sumber industri terdekat, menilai jarak, kategori, dan potensi kontribusinya terhadap penurunan kualitas air melalui indikator lingkungan.",
     visual: {
       gradient: "from-cyan-500/10 to-primary/5",
       accent: "bg-cyan-500",
@@ -34,10 +34,10 @@ const steps = [
     id: "predict",
     icon: Brain,
     number: "03",
-    title: "Run Machine Learning Predictions",
-    subtitle: "AI Prediction Engine",
+    title: "Jalankan Prediksi Machine Learning",
+    subtitle: "Mesin Prediksi AI",
     description:
-      "Trained machine learning models process the collected environmental and industrial data to predict water quality status, healthy water percentage, and pollution risk for each beach.",
+      "Model machine learning yang terlatih memproses data lingkungan dan industri yang dikumpulkan untuk memprediksi status kualitas air, persentase air sehat, dan risiko pencemaran untuk setiap pantai.",
     visual: {
       gradient: "from-emerald-500/10 to-cyan-500/5",
       accent: "bg-emerald-500",
@@ -47,10 +47,10 @@ const steps = [
     id: "insights",
     icon: BarChart3,
     number: "04",
-    title: "Present Water Quality Insights & Recommendations",
-    subtitle: "Actionable Insights",
+    title: "Sajikan Wawasan & Rekomendasi Kualitas Air",
+    subtitle: "Wawasan yang Dapat Ditindaklanjuti",
     description:
-      "Results are presented through interactive maps, beach profiles, and leaderboards — giving visitors, researchers, and policymakers clear, data-driven water quality insights.",
+      "Hasil disajikan melalui peta interaktif, profil pantai, dan papan peringkat — memberikan pengunjung, peneliti, dan pembuat kebijakan wawasan kualitas air yang jelas dan berbasis data.",
     visual: {
       gradient: "from-amber-500/10 to-primary/5",
       accent: "bg-amber-500",
@@ -73,15 +73,15 @@ export function HowItWorks() {
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-16 sm:mb-20">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary mb-4">
-            How It Works
+            Cara Kerja
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-            From Raw Data to{" "}
-            <span className="text-primary">Water Quality Intelligence</span>
+            Dari Data Mentah menjadi{" "}
+            <span className="text-primary">Kecerdasan Kualitas Air</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            A four-step AI pipeline that transforms coastal environmental data
-            into actionable water quality insights.
+            Alur AI empat langkah yang mengubah data lingkungan pesisir menjadi
+            wawasan kualitas air yang dapat ditindaklanjuti.
           </p>
         </div>
 
@@ -189,7 +189,7 @@ export function HowItWorks() {
                       key={i}
                       type="button"
                       onClick={() => setActiveStep(i)}
-                      aria-label={`Step ${i + 1}`}
+                      aria-label={`Langkah ${i + 1}`}
                       className={`h-1 rounded-full transition-all duration-300 ${
                         i === activeStep
                           ? `w-8 ${steps[activeStep].visual.accent}`

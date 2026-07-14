@@ -27,9 +27,15 @@ export async function POST(req: Request) {
 
     const lastUserMessage = messages[messages.length - 1];
 
-    // Extract text content safely from content property
+    // Extract text content safely from parts (AI SDK v7 format) or content (legacy)
     let userMessageContent = "";
-    if (typeof lastUserMessage.content === "string") {
+    if (Array.isArray(lastUserMessage.parts)) {
+      // AI SDK v7: messages use parts array with { type: "text", text: "..." }
+      userMessageContent = lastUserMessage.parts
+        .filter((part: any) => part.type === "text")
+        .map((part: any) => part.text)
+        .join("");
+    } else if (typeof lastUserMessage.content === "string") {
       userMessageContent = lastUserMessage.content;
     } else if (Array.isArray(lastUserMessage.content)) {
       userMessageContent = lastUserMessage.content

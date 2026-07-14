@@ -3,48 +3,48 @@ import { Droplets, Activity, Factory, MapPin, FileText } from "lucide-react";
 const outputs = [
   {
     icon: Droplets,
-    label: "Healthy Water %",
+    label: "Persentase Air Sehat",
     value: "82%",
-    description: "Percentage of water samples meeting clean water standards.",
+    description: "Persentase sampel air yang memenuhi standar air bersih.",
     color: "text-primary",
     bgColor: "bg-primary/8",
     sample: "Pantai Sawarna",
   },
   {
     icon: Activity,
-    label: "Water Quality Status",
-    value: "Good",
-    description: "Overall quality classification based on environmental indicators.",
+    label: "Status Kualitas Air",
+    value: "Baik",
+    description: "Klasifikasi kualitas keseluruhan berdasarkan indikator lingkungan.",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/8",
     sample: "Pantai Anyer",
   },
   {
     icon: Factory,
-    label: "Industrial Impact",
-    value: "Low",
-    description: "Assessed impact level of nearby industrial activity on the coastline.",
+    label: "Dampak Industri",
+    value: "Rendah",
+    description: "Tingkat dampak aktivitas industri terdekat terhadap pesisir.",
     color: "text-amber-500",
     bgColor: "bg-amber-500/8",
     sample: "Pantai Carita",
   },
   {
     icon: MapPin,
-    label: "Nearest Industry",
+    label: "Industri Terdekat",
     value: "4.2 km",
-    description: "Distance to the nearest identified industrial source from the beach.",
+    description: "Jarak ke sumber industri teridentifikasi terdekat dari pantai.",
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/8",
     sample: "Pantai Karang Bolong",
   },
   {
     icon: FileText,
-    label: "Environmental Summary",
-    value: "Analyzed",
-    description: "AI-generated summary of the beach's overall environmental condition.",
+    label: "Ringkasan Lingkungan",
+    value: "Dianalisis",
+    description: "Ringkasan yang dihasilkan AI tentang kondisi lingkungan pantai secara keseluruhan.",
     color: "text-sky-500",
     bgColor: "bg-sky-500/8",
-    sample: "All Beaches",
+    sample: "Semua Pantai",
   },
 ];
 
@@ -58,13 +58,13 @@ export function MLOutputs() {
             Machine Learning
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-            What the AI{" "}
-            <span className="text-primary">Predicts for Each Beach</span>
+            Apa yang AI{" "}
+            <span className="text-primary">Prediksi untuk Setiap Pantai</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Aquality&apos;s machine learning model produces actionable outputs for
-            every monitored beach — giving you a complete picture of coastal
-            water quality at a glance.
+            Model machine learning Aquality menghasilkan keluaran yang dapat
+            ditindaklanjuti untuk setiap pantai terpantau — memberikan Anda
+            gambaran lengkap kualitas air pesisir secara sekilas.
           </p>
         </div>
 

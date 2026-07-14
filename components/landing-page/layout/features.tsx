@@ -10,54 +10,54 @@ import {
 const features = [
   {
     icon: Map,
-    title: "Interactive Map",
+    title: "Peta Interaktif",
     description:
-      "Geospatial visualization of all monitored beaches with water quality overlays, industrial zones, and environmental data layers.",
+      "Visualisasi geospasial semua pantai terpantau dengan overlay kualitas air, zona industri, dan lapisan data lingkungan.",
     color: "text-primary",
     bgColor: "bg-primary/8",
     borderColor: "group-hover:border-primary/20",
   },
   {
     icon: Droplets,
-    title: "Water Quality Prediction",
+    title: "Prediksi Kualitas Air",
     description:
-      "AI-powered predictions for coastal water quality using machine learning models trained on environmental and industrial data.",
+      "Prediksi bertenaga AI untuk kualitas air pesisir menggunakan model machine learning yang dilatih dengan data lingkungan dan industri.",
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/8",
     borderColor: "group-hover:border-cyan-500/20",
   },
   {
     icon: Brain,
-    title: "Beach Analysis",
+    title: "Analisis Pantai",
     description:
-      "Deep environmental analysis per beach — covering healthy water percentage, quality status, and ecosystem summary.",
+      "Analisis lingkungan mendalam per pantai — mencakup persentase air sehat, status kualitas, dan ringkasan ekosistem.",
     color: "text-sky-500",
     bgColor: "bg-sky-500/8",
     borderColor: "group-hover:border-sky-500/20",
   },
   {
     icon: Factory,
-    title: "Industrial Impact Analysis",
+    title: "Analisis Dampak Industri",
     description:
-      "Assess the impact of nearby industries on water quality, including distance, category, and pollution contribution.",
+      "Nilai dampak industri terdekat terhadap kualitas air, termasuk jarak, kategori, dan kontribusi pencemaran.",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/8",
     borderColor: "group-hover:border-emerald-500/20",
   },
   {
     icon: BarChart3,
-    title: "Historical Analysis",
+    title: "Analisis Historis",
     description:
-      "Explore historical water quality trends, seasonal patterns, and long-term environmental changes across all beaches.",
+      "Jelajahi tren kualitas air historis, pola musiman, dan perubahan lingkungan jangka panjang di seluruh pantai.",
     color: "text-chart-2",
     bgColor: "bg-chart-2/8",
     borderColor: "group-hover:border-chart-2/20",
   },
   {
     icon: Trophy,
-    title: "Quality Leaderboard",
+    title: "Papan Peringkat Kualitas",
     description:
-      "Rank beaches by their water quality index score — helping users quickly identify the cleanest and safest coastal destinations.",
+      "Peringkat pantai berdasarkan skor indeks kualitas air — membantu pengguna dengan cepat mengidentifikasi destinasi pesisir terbersih dan teraman.",
     color: "text-amber-500",
     bgColor: "bg-amber-500/8",
     borderColor: "group-hover:border-amber-500/20",
@@ -71,16 +71,16 @@ export function Features() {
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-16 sm:mb-20">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary mb-4">
-            Platform Features
+            Fitur Platform
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-            Everything You Need for{" "}
-            <span className="text-primary">Coastal Water Intelligence</span>
+            Semua yang Anda Butuhkan untuk{" "}
+            <span className="text-primary">Kecerdasan Air Pesisir</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Aquality combines AI, machine learning, and environmental data to
-            give you comprehensive insights into coastal water quality —
-            from industrial impact to real-time predictions.
+            Aquality menggabungkan AI, machine learning, dan data lingkungan
+            untuk memberikan wawasan komprehensif tentang kualitas air pesisir —
+            mulai dari dampak industri hingga prediksi waktu nyata.
           </p>
         </div>
 

@@ -27,22 +27,22 @@ export function FinalCTA() {
           />
           <div className="relative z-10 space-y-6 max-w-2xl mx-auto">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              Get Started
+              Mulai Sekarang
             </p>
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-              Explore Coastal Water Quality{" "}
-              <span className="text-primary">with AI</span>
+              Jelajahi Kualitas Air Pesisir{" "}
+              <span className="text-primary">dengan AI</span>
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto leading-relaxed">
-              Start exploring Banten&apos;s beaches with AI-powered water
-              quality analysis. Get accurate predictions, industrial impact
-              assessments, and environmental insights — all in one platform.
+              Mulai jelajahi pantai-pantai Banten dengan analisis kualitas air
+              bertenaga AI. Dapatkan prediksi akurat, penilaian dampak industri,
+              dan wawasan lingkungan — semua dalam satu platform.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
               <Button size="lg" className="px-8 gap-2 text-sm group" asChild>
                 <Link href="/explore">
-                  Explore Beaches
+                  Jelajahi Pantai
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </Button>
@@ -54,7 +54,7 @@ export function FinalCTA() {
               >
                 <Link href="/map">
                   <Map className="size-4" />
-                  Open Interactive Map
+                  Buka Peta Interaktif
                 </Link>
               </Button>
             </div>

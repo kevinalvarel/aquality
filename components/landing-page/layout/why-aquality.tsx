@@ -3,33 +3,33 @@ import { Compass, FlaskConical, Landmark, Users } from "lucide-react";
 const audiences = [
   {
     icon: Compass,
-    title: "Visitors",
+    title: "Pengunjung",
     description:
-      "Understand beach water conditions before you go — make informed decisions about where to swim, fish, or relax.",
+      "Pahami kondisi air pantai sebelum berangkat — buat keputusan tepat tentang di mana berenang, memancing, atau bersantai.",
     color: "text-primary",
     bgColor: "bg-primary/8",
   },
   {
     icon: FlaskConical,
-    title: "Researchers",
+    title: "Peneliti",
     description:
-      "Access structured environmental insights, historical trends, and industrial impact data for coastal research.",
+      "Akses wawasan lingkungan terstruktur, tren historis, dan data dampak industri untuk penelitian pesisir.",
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/8",
   },
   {
     icon: Landmark,
-    title: "Government",
+    title: "Pemerintah",
     description:
-      "Support evidence-based coastal management decisions with AI-driven water quality monitoring and analysis.",
+      "Dukung keputusan pengelolaan pesisir berbasis bukti dengan pemantauan dan analisis kualitas air bertenaga AI.",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/8",
   },
   {
     icon: Users,
-    title: "Communities",
+    title: "Komunitas",
     description:
-      "Increase local awareness of coastal environmental quality and the impact of industrial activity on nearby beaches.",
+      "Tingkatkan kesadaran lokal tentang kualitas lingkungan pesisir dan dampak aktivitas industri terhadap pantai sekitar.",
     color: "text-amber-500",
     bgColor: "bg-amber-500/8",
   },
@@ -47,15 +47,15 @@ export function WhyAquality() {
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-16 sm:mb-20">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary mb-4">
-            Who It&apos;s For
+            Untuk Siapa
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-            Built for Everyone Who Cares About{" "}
-            <span className="text-primary">Coastal Health</span>
+            Dibuat untuk Semua yang Peduli tentang{" "}
+            <span className="text-primary">Kesehatan Pesisir</span>
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Whether you&apos;re planning a beach visit or conducting research,
-            Aquality provides the environmental insights you need.
+            Baik Anda merencanakan kunjungan ke pantai atau melakukan penelitian,
+            Aquality menyediakan wawasan lingkungan yang Anda butuhkan.
           </p>
         </div>
 

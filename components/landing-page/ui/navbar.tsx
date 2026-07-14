@@ -15,19 +15,19 @@ import { useState } from "react";
 export function FloatingNavbar() {
   const navItems = [
     {
-      name: "Home",
+      name: "Beranda",
       link: "#hero",
     },
     {
-      name: "About",
+      name: "Tentang",
       link: "#about",
     },
     {
-      name: "Features",
+      name: "Fitur",
       link: "#features",
     },
     {
-      name: "How It Works",
+      name: "Cara Kerja",
       link: "#how-it-works",
     },
   ];
@@ -43,7 +43,7 @@ export function FloatingNavbar() {
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
             <NavbarButton variant="primary" href="/login">
-              Sign In
+              Masuk
             </NavbarButton>
           </div>
         </NavBody>
@@ -79,7 +79,7 @@ export function FloatingNavbar() {
                 className="w-full"
                 href="/login"
               >
-                Sign In
+                Masuk
               </NavbarButton>
             </div>
           </MobileNavMenu>

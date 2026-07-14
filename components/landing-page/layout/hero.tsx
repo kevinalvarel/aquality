@@ -7,21 +7,21 @@ const stats = [
   {
     icon: MapPin,
     value: "18+",
-    label: "Coastal Beaches",
+    label: "Pantai Pesisir",
     color: "text-primary",
     bg: "bg-primary/10",
   },
   {
     icon: Brain,
     value: "ML",
-    label: "AI Predictions",
+    label: "Prediksi AI",
     color: "text-cyan-500",
     bg: "bg-cyan-500/10",
   },
   {
     icon: BarChart3,
     value: "Live",
-    label: "Quality Insights",
+    label: "Wawasan Kualitas",
     color: "text-emerald-500",
     bg: "bg-emerald-500/10",
   },
@@ -43,22 +43,22 @@ export function Hero() {
 
           {/* Main headline */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.08] text-foreground">
-            Understand Beach Water{" "}
+            Pahami Kualitas Air{" "}
             <span className="relative inline-block">
               <span className="bg-gradient-to-r from-primary via-cyan-500 to-primary bg-clip-text text-transparent">
-                Quality with AI
+                Pantai dengan AI
               </span>
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="mt-7 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Aquality analyzes coastal water quality using{" "}
+            Aquality menganalisis kualitas air pesisir menggunakan{" "}
             <strong className="text-foreground font-medium">
               machine learning
             </strong>{" "}
-            and environmental indicators — assessing industrial impact, pollution
-            levels, and ecosystem health across Banten&apos;s coastline.
+            dan indikator lingkungan — menilai dampak industri, tingkat
+            pencemaran, dan kesehatan ekosistem di sepanjang pesisir Banten.
           </p>
 
           <CallToAction />

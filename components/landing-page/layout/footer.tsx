@@ -6,10 +6,10 @@ const footerLinks = {
   platform: {
     title: "Platform",
     links: [
-      { label: "Explore Beaches", href: "/explore" },
-      { label: "Interactive Map", href: "/map" },
-      { label: "Leaderboard", href: "/leaderboard" },
-      { label: "Beach Analysis", href: "/analyze" },
+      { label: "Jelajahi Pantai", href: "/explore" },
+      { label: "Peta Interaktif", href: "/map" },
+      { label: "Papan Peringkat", href: "/leaderboard" },
+      { label: "Analisis Pantai", href: "/analyze" },
     ],
   },
 };
@@ -38,9 +38,9 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Aquality is an AI-powered coastal water quality analysis platform
-              — predicting beach conditions using machine learning and
-              environmental data.
+              Aquality adalah platform analisis kualitas air pesisir bertenaga
+              AI — memprediksi kondisi pantai menggunakan machine learning dan
+              data lingkungan.
             </p>
           </div>
 

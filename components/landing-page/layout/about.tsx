@@ -4,24 +4,24 @@ import { Brain, Activity, Factory } from "lucide-react";
 const analysisTypes = [
   {
     icon: <Brain className="size-5" />,
-    label: "ML Prediction",
+    label: "Prediksi ML",
     color: "text-primary",
     bgColor: "bg-primary/8",
-    desc: "Machine learning models predict water quality status.",
+    desc: "Model machine learning memprediksi status kualitas air.",
   },
   {
     icon: <Activity className="size-5" />,
-    label: "Water Quality",
+    label: "Kualitas Air",
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/8",
-    desc: "Healthy water percentage and environmental indicators.",
+    desc: "Persentase air sehat dan indikator lingkungan.",
   },
   {
     icon: <Factory className="size-5" />,
-    label: "Industrial Impact",
+    label: "Dampak Industri",
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/8",
-    desc: "Distance and category of nearby industrial sources.",
+    desc: "Jarak dan kategori sumber industri terdekat.",
   },
 ];
 
@@ -37,19 +37,19 @@ export function About() {
           <div className="space-y-8">
             <div className="space-y-4">
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-                About Aquality
+                Tentang Aquality
               </p>
               <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-snug">
-                AI-Powered Coastal{" "}
-                <span className="text-primary">Environmental Intelligence</span>
+                Kecerdasan Lingkungan Pesisir{" "}
+                <span className="text-primary">Bertenaga AI</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed max-w-lg">
-                Aquality is an environmental monitoring platform that uses
-                machine learning to analyze and predict coastal water quality
-                across Banten&apos;s coastline. By evaluating environmental
-                indicators and nearby industrial activity, Aquality helps
-                visitors, researchers, and policymakers make data-driven
-                decisions.
+                Aquality adalah platform pemantauan lingkungan yang menggunakan
+                machine learning untuk menganalisis dan memprediksi kualitas air
+                pesisir di sepanjang pantai Banten. Dengan mengevaluasi indikator
+                lingkungan dan aktivitas industri terdekat, Aquality membantu
+                pengunjung, peneliti, dan pembuat kebijakan mengambil keputusan
+                berbasis data.
               </p>
             </div>
 
@@ -57,18 +57,18 @@ export function About() {
             <div className="space-y-5">
               <AboutDetail
                 number="01"
-                title="Machine Learning Predictions"
-                description="AI models trained on environmental data predict water quality status, giving you accurate assessments before you visit."
+                title="Prediksi Machine Learning"
+                description="Model AI yang dilatih dengan data lingkungan memprediksi status kualitas air, memberikan penilaian akurat sebelum Anda berkunjung."
               />
               <AboutDetail
                 number="02"
-                title="Industrial Impact Assessment"
-                description="Evaluate the proximity and category of industrial sources near each beach to understand their effect on water quality."
+                title="Penilaian Dampak Industri"
+                description="Evaluasi kedekatan dan kategori sumber industri di sekitar setiap pantai untuk memahami pengaruhnya terhadap kualitas air."
               />
               <AboutDetail
                 number="03"
-                title="18+ Monitored Beaches"
-                description="From Anyer, Carita, Sawarna, to Tanjung Lesung — all beaches analyzed and ranked in a single platform."
+                title="18+ Pantai Terpantau"
+                description="Dari Anyer, Carita, Sawarna, hingga Tanjung Lesung — semua pantai dianalisis dan diperingkat dalam satu platform."
               />
             </div>
           </div>
@@ -90,12 +90,12 @@ export function About() {
               {/* Mission statement */}
               <div className="space-y-3">
                 <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  Our Mission
+                  Misi Kami
                 </p>
                 <p className="text-lg font-medium text-foreground leading-relaxed">
-                  &ldquo;Empowering communities and researchers with AI-driven
-                  insights into coastal water quality — making environmental
-                  data accessible to everyone.&rdquo;
+                  &ldquo;Memberdayakan komunitas dan peneliti dengan wawasan
+                  berbasis AI tentang kualitas air pesisir — menjadikan data
+                  lingkungan dapat diakses oleh semua orang.&rdquo;
                 </p>
               </div>
 
@@ -124,24 +124,24 @@ export function About() {
               {/* Sample beach quality scores */}
               <div className="space-y-3">
                 <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground/60">
-                  Water Quality Index Today
+                  Indeks Kualitas Air Hari Ini
                 </p>
                 <BeachScore
                   name="Pantai Anyer"
                   score={82}
-                  level="Healthy"
+                  level="Sehat"
                   color="emerald"
                 />
                 <BeachScore
                   name="Pantai Carita"
                   score={67}
-                  level="Moderate"
+                  level="Sedang"
                   color="amber"
                 />
                 <BeachScore
                   name="Pantai Sawarna"
                   score={91}
-                  level="Excellent"
+                  level="Sangat Baik"
                   color="emerald"
                 />
               </div>

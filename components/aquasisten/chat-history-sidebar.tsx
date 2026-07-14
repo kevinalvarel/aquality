@@ -29,14 +29,23 @@ function getGroupAndTimestamp(dateString: string | Date): {
 } {
   const date = new Date(dateString);
   const now = new Date();
-  
-  const dMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  
+
+  const dMidnight = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  );
+  const nowMidnight = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+  );
+
   const diffTime = nowMidnight.getTime() - dMidnight.getTime();
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-  let group: "Hari Ini" | "Kemarin" | "Minggu Ini" | "Sebelumnya" = "Sebelumnya";
+  let group: "Hari Ini" | "Kemarin" | "Minggu Ini" | "Sebelumnya" =
+    "Sebelumnya";
 
   if (diffDays === 0) {
     group = "Hari Ini";
@@ -109,9 +118,9 @@ export function ChatHistorySidebar({
   const groups = useMemo(() => {
     const grouped: Record<string, HistoryItem[]> = {
       "Hari Ini": [],
-      "Kemarin": [],
+      Kemarin: [],
       "Minggu Ini": [],
-      "Sebelumnya": [],
+      Sebelumnya: [],
     };
 
     filteredHistory.forEach((item) => {
@@ -189,7 +198,9 @@ export function ChatHistorySidebar({
             <div className="flex flex-col items-center justify-center py-8 text-center">
               <MessageSquare className="size-8 text-muted-foreground/30 mb-2" />
               <p className="text-xs text-muted-foreground font-medium">
-                {isLoading ? "Memuat riwayat..." : "Tidak ada riwayat ditemukan"}
+                {isLoading
+                  ? "Memuat riwayat..."
+                  : "Tidak ada riwayat ditemukan"}
               </p>
             </div>
           ) : (
@@ -247,7 +258,9 @@ export function ChatHistorySidebar({
                             <Button
                               variant="ghost"
                               size="icon-xs"
-                              onClick={(e) => handleDeleteItem(item.id, item.title, e)}
+                              onClick={(e) =>
+                                handleDeleteItem(item.id, item.title, e)
+                              }
                               className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md"
                               title="Hapus riwayat"
                             >
