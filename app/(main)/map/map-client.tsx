@@ -34,6 +34,10 @@ import { generateBeachAnalysis } from "@/lib/beach-analysis.util";
 import type { MapBeachItem } from "@/types/explore.type";
 import type { Destination } from "@/types/map.type";
 import { cn } from "@/lib/utils";
+import {
+  IndustryLayer,
+  IndustryLegend,
+} from "@/components/main/map/ui/industry-layer";
 
 const statusConfig = {
   excellent: {
@@ -96,6 +100,8 @@ export function MapPageClient({ beaches }: MapPageClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showIndustryMarkers, setShowIndustryMarkers] = useState(false);
+  const [showIndustryHeatmap, setShowIndustryHeatmap] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -116,37 +122,46 @@ export function MapPageClient({ beaches }: MapPageClientProps) {
     );
   });
 
-  const flyToDestination = useCallback((longitude: number, latitude: number) => {
-    if (mapRef.current) {
-      mapRef.current.flyTo({
-        center: [longitude, latitude],
-        zoom: 12.5,
-        essential: true,
-      });
-    }
-  }, []);
-
-  const handleSelectDestination = useCallback((id: string) => {
-    setSelectedId((prev) => {
-      const next = prev === id ? null : id;
-      if (next) {
-        const dest = destinations.find((d) => d.id === next);
-        if (dest) {
-          flyToDestination(dest.longitude, dest.latitude);
-        }
+  const flyToDestination = useCallback(
+    (longitude: number, latitude: number) => {
+      if (mapRef.current) {
+        mapRef.current.flyTo({
+          center: [longitude, latitude],
+          zoom: 12.5,
+          essential: true,
+        });
       }
-      return next;
-    });
-  }, [destinations, flyToDestination]);
+    },
+    [],
+  );
 
-  const handleSelectFromList = useCallback((id: string) => {
-    setSelectedId(id);
-    setIsSheetOpen(false);
-    const dest = destinations.find((d) => d.id === id);
-    if (dest) {
-      flyToDestination(dest.longitude, dest.latitude);
-    }
-  }, [destinations, flyToDestination]);
+  const handleSelectDestination = useCallback(
+    (id: string) => {
+      setSelectedId((prev) => {
+        const next = prev === id ? null : id;
+        if (next) {
+          const dest = destinations.find((d) => d.id === next);
+          if (dest) {
+            flyToDestination(dest.longitude, dest.latitude);
+          }
+        }
+        return next;
+      });
+    },
+    [destinations, flyToDestination],
+  );
+
+  const handleSelectFromList = useCallback(
+    (id: string) => {
+      setSelectedId(id);
+      setIsSheetOpen(false);
+      const dest = destinations.find((d) => d.id === id);
+      if (dest) {
+        flyToDestination(dest.longitude, dest.latitude);
+      }
+    },
+    [destinations, flyToDestination],
+  );
 
   const selectedBeach = useMemo(() => {
     if (!selectedId) return null;
@@ -373,7 +388,33 @@ export function MapPageClient({ beaches }: MapPageClientProps) {
                 hidePopup={isMobile}
               />
             ))}
+
+            {/* Industry Markers & Heatmap */}
+            <IndustryLayer
+              showMarkers={showIndustryMarkers}
+              showHeatmap={showIndustryHeatmap}
+            />
           </Map>
+
+          {/* Industry layer toggle controls (top-right of map, below map controls) */}
+          <div className="absolute top-3 right-3 z-10 hidden md:flex flex-col gap-1.5">
+            <IndustryLegend
+              showMarkers={showIndustryMarkers}
+              showHeatmap={showIndustryHeatmap}
+              onToggleMarkers={() => setShowIndustryMarkers((v) => !v)}
+              onToggleHeatmap={() => setShowIndustryHeatmap((v) => !v)}
+            />
+          </div>
+
+          {/* Mobile industry toggle (bottom-left area) */}
+          <div className="absolute bottom-3 right-3 z-10 md:hidden flex flex-col gap-1.5">
+            <IndustryLegend
+              showMarkers={showIndustryMarkers}
+              showHeatmap={showIndustryHeatmap}
+              onToggleMarkers={() => setShowIndustryMarkers((v) => !v)}
+              onToggleHeatmap={() => setShowIndustryHeatmap((v) => !v)}
+            />
+          </div>
 
           {/* Info overlay (hidden on mobile when a card is selected) */}
           <div
