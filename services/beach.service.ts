@@ -47,7 +47,8 @@ export async function getBeachBySlug(
         id: row.id,
         slug: row.slug,
         environmentalScore: row.environmentalScore,
-        aiConfidence: row.aiConfidence !== null ? Math.round(row.aiConfidence * 100) : null,
+        aiConfidence:
+          row.aiConfidence !== null ? Math.round(row.aiConfidence * 100) : null,
         overallStatus: row.overallStatus,
         createdAt: row.createdAt,
       }),
@@ -109,7 +110,10 @@ export async function getAllBeaches(): Promise<BeachListItem[]> {
           image: row.image,
           status: row.status,
           latestScore: row.latestScore,
-          latestConfidence: row.latestConfidence !== null ? Math.round(row.latestConfidence * 100) : null,
+          latestConfidence:
+            row.latestConfidence !== null
+              ? Math.round(row.latestConfidence * 100)
+              : null,
           lastAnalyzed: row.lastAnalyzed,
         });
       }
@@ -133,41 +137,7 @@ export async function getUniqueProvinces(): Promise<string[]> {
  * Create a new beach.
  * Invalidates related caches.
  */
-export async function createBeach(
-  input: CreateBeachInput,
-): Promise<BeachDetail> {
-  const [newBeach] = await db
-    .insert(beaches)
-    .values({
-      slug: input.slug,
-      pantai: input.pantai,
-      kecamatan: input.kecamatan,
-      kabupatenKota: input.kabupatenKota,
-      pctSehat2026: input.pctSehat2026,
-      statusKualitas2026: input.statusKualitas2026,
-      latitude: input.latitude,
-      longitude: input.longitude,
-      industriTerdekat: input.industriTerdekat,
-      jarakIndustriKm: input.jarakIndustriKm,
-      kategoriDampakIndustri: input.kategoriDampakIndustri,
-      image: input.image,
-      description: input.description,
-      status: input.status ?? "moderate",
-    })
-    .returning();
-  // Invalidate related caches
-  await Promise.all([
-    deleteCache(CACHE_KEYS.beachAll),
-    deleteCache(CACHE_KEYS.leaderboard),
-    deleteCache(CACHE_KEYS.leaderboardSummary),
-    deleteCache(CACHE_KEYS.dashboard),
-    deleteCache("beach:provinces"),
-  ]);
-  return {
-    ...newBeach,
-    recentAnalyses: [],
-  };
-}
+
 /**
  * Update an existing beach.
  * Invalidates the beach-specific and aggregate caches.

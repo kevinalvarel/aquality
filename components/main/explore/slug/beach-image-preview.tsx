@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import type { AnalyzeApiResponse } from "@/types/beach-api.type";
 import { extractStatusFromExplanation } from "@/lib/utils";
+import Image from "next/image";
 
 interface BeachImagePreviewProps {
   data: AnalyzeApiResponse;
@@ -64,16 +65,18 @@ export function BeachImagePreview({ data }: BeachImagePreviewProps) {
           {/* Real image with fallback gradient */}
           <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-gradient-to-br from-sky-400 via-cyan-300 to-emerald-200 dark:from-sky-600 dark:via-cyan-500 dark:to-emerald-400">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={data.url_gambar}
               alt={data.pantai}
+              width={1920}
+              height={1080}
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
 
           {/* Hover overlay */}
           <div
-            className={`absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+            className={`absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 rounded-xl ${
               isHovering ? "opacity-100" : "opacity-0"
             }`}
           >

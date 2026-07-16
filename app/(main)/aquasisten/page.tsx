@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import {
   ChatContainer,
   ChatContainerSkeleton,
-} from "@/components/aquasisten/chat-container";
+} from "@/components/main/aquasisten/chat-container";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

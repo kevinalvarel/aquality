@@ -9,23 +9,27 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { beachStatusEnum } from "../enums";
-// ─── Beaches ────────────────────────────────────────────────────────────────
-// Core entity representing a monitored coastal location
+
 export const beaches = pgTable(
   "beaches",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     slug: varchar("slug", { length: 255 }).notNull().unique(),
     pantai: varchar("pantai", { length: 255 }).notNull(),
+    kelurahan: varchar("kelurahan", { length: 255 }),
     kecamatan: varchar("kecamatan", { length: 255 }).notNull(),
     kabupatenKota: varchar("kabupaten_kota", { length: 255 }).notNull(),
+    provinsi: varchar("provinsi", { length: 255 }).notNull(),
+    kodeAdm4: varchar("kode_adm4", { length: 15 }).notNull(),
     pctSehat2026: doublePrecision("pct_sehat_2026"),
     statusKualitas2026: varchar("status_kualitas_2026", { length: 100 }),
     latitude: doublePrecision("latitude"),
     longitude: doublePrecision("longitude"),
     industriTerdekat: text("industri_terdekat"),
     jarakIndustriKm: doublePrecision("jarak_industri_km"),
-    kategoriDampakIndustri: varchar("kategori_dampak_industri", { length: 100 }),
+    kategoriDampakIndustri: varchar("kategori_dampak_industri", {
+      length: 100,
+    }),
     image: text("image"),
     description: text("description"),
     status: beachStatusEnum("status").default("moderate").notNull(),

@@ -81,7 +81,6 @@ export default async function AnalysisDetailPage({
 
   return (
     <div className="space-y-6 px-4 py-6 md:px-6 lg:px-8">
-      {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
@@ -98,16 +97,12 @@ export default async function AnalysisDetailPage({
           </p>
         </div>
         <div className="flex gap-2">
-          <Link href="/analyze">
+          <Link href={`/explore/${beachData.slug}/analisa-hari-ini`}>
             <Button>
               <Plus className="size-4" />
-              Analisis Pantai Baru
+              Analisis Kondisi Pantai
             </Button>
           </Link>
-          <Button variant="outline">
-            <Download className="size-4" />
-            Ekspor Laporan
-          </Button>
         </div>
       </div>
       <Separator />

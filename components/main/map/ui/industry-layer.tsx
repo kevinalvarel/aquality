@@ -184,11 +184,7 @@ function IndustryHeatmapLayer({
   // Toggle visibility
   useEffect(() => {
     if (!isLoaded || !map || !map.getLayer(layerId)) return;
-    map.setLayoutProperty(
-      layerId,
-      "visibility",
-      visible ? "visible" : "none",
-    );
+    map.setLayoutProperty(layerId, "visibility", visible ? "visible" : "none");
   }, [isLoaded, map, layerId, visible]);
 
   return null;
@@ -242,7 +238,9 @@ function IndustryMarker({
             </span>
           </div>
           {/* Tail */}
-          <div className={cn("w-0.5 h-1.5 transition-all duration-200", color)} />
+          <div
+            className={cn("w-0.5 h-1.5 transition-all duration-200", color)}
+          />
         </div>
       </MarkerContent>
     </MapMarker>
@@ -272,7 +270,10 @@ function normalizeIndustry(raw: ApiIndustry, idx: number): Industry | null {
   };
 }
 
-export function IndustryLayer({ showMarkers, showHeatmap }: IndustryLayerProps) {
+export function IndustryLayer({
+  showMarkers,
+  showHeatmap,
+}: IndustryLayerProps) {
   const [industries, setIndustries] = useState<Industry[]>([]);
 
   useEffect(() => {
@@ -284,15 +285,21 @@ export function IndustryLayer({ showMarkers, showHeatmap }: IndustryLayerProps) 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((data: ApiIndustry[] | { industries?: ApiIndustry[]; data?: ApiIndustry[] }) => {
-        const raw: ApiIndustry[] = Array.isArray(data)
-          ? data
-          : (data.industries ?? data.data ?? []);
-        const normalized = raw
-          .map((item, i) => normalizeIndustry(item, i))
-          .filter((x): x is Industry => x !== null);
-        setIndustries(normalized);
-      })
+      .then(
+        (
+          data:
+            | ApiIndustry[]
+            | { industries?: ApiIndustry[]; data?: ApiIndustry[] },
+        ) => {
+          const raw: ApiIndustry[] = Array.isArray(data)
+            ? data
+            : (data.industries ?? data.data ?? []);
+          const normalized = raw
+            .map((item, i) => normalizeIndustry(item, i))
+            .filter((x): x is Industry => x !== null);
+          setIndustries(normalized);
+        },
+      )
       .catch((err) => {
         console.warn("[IndustryLayer] Failed to load industries:", err);
       });
