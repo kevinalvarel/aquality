@@ -23,6 +23,7 @@ import {
 import type { BeachLeaderboard } from "@/types/leaderboard.type";
 import { Bot, ExternalLink } from "lucide-react";
 import { getStatusColor, formatRelativeDate } from "@/lib/utils";
+import Image from "next/image";
 
 const statusLabels: Record<string, string> = {
   excellent: "Sangat Baik",
@@ -113,7 +114,13 @@ export function LeaderboardTable({
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <div className="size-8 shrink-0 rounded-md bg-gradient-to-br from-primary/20 to-chart-2/20" />
+                      <Image
+                        src={beach.image}
+                        alt={beach.beachName}
+                        width={40}
+                        height={40}
+                        className="rounded-md object-cover"
+                      />
                       <span className="font-medium">{beach.beachName}</span>
                     </div>
                   </TableCell>

@@ -8,37 +8,28 @@ import type { BeachWeatherInfo } from "@/types/weather.type";
 // ─── Weather Service ────────────────────────────────────────────────────────
 // Provides beach data needed for the weather analysis page.
 // Uses the project's existing cache-first pattern.
-
-/**
- * Get beach data subset needed for weather analysis page by slug.
- * Returns only the fields relevant to weather display (no analysis data).
- */
 export async function getBeachBySlugForWeather(
   slug: string,
 ): Promise<BeachWeatherInfo | null> {
-  return withCache(
-    `beach:weather:${slug}`,
-    CACHE_TTL.beach,
-    async () => {
-      const rows = await db
-        .select({
-          id: beaches.id,
-          slug: beaches.slug,
-          pantai: beaches.pantai,
-          kecamatan: beaches.kecamatan,
-          kabupatenKota: beaches.kabupatenKota,
-          provinsi: beaches.provinsi,
-          kodeAdm4: beaches.kodeAdm4,
-          latitude: beaches.latitude,
-          longitude: beaches.longitude,
-          image: beaches.image,
-          description: beaches.description,
-        })
-        .from(beaches)
-        .where(eq(beaches.slug, slug))
-        .limit(1);
+  return withCache(`beach:weather:${slug}`, CACHE_TTL.beach, async () => {
+    const rows = await db
+      .select({
+        id: beaches.id,
+        slug: beaches.slug,
+        pantai: beaches.pantai,
+        kecamatan: beaches.kecamatan,
+        kabupatenKota: beaches.kabupatenKota,
+        provinsi: beaches.provinsi,
+        kodeAdm4: beaches.kodeAdm4,
+        latitude: beaches.latitude,
+        longitude: beaches.longitude,
+        image: beaches.image,
+        description: beaches.description,
+      })
+      .from(beaches)
+      .where(eq(beaches.slug, slug))
+      .limit(1);
 
-      return rows[0] ?? null;
-    },
-  );
+    return rows[0] ?? null;
+  });
 }

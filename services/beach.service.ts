@@ -133,34 +133,3 @@ export async function getUniqueProvinces(): Promise<string[]> {
     return rows.map((r) => r.province);
   });
 }
-/**
- * Create a new beach.
- * Invalidates related caches.
- */
-
-/**
- * Update an existing beach.
- * Invalidates the beach-specific and aggregate caches.
- */
-export async function updateBeach(
-  id: string,
-  input: UpdateBeachInput,
-): Promise<BeachDetail | null> {
-  const [updated] = await db
-    .update(beaches)
-    .set(input)
-    .where(eq(beaches.id, id))
-    .returning();
-  if (!updated) return null;
-  // Invalidate related caches
-  await Promise.all([
-    deleteCache(CACHE_KEYS.beach(updated.slug)),
-    deleteCache(CACHE_KEYS.beachAll),
-    deleteCache(CACHE_KEYS.leaderboard),
-    deleteCache(CACHE_KEYS.leaderboardSummary),
-    deleteCache(CACHE_KEYS.dashboard),
-    invalidatePattern("leaderboard:*"),
-  ]);
-  // Return full detail
-  return getBeachBySlug(updated.slug);
-}
