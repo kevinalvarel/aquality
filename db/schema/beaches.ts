@@ -16,7 +16,7 @@ export const beaches = pgTable(
     id: uuid("id").primaryKey().defaultRandom(),
     slug: varchar("slug", { length: 255 }).notNull().unique(),
     pantai: varchar("pantai", { length: 255 }).notNull(),
-    kelurahan: varchar("kelurahan", { length: 255 }),
+    kelurahan: varchar("kelurahan", { length: 255 }).notNull(),
     kecamatan: varchar("kecamatan", { length: 255 }).notNull(),
     kabupatenKota: varchar("kabupaten_kota", { length: 255 }).notNull(),
     provinsi: varchar("provinsi", { length: 255 }).notNull(),
