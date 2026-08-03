@@ -1,5 +1,5 @@
-import { withCache } from "@/lib/cache";
-import { CACHE_KEYS, CACHE_TTL } from "@/constants/cache-keys";
+import { withCache } from '@/lib/cache';
+import { CACHE_KEYS, CACHE_TTL } from '@/constants/cache-keys';
 
 import type {
   BeachLeaderboard,
@@ -7,8 +7,8 @@ import type {
   LeaderboardResponse,
   LeaderboardSummary,
   BeachStatus,
-} from "@/types/leaderboard.type";
-import type { BeachRecommendation } from "@/types/explore.type";
+} from '@/types/leaderboard.type';
+import type { BeachRecommendation } from '@/types/explore.type';
 
 // ─── Leaderboard Service ────────────────────────────────────────────────────
 // Provides ranked beach data for the leaderboard view.
@@ -36,16 +36,16 @@ async function fetchLeaderboardData(): Promise<BeachLeaderboard[]> {
 
     return recommendations.map((rec) => {
       // Map label_rekomendasi (SANGAT DIREKOMENDASIKAN / DIREKOMENDASIKAN / CUKUP / KURANG) to BeachStatus
-      let status: BeachStatus = "Moderate";
-      const label = (rec.label_rekomendasi || "").toUpperCase();
-      if (label.includes("SANGAT") || label.includes("EXCELLENT")) {
-        status = "Excellent";
-      } else if (label.includes("DIREKOMENDASIKAN") || label.includes("GOOD")) {
-        status = "Good";
-      } else if (label.includes("CUKUP") || label.includes("MODERATE")) {
-        status = "Moderate";
-      } else if (label.includes("KURANG") || label.includes("POOR")) {
-        status = "Poor";
+      let status: BeachStatus = 'Moderate';
+      const label = (rec.label_rekomendasi || '').toUpperCase();
+      if (label.includes('SANGAT') || label.includes('EXCELLENT')) {
+        status = 'Excellent';
+      } else if (label.includes('DIREKOMENDASIKAN') || label.includes('GOOD')) {
+        status = 'Good';
+      } else if (label.includes('CUKUP') || label.includes('MODERATE')) {
+        status = 'Moderate';
+      } else if (label.includes('KURANG') || label.includes('POOR')) {
+        status = 'Poor';
       }
 
       return {
@@ -53,7 +53,7 @@ async function fetchLeaderboardData(): Promise<BeachLeaderboard[]> {
         slug: rec.slug,
         beachName: rec.pantai,
         location: `${rec.kecamatan}, ${rec.kabupaten_kota}`,
-        image: rec.url_gambar || "/beaches/default.jpg",
+        image: rec.url_gambar || '/beaches/default.jpg',
         environmentalScore: Math.round(rec.health_score),
         status,
         aiConfidence: Math.round(rec.skor_detail.skor_industri),
@@ -104,24 +104,24 @@ export async function getLeaderboard(
   }
 
   // Status filter
-  if (filters.status !== "all") {
+  if (filters.status !== 'all') {
     filtered = filtered.filter((b) => b.status === filters.status);
   }
 
   // Location filter
-  if (filters.location && filters.location !== "all") {
+  if (filters.location && filters.location !== 'all') {
     filtered = filtered.filter((b) => b.location === filters.location);
   }
 
   // Sort
   filtered.sort((a, b) => {
     const field = filters.sortField;
-    const dir = filters.sortDirection === "asc" ? 1 : -1;
+    const dir = filters.sortDirection === 'asc' ? 1 : -1;
 
-    if (field === "beachName") {
+    if (field === 'beachName') {
       return a.beachName.localeCompare(b.beachName) * dir;
     }
-    if (field === "lastAnalyzed") {
+    if (field === 'lastAnalyzed') {
       return (
         (new Date(a.lastAnalyzed).getTime() -
           new Date(b.lastAnalyzed).getTime()) *
@@ -253,20 +253,20 @@ export async function getScoreDistribution(): Promise<
 
       return [
         {
-          status: "Excellent",
+          status: 'Excellent',
           count: dist.Excellent,
-          fill: "var(--color-success)",
+          fill: 'var(--color-success)',
         },
-        { status: "Good", count: dist.Good, fill: "var(--color-chart-2)" },
+        { status: 'Good', count: dist.Good, fill: 'var(--color-chart-2)' },
         {
-          status: "Moderate",
+          status: 'Moderate',
           count: dist.Moderate,
-          fill: "var(--color-warning)",
+          fill: 'var(--color-warning)',
         },
         {
-          status: "Poor",
+          status: 'Poor',
           count: dist.Poor,
-          fill: "var(--color-destructive)",
+          fill: 'var(--color-destructive)',
         },
       ];
     },

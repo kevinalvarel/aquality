@@ -1,15 +1,15 @@
-import { db } from "@/db";
-import { beaches, analyses } from "@/db/schema/index";
-import { eq, desc, isNotNull, and } from "drizzle-orm";
-import { withCache } from "@/lib/cache";
-import { CACHE_KEYS, CACHE_TTL } from "@/constants/cache-keys";
+import { db } from '@/db';
+import { beaches, analyses } from '@/db/schema/index';
+import { eq, desc, isNotNull, and } from 'drizzle-orm';
+import { withCache } from '@/lib/cache';
+import { CACHE_KEYS, CACHE_TTL } from '@/constants/cache-keys';
 import type {
   ExploreBeachItem,
   MapBeachItem,
   BeachRecommendation,
-} from "@/types/explore.type";
-import type { DbBeachStatus } from "@/types/beach.type";
-import { AnalyzeApiResponse } from "@/types/beach-api.type";
+} from '@/types/explore.type';
+import type { DbBeachStatus } from '@/types/beach.type';
+import { AnalyzeApiResponse } from '@/types/beach-api.type';
 
 // ─── Explore Service ────────────────────────────────────────────────────────
 // Provides data for the Explore page (ResultCard) and Map page (markers).
@@ -30,9 +30,9 @@ export async function getExploreBeaches(): Promise<ExploreBeachItem[]> {
         createdAt: analyses.createdAt,
       })
       .from(analyses)
-      .where(eq(analyses.status, "completed"))
+      .where(eq(analyses.status, 'completed'))
       .orderBy(analyses.beachId, desc(analyses.createdAt))
-      .as("latest_analysis");
+      .as('latest_analysis');
 
     const rows = await db
       .select({
@@ -108,9 +108,9 @@ export async function getBeachesForMap(): Promise<MapBeachItem[]> {
         createdAt: analyses.createdAt,
       })
       .from(analyses)
-      .where(eq(analyses.status, "completed"))
+      .where(eq(analyses.status, 'completed'))
       .orderBy(analyses.beachId, desc(analyses.createdAt))
-      .as("latest_analysis_map");
+      .as('latest_analysis_map');
 
     const rows = await db
       .select({
