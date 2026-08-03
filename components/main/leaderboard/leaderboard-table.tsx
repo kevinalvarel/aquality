@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Link from "next/link";
+import Link from 'next/link';
 import {
   Table,
   TableBody,
@@ -8,9 +8,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Pagination,
   PaginationContent,
@@ -19,17 +19,17 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import type { BeachLeaderboard } from "@/types/leaderboard.type";
-import { Bot, ExternalLink } from "lucide-react";
-import { getStatusColor, formatRelativeDate } from "@/lib/utils";
-import Image from "next/image";
+} from '@/components/ui/pagination';
+import type { BeachLeaderboard } from '@/types/leaderboard.type';
+import { Bot, ExternalLink } from 'lucide-react';
+import { getStatusColor, formatRelativeDate } from '@/lib/utils';
+import Image from 'next/image';
 
 const statusLabels: Record<string, string> = {
-  excellent: "Sangat Baik",
-  good: "Baik",
-  moderate: "Sedang",
-  poor: "Buruk",
+  excellent: 'Sangat Baik',
+  good: 'Baik',
+  moderate: 'Sedang',
+  poor: 'Buruk',
 };
 
 interface LeaderboardTableProps {
@@ -54,12 +54,12 @@ export function LeaderboardTable({
   const startRank = (page - 1) * pageSize;
 
   const paginationPages = () => {
-    const pages: (number | "ellipsis")[] = [];
+    const pages: (number | 'ellipsis')[] = [];
     if (totalPages <= 5) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
       pages.push(1);
-      if (page > 3) pages.push("ellipsis");
+      if (page > 3) pages.push('ellipsis');
       for (
         let i = Math.max(2, page - 1);
         i <= Math.min(totalPages - 1, page + 1);
@@ -67,32 +67,32 @@ export function LeaderboardTable({
       ) {
         pages.push(i);
       }
-      if (page < totalPages - 2) pages.push("ellipsis");
+      if (page < totalPages - 2) pages.push('ellipsis');
       pages.push(totalPages);
     }
     return pages;
   };
 
   return (
-    <section id="leaderboard-table" className="space-y-4">
-      <div className="rounded-lg border">
+    <section id='leaderboard-table' className='space-y-4'>
+      <div className='rounded-lg border'>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[60px]">Peringkat</TableHead>
-              <TableHead>Pantai</TableHead>
-              <TableHead className="hidden sm:table-cell">Lokasi</TableHead>
-              <TableHead className="text-center">Skor</TableHead>
-              <TableHead className="text-center hidden sm:table-cell">
+              <TableHead className='w-[60px]'>Peringkat</TableHead>
+              <TableHead className='min-w-[200px]'>Pantai</TableHead>
+              <TableHead className='hidden sm:table-cell'>Lokasi</TableHead>
+              <TableHead className='text-center'>Skor</TableHead>
+              <TableHead className='text-center hidden sm:table-cell'>
                 Status
               </TableHead>
-              <TableHead className="text-center hidden md:table-cell">
+              <TableHead className='text-center hidden md:table-cell'>
                 Keyakinan AI
               </TableHead>
-              <TableHead className="hidden lg:table-cell">
+              <TableHead className='hidden lg:table-cell'>
                 Analisis Terakhir
               </TableHead>
-              <TableHead className="text-right">Aksi</TableHead>
+              <TableHead className='text-right'>Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -103,38 +103,38 @@ export function LeaderboardTable({
               return (
                 <TableRow
                   key={beach.id}
-                  className="cursor-pointer"
+                  className='cursor-pointer'
                   onClick={() => onRowClick(beach)}
                   id={`leaderboard-row-${beach.id}`}
                 >
                   <TableCell>
-                    <span className="inline-flex size-7 items-center justify-center rounded-full bg-muted text-xs font-bold">
+                    <span className='inline-flex size-7 items-center justify-center rounded-full bg-muted text-xs font-bold'>
                       {rank}
                     </span>
                   </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
+                  <TableCell className='min-w-[200px]'>
+                    <div className='flex items-center gap-3'>
                       <Image
                         src={beach.image}
                         alt={beach.beachName}
                         width={40}
                         height={40}
-                        className="rounded-md object-cover"
+                        className='rounded-md object-cover'
                       />
-                      <span className="font-medium">{beach.beachName}</span>
+                      <span className='font-medium'>{beach.beachName}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell text-muted-foreground">
+                  <TableCell className='hidden sm:table-cell text-muted-foreground min-w-[150px]'>
                     {beach.location}
                   </TableCell>
-                  <TableCell className="text-center">
-                    <span className="font-bold text-lg tabular-nums">
+                  <TableCell className='text-center'>
+                    <span className='font-bold text-lg tabular-nums'>
                       {beach.environmentalScore}
                     </span>
                   </TableCell>
-                  <TableCell className="text-center hidden sm:table-cell">
+                  <TableCell className='text-center hidden sm:table-cell'>
                     <Badge
-                      variant="outline"
+                      variant='outline'
                       className={`border-none ${statusColor.bg} ${statusColor.text}`}
                     >
                       <span
@@ -143,28 +143,28 @@ export function LeaderboardTable({
                       {statusLabels[beach.status] || beach.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-center hidden md:table-cell">
-                    <div className="flex items-center justify-center gap-1 text-muted-foreground">
-                      <Bot className="size-3" />
-                      <span className="tabular-nums">
+                  <TableCell className='text-center hidden md:table-cell'>
+                    <div className='flex items-center justify-center gap-1 text-muted-foreground'>
+                      <Bot className='size-3' />
+                      <span className='tabular-nums'>
                         {beach.aiConfidence}%
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell text-muted-foreground">
+                  <TableCell className='hidden lg:table-cell text-muted-foreground'>
                     {formatRelativeDate(beach.lastAnalyzed)}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className='text-right'>
                     <Button
-                      variant="ghost"
-                      size="xs"
+                      variant='ghost'
+                      size='xs'
                       asChild
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Link href={`/explore/${beach.slug}`}>
                         <ExternalLink
-                          className="size-3"
-                          data-icon="inline-start"
+                          className='size-3'
+                          data-icon='inline-start'
                         />
                         Lihat
                       </Link>
@@ -179,33 +179,33 @@ export function LeaderboardTable({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-muted-foreground">
-            Menampilkan {startRank + 1}–{Math.min(startRank + pageSize, total)}{" "}
+        <div className='flex items-center justify-between'>
+          <p className='text-xs text-muted-foreground'>
+            Menampilkan {startRank + 1}–{Math.min(startRank + pageSize, total)}{' '}
             dari {total} pantai
           </p>
-          <Pagination className="w-auto mx-0">
+          <Pagination className='w-auto mx-0'>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
-                  href="#"
+                  href='#'
                   onClick={(e) => {
                     e.preventDefault();
                     if (page > 1) onPageChange(page - 1);
                   }}
                   aria-disabled={page === 1}
-                  className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                  className={page === 1 ? 'pointer-events-none opacity-50' : ''}
                 />
               </PaginationItem>
               {paginationPages().map((p, i) =>
-                p === "ellipsis" ? (
+                p === 'ellipsis' ? (
                   <PaginationItem key={`e-${i}`}>
                     <PaginationEllipsis />
                   </PaginationItem>
                 ) : (
                   <PaginationItem key={p}>
                     <PaginationLink
-                      href="#"
+                      href='#'
                       isActive={p === page}
                       onClick={(e) => {
                         e.preventDefault();
@@ -219,14 +219,14 @@ export function LeaderboardTable({
               )}
               <PaginationItem>
                 <PaginationNext
-                  href="#"
+                  href='#'
                   onClick={(e) => {
                     e.preventDefault();
                     if (page < totalPages) onPageChange(page + 1);
                   }}
                   aria-disabled={page === totalPages}
                   className={
-                    page === totalPages ? "pointer-events-none opacity-50" : ""
+                    page === totalPages ? 'pointer-events-none opacity-50' : ''
                   }
                 />
               </PaginationItem>

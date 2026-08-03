@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Download, RefreshCw, Trophy } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Download, RefreshCw, Trophy } from 'lucide-react';
 
 interface LeaderboardHeaderProps {
   onRefresh?: () => void;
@@ -12,38 +12,35 @@ export function LeaderboardHeader({
 }: LeaderboardHeaderProps) {
   return (
     <section
-      id="leaderboard-hero"
-      className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+      id='leaderboard-hero'
+      className='flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between'
     >
-      <div className="space-y-1.5">
-        <div className="flex items-center gap-2.5">
-          <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-            <Trophy className="size-5" />
+      <div className='space-y-1.5'>
+        <div className='flex items-center gap-2.5'>
+          <div className='flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary'>
+            <Trophy className='size-5' />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className='text-2xl font-bold tracking-tight'>
             Peringkat Pantai
           </h1>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Bandingkan peringkat kualitas air pantai yang dihasilkan oleh analisis AI.
+        <p className='text-sm text-muted-foreground'>
+          Bandingkan peringkat kualitas air pantai yang dihasilkan oleh analisis
+          AI.
         </p>
       </div>
 
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" id="export-report-btn">
-          <Download className="size-3.5" data-icon="inline-start" />
-          Ekspor Laporan
-        </Button>
+      <div className='flex items-center gap-2'>
         <Button
-          variant="outline"
-          size="sm"
+          variant='outline'
+          size='sm'
           onClick={onRefresh}
           disabled={isRefreshing}
-          id="refresh-data-btn"
+          id='refresh-data-btn'
         >
           <RefreshCw
-            className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`}
-            data-icon="inline-start"
+            className={`size-3.5 ${isRefreshing ? 'animate-spin' : ''}`}
+            data-icon='inline-start'
           />
           Perbarui
         </Button>
